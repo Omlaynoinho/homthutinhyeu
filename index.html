@@ -263,14 +263,14 @@ nav a:hover,nav a.active{color:var(--dusty-pink);background:var(--ivory);}
         <div class="search-area">
             <div class="search-box">
                 <i class="fa-solid fa-magnifying-glass"></i>
-                <input id="char-search" type="search" placeholder="Tìm theo tên nhân vật hoặc tag..." oninput="filterCharacters()">
+                <input id="char-search" type="search" placeholder="Tìm kiếm theo tên hoặc tag..." oninput="filterCharacters()">
             </div>
             <div id="tag-filter" class="tag-filter"></div>
         </div>
         <div class="char-grid" id="char-grid"></div>
     </section>
 
-    <!-- GAMES (KHU VƯỜN BỒ CÂU) -->
+    <!-- GAMES -->
     <section id="games" class="section">
         <h2 class="section-title serif">Khu Vườn Bồ Câu 🌸<span>Nơi gieo mầm những ký ức ngọt ngào</span></h2>
         <div id="game-container">
@@ -290,27 +290,21 @@ nav a:hover,nav a.active{color:var(--dusty-pink);background:var(--ivory);}
                 <span id="pigeon-text" style="font-size:.85rem;font-style:italic;color:var(--text-light)">Chào mừng bạn đến với khu vườn!</span>
             </div>
 
-            <!-- VƯỜN -->
-            <div id="view-garden" class="game-view active">
-                <div class="garden-grid" id="garden-grid"></div>
-            </div>
-            <!-- TÚI -->
+            <div id="view-garden" class="game-view active"><div class="garden-grid" id="garden-grid"></div></div>
             <div id="view-bag" class="game-view">
                 <h3 class="serif" style="color:var(--sage);margin-bottom:20px;text-align:center">🎒 Hạt giống & Hoa</h3>
                 <div class="item-grid" id="bag-grid"></div>
             </div>
-            <!-- SHOP -->
             <div id="view-shop" class="game-view">
                 <h3 class="serif" style="color:var(--dusty-pink);margin-bottom:20px;text-align:center">🏪 Tiệm Hoa Của Bồ Câu</h3>
                 <div class="item-grid" id="shop-grid"></div>
             </div>
-            <!-- MARKET -->
             <div id="view-market" class="game-view">
                 <h3 class="serif" style="color:var(--warm-brown);margin-bottom:20px;text-align:center">💰 Quầy Bán Hoa</h3>
                 <div class="item-grid" id="market-grid"></div>
             </div>
 
-            <!-- PLOT MODAL -->
+            <!-- MODALS GAME -->
             <div class="game-modal" id="plot-modal">
                 <div class="g-modal-content">
                     <h3 id="pm-title" class="serif" style="color:var(--warm-brown);margin-bottom:15px">Ô đất</h3>
@@ -320,8 +314,6 @@ nav a:hover,nav a.active{color:var(--dusty-pink);background:var(--ivory);}
                     <button onclick="closeGameModal('plot-modal')" style="margin-top:20px;background:none;color:var(--text-light);text-decoration:underline">Đóng</button>
                 </div>
             </div>
-
-            <!-- SEED MODAL -->
             <div class="game-modal" id="seed-modal">
                 <div class="g-modal-content" style="max-width:500px;width:90%">
                     <h3 class="serif" style="color:var(--sage);margin-bottom:15px">Chọn hạt giống để trồng</h3>
@@ -363,7 +355,7 @@ nav a:hover,nav a.active{color:var(--dusty-pink);background:var(--ivory);}
             <h2 class="section-title serif" style="font-size:1.6rem;margin-bottom:20px">👑 Quản Lý Nhân Vật</h2>
             <form class="admin-form" onsubmit="saveCharacter(event)">
                 <div class="form-group"><label>👤 Tên nhân vật</label><input id="admin-name" type="text" required placeholder="Tên character"></div>
-                <div class="form-group"><label>🖼️ Avatar Google Drive</label><input id="admin-avatar" type="url" placeholder="Link chia sẻ Google Drive" oninput="previewAvatar()"><img id="avatar-preview" class="avatar-preview" alt="Avatar preview"></div>
+                <div class="form-group"><label>🖼️ Avatar (Link ảnh / Google Drive)</label><input id="admin-avatar" type="url" placeholder="Link ảnh hoặc Link chia sẻ Google Drive" oninput="previewAvatar()"><img id="avatar-preview" class="avatar-preview" alt="Avatar preview"></div>
                 <div class="form-group"><label>🏷️ Tag</label><input id="admin-tags" type="text" placeholder="#BL, #BG, #ChiếmHữu..."></div>
                 <div class="form-group"><label>💡 Gợi ý nội dung</label><input id="admin-slogan" type="text" placeholder="Một câu giới thiệu ngắn..."></div>
                 <div class="form-group full"><label>📖 Bối cảnh / Plot</label><textarea id="admin-plot" placeholder="Nhập bối cảnh nhân vật..."></textarea></div>
@@ -373,7 +365,7 @@ nav a:hover,nav a.active{color:var(--dusty-pink);background:var(--ivory);}
                 <div class="form-group full"><label>🔐 Mật khẩu mở khóa</label><input id="admin-char-password" type="password" autocomplete="new-password" placeholder="Mật khẩu mở khóa"></div>
                 <div class="admin-actions">
                     <button type="submit" class="btn-vintage">💾 Lưu nhân vật</button>
-                    <button type="button" class="btn-secondary" onclick="resetAdminForm()">↩️ Làm mới</button>
+                    <button type="button" class="btn-secondary" onclick="resetAdminForm()">↩️ Làm mới form</button>
                     <button type="button" class="btn-danger" onclick="closeAdmin()">🚪 Thoát quản lý</button>
                 </div>
             </form>
@@ -403,18 +395,13 @@ nav a:hover,nav a.active{color:var(--dusty-pink);background:var(--ivory);}
 <!-- ================= JAVASCRIPT LOGIC ================= -->
 <script>
 // --- UTILS ---
-function escapeHTML(value) {
-    return String(value ?? "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");
-}
+function escapeHTML(value) { return String(value ?? "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;"); }
 function escapeAttribute(value) { return escapeHTML(value); }
 
 function showToast(message) {
     const container = document.getElementById("toast-container");
-    const toast = document.createElement("div");
-    toast.className = "toast";
-    toast.innerText = message;
-    container.appendChild(toast);
-    setTimeout(() => toast.remove(), 3000);
+    const toast = document.createElement("div"); toast.className = "toast"; toast.innerText = message;
+    container.appendChild(toast); setTimeout(() => toast.remove(), 3000);
 }
 
 // --- BACKGROUND DECOR ---
@@ -422,55 +409,38 @@ const decorations = ["🍂","🍁","🌸","🌼","🌿","🦋","🐦","🕊️"]
 function createBackgroundDecorations() {
     const container = document.getElementById("bg-effects");
     for(let i=0; i<25; i++) {
-        const item = document.createElement("div");
-        item.className = "floating-decoration";
+        const item = document.createElement("div"); item.className = "floating-decoration";
         item.innerText = decorations[Math.floor(Math.random()*decorations.length)];
-        item.style.left = Math.random()*100 + "%";
-        item.style.fontSize = (0.7 + Math.random()*1.1) + "rem";
-        item.style.animationDuration = (12 + Math.random()*18) + "s";
-        item.style.animationDelay = (-Math.random()*20) + "s";
+        item.style.left = Math.random()*100 + "%"; item.style.fontSize = (0.7 + Math.random()*1.1) + "rem";
+        item.style.animationDuration = (12 + Math.random()*18) + "s"; item.style.animationDelay = (-Math.random()*20) + "s";
         container.appendChild(item);
     }
 }
 createBackgroundDecorations();
 
 // --- MUSIC ---
-let ytPlayer;
-let musicPlaying = false;
+let ytPlayer; let musicPlaying = false;
 function onYouTubeIframeAPIReady() {
     ytPlayer = new YT.Player("youtube-player", {
-        videoId: "GEGSzh4vUuE", // Đổi ID video ở đây
+        videoId: "GEGSzh4vUuE",
         playerVars: { autoplay: 0, controls: 0, loop: 1, playlist: "GEGSzh4vUuE" }
     });
 }
 function toggleMusic() {
     if(!ytPlayer || !ytPlayer.getPlayerState) return;
     const btn = document.getElementById("music-toggle");
-    if(musicPlaying) {
-        ytPlayer.pauseVideo();
-        musicPlaying = false;
-        btn.innerText = "🔇";
-    } else {
-        ytPlayer.playVideo();
-        musicPlaying = true;
-        btn.innerText = "🔊";
-    }
+    if(musicPlaying) { ytPlayer.pauseVideo(); musicPlaying = false; btn.innerText = "🔇"; } 
+    else { ytPlayer.playVideo(); musicPlaying = true; btn.innerText = "🔊"; }
 }
-const ytScript = document.createElement("script");
-ytScript.src = "https://www.youtube.com/iframe_api";
-document.head.appendChild(ytScript);
+const ytScript = document.createElement("script"); ytScript.src = "https://www.youtube.com/iframe_api"; document.head.appendChild(ytScript);
 
 // --- APP INIT & INTRO ---
 document.getElementById("start-btn").addEventListener("click", () => {
     if(ytPlayer && ytPlayer.playVideo) { ytPlayer.playVideo(); musicPlaying = true; }
     document.querySelector(".intro-pigeon").classList.add("pigeon-fly");
     setTimeout(() => {
-        document.getElementById("intro-screen").style.opacity = "0";
-        document.getElementById("intro-screen").style.visibility = "hidden";
-        setTimeout(() => {
-            document.getElementById("main-app").style.visibility = "visible";
-            document.getElementById("main-app").style.opacity = "1";
-        }, 600);
+        document.getElementById("intro-screen").style.opacity = "0"; document.getElementById("intro-screen").style.visibility = "hidden";
+        setTimeout(() => { document.getElementById("main-app").style.visibility = "visible"; document.getElementById("main-app").style.opacity = "1"; }, 600);
     }, 600);
 });
 
@@ -488,48 +458,52 @@ function nav(sectionId, element) {
 let characters = [];
 const DEFAULT_CHARACTERS = [{
     id:"default-kaelen", name:"Kaelen", avatar:"", tags:["#Fantasy"],
-    slogan:"Một lá thư chưa bao giờ được gửi.",
-    plot:"Một nhân vật đang chờ câu chuyện của riêng mình.",
+    slogan:"Một lá thư chưa bao giờ được gửi.", plot:"Một nhân vật đang chờ câu chuyện của riêng mình.",
     aiLink:"", question:"Nhân vật này đang chờ điều gì?", hint:"Một thứ liên quan đến những lá thư.", password:""
 }];
 
-// ✅ FIX 1: Tối ưu mạnh mẽ trình đọc link ảnh Google Drive để hiển thị ảnh bắt buộc
+// ✅ FIX 1: Tối ưu ảnh Google Drive mạnh mẽ bằng lh3.googleusercontent
 function convertGoogleDriveURL(url){
     if(!url) return "";
-    if(url.match(/\.(jpeg|jpg|gif|png)$/i)) return url; // Link trực tiếp
-
+    if(url.match(/\.(jpeg|jpg|gif|png|webp)$/i)) return url; // Trả thẳng nếu là link ảnh trực tiếp
+    
     let id = "";
     const match1 = url.match(/\/file\/d\/([^/]+)/);
     const match2 = url.match(/[?&]id=([^&]+)/);
-
-    if(match1) id = match1[1];
-    else if(match2) id = match2[1];
-
-    if(id) {
-        // Trả về dạng lh3.googleusercontent là cách mạnh nhất để vượt rào CORS của Google Drive hiện tại
-        return "https://lh3.googleusercontent.com/d/" + id;
-    }
+    
+    if(match1) id = match1[1]; else if(match2) id = match2[1];
+    
+    if(id) return "https://lh3.googleusercontent.com/d/" + id; // Cách xịn nhất năm 2024+
     return url;
+}
+
+// ================= LÕI CẬP NHẬT GIAO DIỆN =================
+// ✅ Hàm này ép hệ thống làm sạch Tìm kiếm & render lại MỌI THỨ
+function refreshAllCharacterViews() {
+    selectedTag = "all";
+    const searchInput = document.getElementById("char-search");
+    if (searchInput) searchInput.value = ""; 
+    renderTags();
+    filterCharacters();
+    renderAdminCharacterList();
 }
 
 let selectedTag = "all";
 function renderTags() {
-    const container = document.getElementById("tag-filter");
-    container.innerHTML = "";
-    const set = new Set();
-    characters.forEach(char => (char.tags || []).forEach(tag => { if(tag.trim()) set.add(tag.trim()); }));
+    const container = document.getElementById("tag-filter"); container.innerHTML = "";
+    const set = new Set(); characters.forEach(char => (char.tags || []).forEach(tag => { if(tag.trim()) set.add(tag.trim()); }));
     
     const allBtn = document.createElement("button");
     allBtn.className = "tag-button " + (selectedTag === "all" ? "active" : "");
     allBtn.innerText = "🌸 Tất cả";
-    allBtn.onclick = () => { selectedTag = "all"; renderTags(); filterCharacters(); };
+    allBtn.onclick = () => { selectedTag = "all"; filterCharacters(); renderTags(); };
     container.appendChild(allBtn);
 
     [...set].sort().forEach(tag => {
         const btn = document.createElement("button");
         btn.className = "tag-button " + (selectedTag === tag ? "active" : "");
         btn.innerText = tag;
-        btn.onclick = () => { selectedTag = tag; renderTags(); filterCharacters(); };
+        btn.onclick = () => { selectedTag = tag; filterCharacters(); renderTags(); };
         container.appendChild(btn);
     });
 }
@@ -538,21 +512,18 @@ function filterCharacters() {
     const grid = document.getElementById("char-grid");
     const search = (document.getElementById("char-search")?.value || "").trim().toLowerCase();
     grid.innerHTML = "";
+    
     const filtered = characters.filter(char => {
-        const nameMatch = char.name.toLowerCase().includes(search);
+        const nameMatch = (char.name || "").toLowerCase().includes(search);
         const tagMatch = (char.tags || []).some(tag => tag.toLowerCase().includes(search));
         const selectedMatch = selectedTag === "all" || (char.tags || []).includes(selectedTag);
         return (nameMatch || tagMatch) && selectedMatch;
     });
 
-    if(filtered.length === 0) {
-        grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:50px;color:var(--text-light)">🕊️ Không tìm thấy lá thư phù hợp.</div>`;
-        return;
-    }
+    if(filtered.length === 0) { grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:50px;color:var(--text-light)">🕊️ Không tìm thấy lá thư phù hợp.</div>`; return; }
 
     filtered.forEach(char => {
-        const card = document.createElement("div");
-        card.className = "letter-card";
+        const card = document.createElement("div"); card.className = "letter-card";
         const avatar = convertGoogleDriveURL(char.avatar);
         const tags = (char.tags || []).map(t => `<span class="char-tag">${escapeHTML(t)}</span>`).join("");
         const locked = char.password && char.password.trim() !== "";
@@ -570,31 +541,22 @@ function filterCharacters() {
 
 let unlockingCharacterId = null;
 function openCharacter(id) {
-    const char = characters.find(c => c.id === id);
-    if(!char) return;
+    const char = characters.find(c => c.id === id); if(!char) return;
     if(char.password && char.password.trim() !== "") {
         unlockingCharacterId = char.id;
         document.getElementById("unlock-title").innerText = "🔐 " + char.name;
         document.getElementById("unlock-question").innerHTML = `<strong>❓ Câu hỏi:</strong><br>${escapeHTML(char.question || "Không có câu hỏi.")}`;
         document.getElementById("unlock-hint").innerHTML = `<strong>💡 Gợi ý:</strong><br>${escapeHTML(char.hint || "Không có gợi ý.")}`;
-        document.getElementById("unlock-password").value = "";
-        document.getElementById("unlock-error").innerText = "";
+        document.getElementById("unlock-password").value = ""; document.getElementById("unlock-error").innerText = "";
         document.getElementById("unlock-modal").classList.add("active");
-    } else {
-        showCharacterPlot(char);
-    }
+    } else { showCharacterPlot(char); }
 }
 
 function unlockCharacter() {
-    const char = characters.find(c => c.id === unlockingCharacterId);
-    if(!char) return;
+    const char = characters.find(c => c.id === unlockingCharacterId); if(!char) return;
     if(document.getElementById("unlock-password").value === char.password) {
-        closeOverlay("unlock-modal");
-        showCharacterPlot(char);
-        showToast("🔓 Giải mật khẩu thành công!");
-    } else {
-        document.getElementById("unlock-error").innerText = "❌ Mật khẩu không chính xác.";
-    }
+        closeOverlay("unlock-modal"); showCharacterPlot(char); showToast("🔓 Giải mật khẩu thành công!");
+    } else { document.getElementById("unlock-error").innerText = "❌ Mật khẩu không chính xác."; }
 }
 
 function showCharacterPlot(char) {
@@ -614,36 +576,24 @@ function showCharacterPlot(char) {
     `;
     document.getElementById("char-modal").classList.add("active");
 }
-
 function closeOverlay(id) { document.getElementById(id).classList.remove("active"); }
 
-// Admin logic
+// ================= ADMIN =================
 const ADMIN_PASSWORD = "omlaynoinho";
 function openAdmin() { document.getElementById("admin-modal").classList.add("active"); document.getElementById("admin-login").style.display = "block"; document.getElementById("admin-panel").classList.remove("active"); }
 
-// ✅ FIX 2: Tự động tải lại trang nhân vật khi thoát quản lý
 function closeAdmin() { 
     document.getElementById("admin-modal").classList.remove("active"); 
     resetAdminForm(); 
-    
-    // Ép làm mới ô tìm kiếm và tag để hiện toàn bộ nhân vật
-    selectedTag = "all";
-    document.getElementById("char-search").value = "";
-    
-    // Tự động chuyển hướng về Tab nhân vật để xem ngay lập tức
-    const charNavBtn = document.getElementById("nav-chars");
-    nav('chars', charNavBtn);
+    refreshAllCharacterViews(); // ✅ Làm mới & xóa search
+    nav('chars', document.getElementById("nav-chars")); // ✅ Đưa người dùng về màn hình nhân vật
 }
 
 function loginAdmin() {
     if(document.getElementById("admin-password").value === ADMIN_PASSWORD) {
-        document.getElementById("admin-login").style.display = "none";
-        document.getElementById("admin-panel").classList.add("active");
-        renderAdminCharacterList();
-        showToast("👑 Đăng nhập quản lý thành công!");
-    } else {
-        document.getElementById("admin-error").innerText = "❌ Mật khẩu sai.";
-    }
+        document.getElementById("admin-login").style.display = "none"; document.getElementById("admin-panel").classList.add("active");
+        renderAdminCharacterList(); showToast("👑 Đăng nhập quản lý thành công!");
+    } else { document.getElementById("admin-error").innerText = "❌ Mật khẩu sai."; }
 }
 function previewAvatar() {
     const url = convertGoogleDriveURL(document.getElementById("admin-avatar").value.trim());
@@ -655,42 +605,34 @@ let editingCharacterId = null;
 function saveCharacter(e) {
     e.preventDefault();
     const charData = {
-        name: document.getElementById("admin-name").value.trim(),
-        avatar: document.getElementById("admin-avatar").value.trim(),
+        name: document.getElementById("admin-name").value.trim(), avatar: document.getElementById("admin-avatar").value.trim(),
         tags: document.getElementById("admin-tags").value.split(",").map(t=>t.trim()).filter(Boolean),
-        slogan: document.getElementById("admin-slogan").value.trim(),
-        plot: document.getElementById("admin-plot").value,
-        aiLink: document.getElementById("admin-ai-link").value.trim(),
-        question: document.getElementById("admin-question").value.trim(),
-        hint: document.getElementById("admin-hint").value.trim(),
-        password: document.getElementById("admin-char-password").value
+        slogan: document.getElementById("admin-slogan").value.trim(), plot: document.getElementById("admin-plot").value,
+        aiLink: document.getElementById("admin-ai-link").value.trim(), question: document.getElementById("admin-question").value.trim(),
+        hint: document.getElementById("admin-hint").value.trim(), password: document.getElementById("admin-char-password").value
     };
 
     if(editingCharacterId) {
         const idx = characters.findIndex(c => c.id === editingCharacterId);
         if(idx !== -1) {
+            const oldPass = characters[idx].password;
             characters[idx] = { ...characters[idx], ...charData };
-            if(charData.password.trim() === "") characters[idx].password = characters[idx].password; // keep old if empty
+            if(charData.password.trim() === "") characters[idx].password = oldPass;
         }
         showToast("💾 Đã cập nhật!");
     } else {
         charData.id = "char-" + Date.now();
-        characters.push(charData);
+        characters.unshift(charData); // ✅ FIX 2: Bỏ vào đầu mảng để nhân vật hiện lên trên cùng luôn
         showToast("📮 Đã đăng!");
     }
     localStorage.setItem("boCauCharacters", JSON.stringify(characters));
     
-    // Làm mới list 
-    selectedTag = "all";
-    document.getElementById("char-search").value = "";
-    renderCharacters(); 
-    renderAdminCharacterList(); 
-    resetAdminForm();
+    // ✅ Tự động thoát và hiển thị
+    closeAdmin();
 }
 
 function renderAdminCharacterList() {
-    const list = document.getElementById("admin-character-list");
-    list.innerHTML = "";
+    const list = document.getElementById("admin-character-list"); list.innerHTML = "";
     characters.forEach(char => {
         const div = document.createElement("div"); div.className = "admin-char-row";
         div.innerHTML = `
@@ -710,33 +652,19 @@ function renderAdminCharacterList() {
 function editCharacter(id) {
     const char = characters.find(c => c.id === id); if(!char) return;
     editingCharacterId = id;
-    document.getElementById("admin-name").value = char.name;
-    document.getElementById("admin-avatar").value = char.avatar;
-    document.getElementById("admin-tags").value = char.tags.join(", ");
-    document.getElementById("admin-slogan").value = char.slogan;
-    document.getElementById("admin-plot").value = char.plot;
-    document.getElementById("admin-ai-link").value = char.aiLink;
-    document.getElementById("admin-question").value = char.question;
-    document.getElementById("admin-hint").value = char.hint;
+    document.getElementById("admin-name").value = char.name; document.getElementById("admin-avatar").value = char.avatar;
+    document.getElementById("admin-tags").value = (char.tags||[]).join(", "); document.getElementById("admin-slogan").value = char.slogan;
+    document.getElementById("admin-plot").value = char.plot; document.getElementById("admin-ai-link").value = char.aiLink;
+    document.getElementById("admin-question").value = char.question; document.getElementById("admin-hint").value = char.hint;
     document.getElementById("admin-char-password").value = "";
-    previewAvatar();
+    previewAvatar(); window.scrollTo({top:0, behavior:"smooth"});
 }
 
-// ✅ FIX 3: Cho phép xóa nhân vật ngay mà không cần làm mới trang
 function deleteCharacter(id) {
-    if(!confirm("Xóa nhân vật này? Hành động này không thể hoàn tác.")) return;
-    
-    // Lọc bỏ nhân vật khỏi mảng
+    if(!confirm("⚠️ Xóa nhân vật này? Hành động này không thể hoàn tác.")) return;
     characters = characters.filter(c => c.id !== id);
-    
-    // Lưu Database
     localStorage.setItem("boCauCharacters", JSON.stringify(characters));
-    localStorage.removeItem("unlocked_" + id);
-    
-    // Gọi lại 2 hàm Render để cập nhật Giao diện tức thì (Không cần F5)
-    renderAdminCharacterList(); 
-    renderCharacters(); 
-    
+    refreshAllCharacterViews(); // ✅ FIX 3: Xóa phát mượt luôn không cần tải trang
     showToast("🗑️ Đã xóa nhân vật.");
 }
 
@@ -751,266 +679,123 @@ function resetAdminForm() {
 // ================= GAME: KHU VƯỜN =======================
 // ========================================================
 const FLOWER_DB = [
-    {id:1,name:"Hoa Tulip",icon:"🌷",rarity:"thuong",buy:20,sell:35,time:30},
-    {id:2,name:"Hoa Hướng Dương",icon:"🌻",rarity:"thuong",buy:25,sell:45,time:45},
-    {id:3,name:"Hoa Hồng",icon:"🌹",rarity:"thuong",buy:35,sell:60,time:60},
-    {id:4,name:"Hoa Cúc",icon:"🌼",rarity:"thuong",buy:15,sell:25,time:20},
-    {id:5,name:"Hoa Anh Đào",icon:"🌸",rarity:"thuong",buy:40,sell:70,time:75},
-    {id:6,name:"Hoa Oải Hương",icon:"💠",rarity:"thuong",buy:30,sell:55,time:50},
-    {id:7,name:"Hoa Dâm Bụt",icon:"🌺",rarity:"thuong",buy:20,sell:35,time:35},
-    {id:8,name:"Hoa Cẩm Tú Cầu",icon:"🌿",rarity:"thuong",buy:45,sell:80,time:90},
-    {id:9,name:"Hoa Iris",icon:"🪻",rarity:"hiem",buy:100,sell:200,time:180},
-    {id:10,name:"Hoa Mẫu Đơn",icon:"🏵️",rarity:"hiem",buy:120,sell:250,time:240},
-    {id:11,name:"Hoa Đào",icon:"🍑",rarity:"hiem",buy:150,sell:300,time:300},
-    {id:12,name:"Hoa Camellia",icon:"💮",rarity:"hiem",buy:130,sell:260,time:270},
-    {id:13,name:"Hoa Cúc Họa Mi",icon:"🌼",rarity:"hiem",buy:110,sell:220,time:200},
-    {id:14,name:"Hoa Sen",icon:"🪷",rarity:"hiem",buy:180,sell:380,time:400},
-    {id:15,name:"Hoa Ly",icon:"⚜️",rarity:"hiem",buy:160,sell:330,time:360},
-    {id:16,name:"Hoa Tử Đằng",icon:"🍇",rarity:"hiem",buy:200,sell:420,time:450},
-    {id:17,name:"Hoa Violet",icon:"🪻",rarity:"hiem",buy:140,sell:280,time:280},
-    {id:18,name:"Hoa Lan",icon:"🌺",rarity:"suthi",buy:500,sell:1200,time:900},
-    {id:19,name:"Hoa Hồng Đen",icon:"🥀",rarity:"suthi",buy:600,sell:1500,time:1200},
-    {id:20,name:"Hoa Linh Lan",icon:"🎐",rarity:"suthi",buy:700,sell:1800,time:1500},
-    {id:21,name:"Hoa Nguyệt Quang",icon:"✨",rarity:"huyenthoai",buy:1500,sell:4000,time:3600},
-    {id:22,name:"Hoa Bồ Câu",icon:"🕊️",rarity:"huyenthoai",buy:2000,sell:6000,time:7200}
+    {id:1,name:"Hoa Tulip",icon:"🌷",rarity:"thuong",buy:20,sell:35,time:30}, {id:2,name:"Hoa Hướng Dương",icon:"🌻",rarity:"thuong",buy:25,sell:45,time:45},
+    {id:3,name:"Hoa Hồng",icon:"🌹",rarity:"thuong",buy:35,sell:60,time:60}, {id:4,name:"Hoa Cúc",icon:"🌼",rarity:"thuong",buy:15,sell:25,time:20},
+    {id:5,name:"Hoa Anh Đào",icon:"🌸",rarity:"thuong",buy:40,sell:70,time:75}, {id:6,name:"Hoa Oải Hương",icon:"💠",rarity:"thuong",buy:30,sell:55,time:50},
+    {id:7,name:"Hoa Dâm Bụt",icon:"🌺",rarity:"thuong",buy:20,sell:35,time:35}, {id:8,name:"Hoa Cẩm Tú Cầu",icon:"🌿",rarity:"thuong",buy:45,sell:80,time:90},
+    {id:9,name:"Hoa Iris",icon:"🪻",rarity:"hiem",buy:100,sell:200,time:180}, {id:10,name:"Hoa Mẫu Đơn",icon:"🏵️",rarity:"hiem",buy:120,sell:250,time:240},
+    {id:11,name:"Hoa Đào",icon:"🍑",rarity:"hiem",buy:150,sell:300,time:300}, {id:12,name:"Hoa Camellia",icon:"💮",rarity:"hiem",buy:130,sell:260,time:270},
+    {id:13,name:"Hoa Cúc Họa Mi",icon:"🌼",rarity:"hiem",buy:110,sell:220,time:200}, {id:14,name:"Hoa Sen",icon:"🪷",rarity:"hiem",buy:180,sell:380,time:400},
+    {id:15,name:"Hoa Ly",icon:"⚜️",rarity:"hiem",buy:160,sell:330,time:360}, {id:16,name:"Hoa Tử Đằng",icon:"🍇",rarity:"hiem",buy:200,sell:420,time:450},
+    {id:17,name:"Hoa Violet",icon:"🪻",rarity:"hiem",buy:140,sell:280,time:280}, {id:18,name:"Hoa Lan",icon:"🌺",rarity:"suthi",buy:500,sell:1200,time:900},
+    {id:19,name:"Hoa Hồng Đen",icon:"🥀",rarity:"suthi",buy:600,sell:1500,time:1200}, {id:20,name:"Hoa Linh Lan",icon:"🎐",rarity:"suthi",buy:700,sell:1800,time:1500},
+    {id:21,name:"Hoa Nguyệt Quang",icon:"✨",rarity:"huyenthoai",buy:1500,sell:4000,time:3600}, {id:22,name:"Hoa Bồ Câu",icon:"🕊️",rarity:"huyenthoai",buy:2000,sell:6000,time:7200}
 ];
 
 const RARITY_LABELS = {thuong:"⭐ Thường", hiem:"🌟 Hiếm", suthi:"🔮 Sử Thi", huyenthoai:"👑 Huyền Thoại"};
+let gameState = { xu: 1000, inventory: { seeds: {}, flowers: {} }, garden: Array(9).fill(null).map(() => ({ plantId: null, plantedAt: null, watered: true, stage: 0 })) };
 
-let gameState = {
-    xu: 1000,
-    inventory: { seeds: {}, flowers: {} },
-    garden: Array(9).fill(null).map(() => ({ plantId: null, plantedAt: null, watered: true, stage: 0 }))
-};
-
-function saveGame() {
-    localStorage.setItem("gardenOfMemories", JSON.stringify(gameState));
-    document.getElementById("ui-xu").innerText = gameState.xu;
-}
+function saveGame() { localStorage.setItem("gardenOfMemories", JSON.stringify(gameState)); document.getElementById("ui-xu").innerText = gameState.xu; }
 
 function switchGameView(id, btn) {
-    document.querySelectorAll(".game-nav button").forEach(x => x.classList.remove("active"));
-    btn.classList.add("active");
-    document.querySelectorAll(".game-view").forEach(x => x.classList.remove("active"));
-    document.getElementById(id).classList.add("active");
-    if(id === "view-garden") renderGarden();
-    if(id === "view-bag") renderBag();
-    if(id === "view-shop") renderShop();
-    if(id === "view-market") renderMarket();
+    document.querySelectorAll(".game-nav button").forEach(x => x.classList.remove("active")); btn.classList.add("active");
+    document.querySelectorAll(".game-view").forEach(x => x.classList.remove("active")); document.getElementById(id).classList.add("active");
+    if(id === "view-garden") renderGarden(); if(id === "view-bag") renderBag(); if(id === "view-shop") renderShop(); if(id === "view-market") renderMarket();
 }
 
-function getStageIcon(stage, icon) {
-    if(stage===0) return "🌰"; if(stage===1) return "🌱"; if(stage===2) return "🌿"; if(stage===3) return "🌷";
-    return icon;
-}
+function getStageIcon(stage, icon) { if(stage===0) return "🌰"; if(stage===1) return "🌱"; if(stage===2) return "🌿"; if(stage===3) return "🌷"; return icon; }
 
 function renderGarden() {
-    const grid = document.getElementById("garden-grid");
-    grid.innerHTML = "";
+    const grid = document.getElementById("garden-grid"); grid.innerHTML = "";
     gameState.garden.forEach((plot, index) => {
-        const div = document.createElement("div");
-        div.className = "garden-plot " + (plot.plantId ? "planted" : "empty");
+        const div = document.createElement("div"); div.className = "garden-plot " + (plot.plantId ? "planted" : "empty");
         div.innerHTML = `<span class="plot-number">Ô ${index+1}</span>`;
         if(plot.plantId) {
-            const flower = FLOWER_DB.find(f => f.id == plot.plantId);
-            const progress = Math.min(100, ((Date.now() - plot.plantedAt) / (flower.time * 1000)) * 100);
-            div.innerHTML += getStageIcon(plot.stage, flower.icon);
-            div.innerHTML += `<div class="progress-bar"><div class="progress-fill" style="width:${progress}%"></div></div>`;
+            const flower = FLOWER_DB.find(f => f.id == plot.plantId); const progress = Math.min(100, ((Date.now() - plot.plantedAt) / (flower.time * 1000)) * 100);
+            div.innerHTML += getStageIcon(plot.stage, flower.icon); div.innerHTML += `<div class="progress-bar"><div class="progress-fill" style="width:${progress}%"></div></div>`;
             if(!plot.watered && progress < 100) div.innerHTML += `<div class="water-drop">💧</div>`;
-        } else {
-            div.innerHTML += "🌱";
-        }
-        div.onclick = () => openPlot(index);
-        grid.appendChild(div);
+        } else { div.innerHTML += "🌱"; }
+        div.onclick = () => openPlot(index); grid.appendChild(div);
     });
 }
 
 let currentPlotIndex = null;
 function openPlot(index) {
-    currentPlotIndex = index;
-    const plot = gameState.garden[index];
-    const actions = document.getElementById("pm-actions");
-    actions.innerHTML = "";
-
+    currentPlotIndex = index; const plot = gameState.garden[index]; const actions = document.getElementById("pm-actions"); actions.innerHTML = "";
     if(!plot.plantId) {
-        document.getElementById("pm-title").innerText = "🌱 Ô đất " + (index+1);
-        document.getElementById("pm-icon").innerText = "🪹";
-        document.getElementById("pm-status").innerText = "Ô đất đang trống. Hãy chọn hạt giống.";
-        actions.innerHTML = `<button class="btn-vintage" onclick="openSeedSelect()">🌱 Trồng cây</button>`;
+        document.getElementById("pm-title").innerText = "🌱 Ô đất " + (index+1); document.getElementById("pm-icon").innerText = "🪹";
+        document.getElementById("pm-status").innerText = "Ô đất đang trống. Hãy chọn hạt giống."; actions.innerHTML = `<button class="btn-vintage" onclick="openSeedSelect()">🌱 Trồng cây</button>`;
     } else {
-        const flower = FLOWER_DB.find(f => f.id == plot.plantId);
-        const progress = Math.min(100, ((Date.now() - plot.plantedAt) / (flower.time * 1000)) * 100);
-        document.getElementById("pm-title").innerText = flower.name;
-        document.getElementById("pm-icon").innerText = getStageIcon(plot.stage, flower.icon);
-        document.getElementById("pm-status").innerText = `Tiến độ: ${Math.floor(progress)}%`;
-
-        if(progress >= 100) {
-            actions.innerHTML = `<button class="btn-vintage" onclick="harvestFlower()">✨ Thu hoạch</button>`;
-        } else if(!plot.watered) {
-            actions.innerHTML = `<button class="btn-vintage" onclick="waterPlant()">💧 Tưới nước</button>`;
-        } else {
-            actions.innerHTML = `<p style="color:var(--sage)">🌿 Cây đang phát triển tốt.</p>`;
-        }
+        const flower = FLOWER_DB.find(f => f.id == plot.plantId); const progress = Math.min(100, ((Date.now() - plot.plantedAt) / (flower.time * 1000)) * 100);
+        document.getElementById("pm-title").innerText = flower.name; document.getElementById("pm-icon").innerText = getStageIcon(plot.stage, flower.icon); document.getElementById("pm-status").innerText = `Tiến độ: ${Math.floor(progress)}%`;
+        if(progress >= 100) { actions.innerHTML = `<button class="btn-vintage" onclick="harvestFlower()">✨ Thu hoạch</button>`; } else if(!plot.watered) { actions.innerHTML = `<button class="btn-vintage" onclick="waterPlant()">💧 Tưới nước</button>`; } else { actions.innerHTML = `<p style="color:var(--sage)">🌿 Cây đang phát triển tốt.</p>`; }
     }
     document.getElementById("plot-modal").classList.add("active");
 }
 
-function openGameModal(id) { document.getElementById(id).classList.add("active"); }
-function closeGameModal(id) { document.getElementById(id).classList.remove("active"); }
-
+function openGameModal(id) { document.getElementById(id).classList.add("active"); } function closeGameModal(id) { document.getElementById(id).classList.remove("active"); }
 function openSeedSelect() {
-    closeGameModal("plot-modal");
-    const grid = document.getElementById("seed-select-grid");
-    grid.innerHTML = "";
-    let found = false;
+    closeGameModal("plot-modal"); const grid = document.getElementById("seed-select-grid"); grid.innerHTML = ""; let found = false;
     Object.entries(gameState.inventory.seeds).forEach(([id, qty]) => {
-        if(qty <= 0) return; found = true;
-        const flower = FLOWER_DB.find(f => f.id == id);
-        grid.innerHTML += `
-            <div class="item-card">
-                <div class="item-icon">${flower.icon}</div>
-                <div class="item-name">${flower.name}</div>
-                <div>Có: ${qty}</div><br>
-                <button class="btn-vintage" style="width:100%" onclick="plantSeed(${id})">Trồng</button>
-            </div>
-        `;
+        if(qty <= 0) return; found = true; const flower = FLOWER_DB.find(f => f.id == id);
+        grid.innerHTML += `<div class="item-card"><div class="item-icon">${flower.icon}</div><div class="item-name">${flower.name}</div><div>Có: ${qty}</div><br><button class="btn-vintage" style="width:100%" onclick="plantSeed(${id})">Trồng</button></div>`;
     });
-    if(!found) grid.innerHTML = `<p style="grid-column:1/-1;text-align:center">🎒 Bạn không có hạt giống nào.</p>`;
-    openGameModal("seed-modal");
+    if(!found) grid.innerHTML = `<p style="grid-column:1/-1;text-align:center">🎒 Bạn không có hạt giống nào.</p>`; openGameModal("seed-modal");
 }
-
-function plantSeed(id) {
-    if(!gameState.inventory.seeds[id]) return;
-    gameState.inventory.seeds[id]--;
-    gameState.garden[currentPlotIndex] = { plantId: id, plantedAt: Date.now(), watered: true, stage: 0 };
-    saveGame(); renderGarden(); closeGameModal("seed-modal"); showToast("🌱 Đã gieo hạt!");
-}
-function waterPlant() {
-    gameState.garden[currentPlotIndex].watered = true;
-    saveGame(); renderGarden(); closeGameModal("plot-modal"); showToast("💧 Đã tưới nước!");
-}
+function plantSeed(id) { if(!gameState.inventory.seeds[id]) return; gameState.inventory.seeds[id]--; gameState.garden[currentPlotIndex] = { plantId: id, plantedAt: Date.now(), watered: true, stage: 0 }; saveGame(); renderGarden(); closeGameModal("seed-modal"); showToast("🌱 Đã gieo hạt!"); }
+function waterPlant() { gameState.garden[currentPlotIndex].watered = true; saveGame(); renderGarden(); closeGameModal("plot-modal"); showToast("💧 Đã tưới nước!"); }
 function harvestFlower() {
-    const plot = gameState.garden[currentPlotIndex];
-    const flower = FLOWER_DB.find(f => f.id == plot.plantId);
-    gameState.inventory.flowers[plot.plantId] = (gameState.inventory.flowers[plot.plantId] || 0) + 1;
-    gameState.garden[currentPlotIndex] = { plantId: null, plantedAt: null, watered: true, stage: 0 };
+    const plot = gameState.garden[currentPlotIndex]; const flower = FLOWER_DB.find(f => f.id == plot.plantId);
+    gameState.inventory.flowers[plot.plantId] = (gameState.inventory.flowers[plot.plantId] || 0) + 1; gameState.garden[currentPlotIndex] = { plantId: null, plantedAt: null, watered: true, stage: 0 };
     saveGame(); renderGarden(); closeGameModal("plot-modal"); showToast(`✨ Thu hoạch 1 ${flower.name}`);
 }
 
 function renderShop() {
-    const grid = document.getElementById("shop-grid");
-    grid.innerHTML = "";
-    FLOWER_DB.forEach(f => {
-        grid.innerHTML += `
-            <div class="item-card">
-                <div class="item-icon">${f.icon}</div>
-                <div class="item-name">${f.name}</div>
-                <div class="rarity-${f.rarity}">${RARITY_LABELS[f.rarity]}</div>
-                <div style="margin:7px 0">⏰ ${f.time}s</div>
-                <div class="item-price">${f.buy} 🪙</div>
-                <button class="btn-vintage" onclick="buySeed(${f.id})" style="width:100%">Mua hạt</button>
-            </div>
-        `;
-    });
+    const grid = document.getElementById("shop-grid"); grid.innerHTML = "";
+    FLOWER_DB.forEach(f => { grid.innerHTML += `<div class="item-card"><div class="item-icon">${f.icon}</div><div class="item-name">${f.name}</div><div class="rarity-${f.rarity}">${RARITY_LABELS[f.rarity]}</div><div style="margin:7px 0">⏰ ${f.time}s</div><div class="item-price">${f.buy} 🪙</div><button class="btn-vintage" onclick="buySeed(${f.id})" style="width:100%">Mua hạt</button></div>`; });
 }
 function buySeed(id) {
-    const f = FLOWER_DB.find(x => x.id === id);
-    if(gameState.xu < f.buy) { showToast("❌ Không đủ Xu!"); return; }
-    gameState.xu -= f.buy;
-    gameState.inventory.seeds[id] = (gameState.inventory.seeds[id] || 0) + 1;
-    saveGame(); showToast(`🛒 Mua 1 hạt ${f.name}`);
+    const f = FLOWER_DB.find(x => x.id === id); if(gameState.xu < f.buy) { showToast("❌ Không đủ Xu!"); return; }
+    gameState.xu -= f.buy; gameState.inventory.seeds[id] = (gameState.inventory.seeds[id] || 0) + 1; saveGame(); showToast(`🛒 Mua 1 hạt ${f.name}`);
 }
-
 function renderBag() {
-    const grid = document.getElementById("bag-grid");
-    grid.innerHTML = ""; let found = false;
-    Object.entries(gameState.inventory.seeds).forEach(([id, qty]) => {
-        if(qty <= 0) return; found = true; const f = FLOWER_DB.find(x => x.id == id);
-        grid.innerHTML += `<div class="item-card"><div class="item-icon">🌰</div><div class="item-name">${f.name}</div><div>Hạt: ${qty}</div></div>`;
-    });
-    Object.entries(gameState.inventory.flowers).forEach(([id, qty]) => {
-        if(qty <= 0) return; found = true; const f = FLOWER_DB.find(x => x.id == id);
-        grid.innerHTML += `<div class="item-card"><div class="item-icon">${f.icon}</div><div class="item-name">${f.name}</div><div>Hoa: ${qty}</div></div>`;
-    });
+    const grid = document.getElementById("bag-grid"); grid.innerHTML = ""; let found = false;
+    Object.entries(gameState.inventory.seeds).forEach(([id, qty]) => { if(qty <= 0) return; found = true; const f = FLOWER_DB.find(x => x.id == id); grid.innerHTML += `<div class="item-card"><div class="item-icon">🌰</div><div class="item-name">${f.name}</div><div>Hạt: ${qty}</div></div>`; });
+    Object.entries(gameState.inventory.flowers).forEach(([id, qty]) => { if(qty <= 0) return; found = true; const f = FLOWER_DB.find(x => x.id == id); grid.innerHTML += `<div class="item-card"><div class="item-icon">${f.icon}</div><div class="item-name">${f.name}</div><div>Hoa: ${qty}</div></div>`; });
     if(!found) grid.innerHTML = `<p style="grid-column:1/-1;text-align:center">🎒 Túi đồ đang trống.</p>`;
 }
-
 function renderMarket() {
-    const grid = document.getElementById("market-grid");
-    grid.innerHTML = ""; let found = false;
+    const grid = document.getElementById("market-grid"); grid.innerHTML = ""; let found = false;
     Object.entries(gameState.inventory.flowers).forEach(([id, qty]) => {
         if(qty <= 0) return; found = true; const f = FLOWER_DB.find(x => x.id == id);
-        grid.innerHTML += `
-            <div class="item-card">
-                <div class="item-icon">${f.icon}</div>
-                <div class="item-name">${f.name}</div>
-                <div>Đang có: ${qty}</div>
-                <div class="item-price">+${f.sell} 🪙 / bông</div>
-                <button class="btn-vintage" onclick="sellFlower(${f.id})" style="width:100%; margin-bottom:5px">💰 Bán 1</button>
-                <button class="btn-secondary" onclick="sellAllFlower(${f.id})" style="width:100%">💰 Bán Tất Cả</button>
-            </div>
-        `;
+        grid.innerHTML += `<div class="item-card"><div class="item-icon">${f.icon}</div><div class="item-name">${f.name}</div><div>Đang có: ${qty}</div><div class="item-price">+${f.sell} 🪙 / bông</div><button class="btn-vintage" onclick="sellFlower(${f.id})" style="width:100%; margin-bottom:5px">💰 Bán 1</button><button class="btn-secondary" onclick="sellAllFlower(${f.id})" style="width:100%">💰 Bán Tất Cả</button></div>`;
     });
     if(!found) grid.innerHTML = `<p style="grid-column:1/-1;text-align:center">🌸 Chưa có hoa để bán.</p>`;
 }
-
-function sellFlower(id) {
-    const f = FLOWER_DB.find(x => x.id === id);
-    if(!gameState.inventory.flowers[id]) return;
-    gameState.inventory.flowers[id]--;
-    gameState.xu += f.sell; saveGame(); renderMarket(); showToast(`💰 +${f.sell} Xu!`);
-}
+function sellFlower(id) { const f = FLOWER_DB.find(x => x.id === id); if(!gameState.inventory.flowers[id]) return; gameState.inventory.flowers[id]--; gameState.xu += f.sell; saveGame(); renderMarket(); showToast(`💰 +${f.sell} Xu!`); }
 function sellAllFlower(id) {
-    const f = FLOWER_DB.find(x => x.id === id);
-    const qty = gameState.inventory.flowers[id];
-    if(!qty) return;
-    gameState.inventory.flowers[id] = 0;
-    const total = f.sell * qty;
-    gameState.xu += total; saveGame(); renderMarket(); showToast(`💰 Bán sạch thu về +${total} Xu!`);
+    const f = FLOWER_DB.find(x => x.id === id); const qty = gameState.inventory.flowers[id]; if(!qty) return;
+    gameState.inventory.flowers[id] = 0; const total = f.sell * qty; gameState.xu += total; saveGame(); renderMarket(); showToast(`💰 Bán sạch thu về +${total} Xu!`);
 }
 
-// Game Loop & Pigeon Helper
-const pigeonTexts = [
-    "🌱 Đừng quên tưới cây nhé!", "🌸 Có hoa sắp nở rồi!", 
-    "💰 Chăm hoa để kiếm thêm Xu nhé!", "👀 Hình như có một bông hoa hiếm đang xuất hiện...",
-    "🕊️ Một ngày mùa thu thật đẹp!"
-];
 setInterval(() => {
     let changed = false; const now = Date.now();
     gameState.garden.forEach(plot => {
-        if(!plot.plantId) return;
-        const flower = FLOWER_DB.find(f => f.id == plot.plantId);
-        const progress = (now - plot.plantedAt) / (flower.time * 1000);
-        let stage = 0;
+        if(!plot.plantId) return; const flower = FLOWER_DB.find(f => f.id == plot.plantId); const progress = (now - plot.plantedAt) / (flower.time * 1000); let stage = 0;
         if(progress >= 1) stage = 4; else if(progress >= .75) stage = 3; else if(progress >= .5) stage = 2; else if(progress >= .25) stage = 1;
         if(stage !== plot.stage) { plot.stage = stage; changed = true; }
-        // 3% khát nước mỗi giây nếu đang lớn
         if(Math.random() < 0.03 && plot.watered && stage > 0 && stage < 4) { plot.watered = false; changed = true; }
     });
-    if(changed) {
-        saveGame();
-        if(document.getElementById("view-garden").classList.contains("active")) renderGarden();
-    }
-    // Random pigeon text
-    if(Math.random() < 0.05) document.getElementById("pigeon-text").innerText = pigeonTexts[Math.floor(Math.random()*pigeonTexts.length)];
+    if(changed) { saveGame(); if(document.getElementById("view-garden").classList.contains("active")) renderGarden(); }
+    if(Math.random() < 0.05) { const msgs = ["🌱 Đừng quên tưới cây nhé!", "🌸 Có hoa sắp nở rồi!", "💰 Chăm hoa kiếm Xu nào!", "🕊️ Một ngày mùa thu thật đẹp!"]; document.getElementById("pigeon-text").innerText = msgs[Math.floor(Math.random()*msgs.length)]; }
 }, 1000);
 
-// ========================================================
-// ================= INITIALIZATION =======================
-// ========================================================
+// ================= INITIALIZATION =================
 window.addEventListener("DOMContentLoaded", () => {
-    // Tải nhân vật
-    const savedChars = localStorage.getItem("boCauCharacters");
-    characters = savedChars ? JSON.parse(savedChars) : DEFAULT_CHARACTERS;
-    renderCharacters();
-    
-    // Tải Game
-    const savedGame = localStorage.getItem("gardenOfMemories");
-    if(savedGame) gameState = JSON.parse(savedGame);
-    else saveGame(); // Save initial if null
-    
-    document.getElementById("ui-xu").innerText = gameState.xu;
-    renderGarden();
+    try { const savedChars = localStorage.getItem("boCauCharacters"); characters = savedChars ? JSON.parse(savedChars) : DEFAULT_CHARACTERS; } catch(e) { characters = DEFAULT_CHARACTERS; }
+    refreshAllCharacterViews();
+    try { const savedGame = localStorage.getItem("gardenOfMemories"); if(savedGame) gameState = JSON.parse(savedGame); else saveGame(); } catch(e){}
+    document.getElementById("ui-xu").innerText = gameState.xu; renderGarden();
 });
 </script>
 
