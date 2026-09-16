@@ -1130,30 +1130,89 @@ nav a.active{
 
 <!-- ================= INTRO ================= -->
 
-<div id="intro-screen">
+<script>
+document.addEventListener("DOMContentLoaded", function () {
 
-    <h1 class="serif">
-        🕊️ Bưu Điện Của Những Nỗi Nhớ
-    </h1>
+    const startBtn = document.getElementById("start-btn");
+    const introScreen = document.getElementById("intro-screen");
+    const mainApp = document.getElementById("main-app");
+    const pigeon = document.querySelector(".intro-pigeon");
 
-    <p>
-        “Có những lá thư không cần người gửi, chỉ cần một người chịu mở.”
-    </p>
+    if (startBtn) {
+        startBtn.addEventListener("click", function () {
 
-    <button id="start-btn" class="btn-vintage">
-        <i class="fa-regular fa-envelope"></i>
-        GỬI THƯ
-    </button>
+            // Hiệu ứng bồ câu bay
+            if (pigeon) {
+                pigeon.classList.add("pigeon-fly");
+            }
 
-    <div class="intro-pigeon">
-        🕊️
-    </div>
+            // Mở trang chủ
+            setTimeout(function () {
+                introScreen.style.opacity = "0";
+                introScreen.style.visibility = "hidden";
 
-</div>
+                mainApp.style.visibility = "visible";
+                mainApp.style.opacity = "1";
 
+                // Đảm bảo mở đúng Trang chủ
+                document.querySelectorAll(".section").forEach(section => {
+                    section.classList.remove("active");
+                });
+
+                const home = document.getElementById("home");
+                if (home) {
+                    home.classList.add("active");
+                }
+
+                // Đặt nút Trang chủ active
+                document.querySelectorAll("nav a").forEach(a => {
+                    a.classList.remove("active");
+                });
+
+                const homeNav = document.querySelector('nav a[onclick*="home"]');
+                if (homeNav) {
+                    homeNav.classList.add("active");
+                }
+
+                // Phát nhạc nền
+                playBackgroundMusic();
+
+            }, 600);
+        });
+    }
+
+});
+</script>
 <!-- ================= YOUTUBE MUSIC ================= -->
 
-<div id="youtube-player"></div>
+<div id="youtube-player" style="display:none;"></div>
+
+<script>
+let ytPlayer;
+
+function onYouTubeIframeAPIReady() {
+    ytPlayer = new YT.Player("youtube-player", {
+        videoId: "VIDEO_ID_CUA_BAN",
+        playerVars: {
+            autoplay: 0,
+            controls: 0,
+            loop: 1,
+            playlist: "https://youtu.be/GEGSzh4vUuE?si=P8MgWrBMrSV584Vc"
+        }
+    });
+}
+
+function playBackgroundMusic() {
+    if (ytPlayer && ytPlayer.playVideo) {
+        ytPlayer.playVideo();
+    }
+}
+
+// Tải YouTube API
+const ytScript = document.createElement("script");
+ytScript.src = "https://www.youtube.com/iframe_api";
+document.head.appendChild(ytScript);
+</script>
 
 <!-- ================= MAIN APP ================= -->
 
