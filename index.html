@@ -363,17 +363,17 @@ nav a:hover,nav a.active{color:var(--dusty-pink);background:var(--ivory);}
             <h2 class="section-title serif" style="font-size:1.6rem;margin-bottom:20px">👑 Quản Lý Nhân Vật</h2>
             <form class="admin-form" onsubmit="saveCharacter(event)">
                 <div class="form-group"><label>👤 Tên nhân vật</label><input id="admin-name" type="text" required placeholder="Tên character"></div>
-                <div class="form-group"><label>🖼️ Avatar Google Drive</label><input id="admin-avatar" type="url" placeholder="Link chia sẻ Google Drive" oninput="previewAvatar()"><img id="avatar-preview" class="avatar-preview" alt="Avatar preview"></div>
+                <div class="form-group"><label>🖼️ Avatar (GG Drive URL)</label><input id="admin-avatar" type="url" placeholder="Link chia sẻ Google Drive" oninput="previewAvatar()"><img id="avatar-preview" class="avatar-preview" alt="Avatar preview"></div>
                 <div class="form-group"><label>🏷️ Tag</label><input id="admin-tags" type="text" placeholder="#BL, #BG, #ChiếmHữu..."></div>
                 <div class="form-group"><label>💡 Gợi ý nội dung</label><input id="admin-slogan" type="text" placeholder="Một câu giới thiệu ngắn..."></div>
                 <div class="form-group full"><label>📖 Bối cảnh / Plot</label><textarea id="admin-plot" placeholder="Nhập bối cảnh nhân vật..."></textarea></div>
                 <div class="form-group full"><label>🔗 Link nhân vật Google AI Studio</label><input id="admin-ai-link" type="url" placeholder="Dán link Google AI Studio..."></div>
                 <div class="form-group"><label>❓ Câu hỏi mở khóa</label><textarea id="admin-question" placeholder="Nhập câu hỏi..."></textarea></div>
                 <div class="form-group"><label>💡 Gợi ý giải mật khẩu</label><textarea id="admin-hint" placeholder="Nhập gợi ý..."></textarea></div>
-                <div class="form-group full"><label>🔐 Mật khẩu mở khóa</label><input id="admin-char-password" type="password" autocomplete="new-password" placeholder="Mật khẩu mở khóa"></div>
+                <div class="form-group full"><label>🔐 Mật khẩu mở khóa</label><input id="admin-char-password" type="password" autocomplete="new-password" placeholder="Mật khẩu mở khóa (Để trống nếu ko đổi)"></div>
                 <div class="admin-actions">
                     <button type="submit" class="btn-vintage">💾 Lưu nhân vật</button>
-                    <button type="button" class="btn-secondary" onclick="resetAdminForm()">↩️ Làm mới</button>
+                    <button type="button" class="btn-secondary" onclick="resetAdminForm()">↩️ Làm mới form</button>
                     <button type="button" class="btn-danger" onclick="closeAdmin()">🚪 Thoát quản lý</button>
                 </div>
             </form>
@@ -403,27 +403,25 @@ nav a:hover,nav a.active{color:var(--dusty-pink);background:var(--ivory);}
 <!-- ================= JAVASCRIPT LOGIC ================= -->
 <script>
 // --- UTILS ---
-function escapeHTML(value) {
-    return String(value ?? "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");
-}
+function escapeHTML(value) { return String(value ?? "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;"); }
 function escapeAttribute(value) { return escapeHTML(value); }
 
 function showToast(message) {
     const container = document.getElementById("toast-container");
-    const toast = document.createElement("div");
-    toast.className = "toast";
-    toast.innerText = message;
+    const toast = document.createElement("div"); toast.className = "toast"; toast.innerText = message;
     container.appendChild(toast);
     setTimeout(() => toast.remove(), 3000);
 }
+
+// Hình ảnh mặc định nếu URL ảnh bị lỗi
+const DEFAULT_AVATAR = "https://i.pinimg.com/564x/07/77/b0/0777b08ec32a0cc6be3edff6edde9ce5.jpg";
 
 // --- BACKGROUND DECOR ---
 const decorations = ["🍂","🍁","🌸","🌼","🌿","🦋","🐦","🕊️"];
 function createBackgroundDecorations() {
     const container = document.getElementById("bg-effects");
     for(let i=0; i<25; i++) {
-        const item = document.createElement("div");
-        item.className = "floating-decoration";
+        const item = document.createElement("div"); item.className = "floating-decoration";
         item.innerText = decorations[Math.floor(Math.random()*decorations.length)];
         item.style.left = Math.random()*100 + "%";
         item.style.fontSize = (0.7 + Math.random()*1.1) + "rem";
@@ -435,30 +433,20 @@ function createBackgroundDecorations() {
 createBackgroundDecorations();
 
 // --- MUSIC ---
-let ytPlayer;
-let musicPlaying = false;
+let ytPlayer; let musicPlaying = false;
 function onYouTubeIframeAPIReady() {
     ytPlayer = new YT.Player("youtube-player", {
-        videoId: "GEGSzh4vUuE", // Đổi ID video ở đây
+        videoId: "GEGSzh4vUuE", 
         playerVars: { autoplay: 0, controls: 0, loop: 1, playlist: "GEGSzh4vUuE" }
     });
 }
 function toggleMusic() {
     if(!ytPlayer || !ytPlayer.getPlayerState) return;
     const btn = document.getElementById("music-toggle");
-    if(musicPlaying) {
-        ytPlayer.pauseVideo();
-        musicPlaying = false;
-        btn.innerText = "🔇";
-    } else {
-        ytPlayer.playVideo();
-        musicPlaying = true;
-        btn.innerText = "🔊";
-    }
+    if(musicPlaying) { ytPlayer.pauseVideo(); musicPlaying = false; btn.innerText = "🔇"; } 
+    else { ytPlayer.playVideo(); musicPlaying = true; btn.innerText = "🔊"; }
 }
-const ytScript = document.createElement("script");
-ytScript.src = "https://www.youtube.com/iframe_api";
-document.head.appendChild(ytScript);
+const ytScript = document.createElement("script"); ytScript.src = "https://www.youtube.com/iframe_api"; document.head.appendChild(ytScript);
 
 // --- APP INIT & INTRO ---
 document.getElementById("start-btn").addEventListener("click", () => {
@@ -487,19 +475,22 @@ function nav(sectionId, element) {
 // ========================================================
 let characters = [];
 const DEFAULT_CHARACTERS = [{
-    id:"default-kaelen", name:"Kaelen", avatar:"", tags:["#Fantasy"],
-    slogan:"Một lá thư chưa bao giờ được gửi.",
-    plot:"Một nhân vật đang chờ câu chuyện của riêng mình.",
-    aiLink:"", question:"Nhân vật này đang chờ điều gì?", hint:"Một thứ liên quan đến những lá thư.", password:""
+    id:"default-kaelen", name:"Kaelen", avatar:"https://i.pinimg.com/564x/07/77/b0/0777b08ec32a0cc6be3edff6edde9ce5.jpg", tags:["#Fantasy", "#ChữaLành"],
+    slogan:"Một lá thư chưa bao giờ được gửi.", plot:"Một nhân vật đang chờ câu chuyện của riêng mình.",
+    aiLink:"", question:"", hint:"", password:""
 }];
 
+// FIX 1: TỐI ƯU CÁCH CONVERT LINK GOOGLE DRIVE ĐỂ HIỂN THỊ ĐƯỢC ẢNH
 function convertGoogleDriveURL(url){
     if(!url) return "";
-    const match = url.match(/\/file\/d\/([^/]+)/);
-    if(match) return "https://drive.google.com/uc?export=view&id=" + match[1];
-    const idMatch = url.match(/[?&]id=([^&]+)/);
-    if(idMatch) return "https://drive.google.com/uc?export=view&id=" + idMatch[1];
-    return url;
+    let id = "";
+    const match1 = url.match(/\/file\/d\/([^/]+)/);
+    const match2 = url.match(/[?&]id=([^&]+)/);
+    if(match1) id = match1[1]; else if(match2) id = match2[1];
+    
+    // Sử dụng lh3.googleusercontent.com để bypass bảo mật CORS của Google cho thẻ <img>
+    if(id) return "https://lh3.googleusercontent.com/d/" + id;
+    return url; // Giữ nguyên link nếu là link ảnh bình thường (Imgur, Pinterest...)
 }
 
 let selectedTag = "all";
@@ -541,13 +532,13 @@ function filterCharacters() {
     }
 
     filtered.forEach(char => {
-        const card = document.createElement("div");
-        card.className = "letter-card";
+        const card = document.createElement("div"); card.className = "letter-card";
         const avatar = convertGoogleDriveURL(char.avatar);
         const tags = (char.tags || []).map(t => `<span class="char-tag">${escapeHTML(t)}</span>`).join("");
         const locked = char.password && char.password.trim() !== "";
+        // Nếu ảnh bị hỏng thì fallback về ảnh mặc định bằng onerror
         card.innerHTML = `
-            ${avatar ? `<img src="${escapeAttribute(avatar)}" class="char-avatar" onerror="this.style.display='none'">` : `<div class="char-avatar" style="display:flex;align-items:center;justify-content:center;font-size:3rem;">🕊️</div>`}
+            ${avatar ? `<img src="${escapeAttribute(avatar)}" class="char-avatar" onerror="this.src='${DEFAULT_AVATAR}'">` : `<img src="${DEFAULT_AVATAR}" class="char-avatar">`}
             <h3 class="char-name serif">${escapeHTML(char.name)}</h3>
             <p class="char-slogan">${escapeHTML(char.slogan || "Một lá thư đang chờ được mở...")}</p>
             <div class="char-tags">${tags}</div>
@@ -560,8 +551,7 @@ function filterCharacters() {
 
 let unlockingCharacterId = null;
 function openCharacter(id) {
-    const char = characters.find(c => c.id === id);
-    if(!char) return;
+    const char = characters.find(c => c.id === id); if(!char) return;
     if(char.password && char.password.trim() !== "") {
         unlockingCharacterId = char.id;
         document.getElementById("unlock-title").innerText = "🔐 " + char.name;
@@ -570,21 +560,14 @@ function openCharacter(id) {
         document.getElementById("unlock-password").value = "";
         document.getElementById("unlock-error").innerText = "";
         document.getElementById("unlock-modal").classList.add("active");
-    } else {
-        showCharacterPlot(char);
-    }
+    } else { showCharacterPlot(char); }
 }
 
 function unlockCharacter() {
-    const char = characters.find(c => c.id === unlockingCharacterId);
-    if(!char) return;
+    const char = characters.find(c => c.id === unlockingCharacterId); if(!char) return;
     if(document.getElementById("unlock-password").value === char.password) {
-        closeOverlay("unlock-modal");
-        showCharacterPlot(char);
-        showToast("🔓 Giải mật khẩu thành công!");
-    } else {
-        document.getElementById("unlock-error").innerText = "❌ Mật khẩu không chính xác.";
-    }
+        closeOverlay("unlock-modal"); showCharacterPlot(char); showToast("🔓 Giải mật khẩu thành công!");
+    } else { document.getElementById("unlock-error").innerText = "❌ Mật khẩu không chính xác."; }
 }
 
 function showCharacterPlot(char) {
@@ -592,7 +575,7 @@ function showCharacterPlot(char) {
     const avatar = convertGoogleDriveURL(char.avatar);
     const tags = (char.tags || []).map(t => `<span class="char-tag">${escapeHTML(t)}</span>`).join("");
     content.innerHTML = `
-        ${avatar ? `<img src="${escapeAttribute(avatar)}" class="modal-avatar" onerror="this.style.display='none'">` : `<div style="text-align:center;font-size:4rem;margin-bottom:15px;">🕊️</div>`}
+        ${avatar ? `<img src="${escapeAttribute(avatar)}" class="modal-avatar" onerror="this.src='${DEFAULT_AVATAR}'">` : `<img src="${DEFAULT_AVATAR}" class="modal-avatar">`}
         <h2 class="serif" style="text-align:center;color:var(--warm-brown);">${escapeHTML(char.name)}</h2>
         <p style="text-align:center;color:var(--text-light);font-style:italic;margin:8px 0 12px;">${escapeHTML(char.slogan || "")}</p>
         <div class="char-tags" style="margin-bottom:15px">${tags}</div>
@@ -607,10 +590,23 @@ function showCharacterPlot(char) {
 
 function closeOverlay(id) { document.getElementById(id).classList.remove("active"); }
 
-// Admin logic
+// ========================================================
+// ================= HỆ THỐNG ADMIN =======================
+// ========================================================
 const ADMIN_PASSWORD = "omlaynoinho";
-function openAdmin() { document.getElementById("admin-modal").classList.add("active"); document.getElementById("admin-login").style.display = "block"; document.getElementById("admin-panel").classList.remove("active"); }
-function closeAdmin() { document.getElementById("admin-modal").classList.remove("active"); resetAdminForm(); }
+function openAdmin() { 
+    document.getElementById("admin-modal").classList.add("active"); 
+    document.getElementById("admin-login").style.display = "block"; 
+    document.getElementById("admin-panel").classList.remove("active"); 
+}
+
+// FIX 2: Bắt buộc render và cập nhật lại tab Nhân Vật khi tắt khu vực Admin
+function closeAdmin() { 
+    document.getElementById("admin-modal").classList.remove("active"); 
+    resetAdminForm(); 
+    renderCharacters(); // BẮT BUỘC RENDER LẠI ĐỂ CẬP NHẬT GIAO DIỆN MỚI
+}
+
 function loginAdmin() {
     if(document.getElementById("admin-password").value === ADMIN_PASSWORD) {
         document.getElementById("admin-login").style.display = "none";
@@ -621,10 +617,18 @@ function loginAdmin() {
         document.getElementById("admin-error").innerText = "❌ Mật khẩu sai.";
     }
 }
+
+// Bắt buộc hiện ảnh ngay khi nhập/dán link
 function previewAvatar() {
     const url = convertGoogleDriveURL(document.getElementById("admin-avatar").value.trim());
     const preview = document.getElementById("avatar-preview");
-    if(url) { preview.src = url; preview.style.display = "block"; } else { preview.style.display = "none"; }
+    if(url) { 
+        preview.src = url; 
+        preview.style.display = "block"; 
+        preview.onerror = function() { this.src = DEFAULT_AVATAR; }; // Nếu link hỏng, tự thay bằng ảnh mặc định
+    } else { 
+        preview.style.display = "none"; 
+    }
 }
 
 let editingCharacterId = null;
@@ -645,8 +649,8 @@ function saveCharacter(e) {
     if(editingCharacterId) {
         const idx = characters.findIndex(c => c.id === editingCharacterId);
         if(idx !== -1) {
+            if(charData.password.trim() === "") charData.password = characters[idx].password; // Giữ lại pass cũ nếu không nhập pass mới
             characters[idx] = { ...characters[idx], ...charData };
-            if(charData.password.trim() === "") characters[idx].password = characters[idx].password; // keep old if empty
         }
         showToast("💾 Đã cập nhật!");
     } else {
@@ -654,8 +658,12 @@ function saveCharacter(e) {
         characters.push(charData);
         showToast("📮 Đã đăng!");
     }
+    
+    // Lưu vào bộ nhớ và BẮT BUỘC RENDER LẠI ngay lập tức
     localStorage.setItem("boCauCharacters", JSON.stringify(characters));
-    renderCharacters(); renderAdminCharacterList(); resetAdminForm();
+    renderCharacters(); 
+    renderAdminCharacterList(); 
+    resetAdminForm();
 }
 
 function renderAdminCharacterList() {
@@ -663,9 +671,10 @@ function renderAdminCharacterList() {
     list.innerHTML = "";
     characters.forEach(char => {
         const div = document.createElement("div"); div.className = "admin-char-row";
+        const avatar = convertGoogleDriveURL(char.avatar);
         div.innerHTML = `
             <div class="admin-char-info">
-                ${char.avatar ? `<img src="${escapeAttribute(convertGoogleDriveURL(char.avatar))}">` : `<div>🕊️</div>`}
+                ${avatar ? `<img src="${escapeAttribute(avatar)}" onerror="this.src='${DEFAULT_AVATAR}'">` : `<img src="${DEFAULT_AVATAR}">`}
                 <div><strong>${escapeHTML(char.name)}</strong><br><small>${char.password ? '🔒 Khóa' : '🔓 Mở'}</small></div>
             </div>
             <div class="admin-row-actions">
@@ -688,12 +697,12 @@ function editCharacter(id) {
     document.getElementById("admin-ai-link").value = char.aiLink;
     document.getElementById("admin-question").value = char.question;
     document.getElementById("admin-hint").value = char.hint;
-    document.getElementById("admin-char-password").value = "";
+    document.getElementById("admin-char-password").value = ""; // Luôn làm rỗng pass khi edit
     previewAvatar();
 }
 
 function deleteCharacter(id) {
-    if(!confirm("Xóa nhân vật này?")) return;
+    if(!confirm("Bạn có chắc muốn xóa nhân vật này?")) return;
     characters = characters.filter(c => c.id !== id);
     localStorage.setItem("boCauCharacters", JSON.stringify(characters));
     renderCharacters(); renderAdminCharacterList(); showToast("🗑️ Đã xóa.");
@@ -704,7 +713,6 @@ function resetAdminForm() {
     document.querySelector(".admin-form").reset();
     document.getElementById("avatar-preview").style.display = "none";
 }
-
 
 // ========================================================
 // ================= GAME: KHU VƯỜN =======================
