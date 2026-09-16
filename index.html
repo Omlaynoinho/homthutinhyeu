@@ -532,7 +532,7 @@ let selectedTag = "all";
 function renderTags() {
     const container = document.getElementById("tag-filter"); container.innerHTML = "";
     const set = new Set(); characters.forEach(char => (char.tags || []).forEach(tag => { if(tag.trim()) set.add(tag.trim()); }));
-    $2a$10$TmZSI9fFACr4PFjI4g8wwOExK7jalZQ5iz857wEfCohx/dDrp7Y8.
+    
     const allBtn = document.createElement("button");
     allBtn.className = "tag-button " + (selectedTag === "all" ? "active" : "");
     allBtn.innerText = "🌸 Tất cả";
