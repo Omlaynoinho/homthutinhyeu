@@ -24,4712 +24,953 @@
     --transition:all .4s ease;
 }
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
-html{
-    scroll-behavior:smooth;
-}
-
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
 body{
     font-family:'Quicksand',sans-serif;
-    background:
-        radial-gradient(circle at top,var(--ivory),var(--cream));
+    background:radial-gradient(circle at top,var(--ivory),var(--cream));
     color:var(--text-dark);
     overflow-x:hidden;
     min-height:100vh;
 }
-
-h1,h2,h3,h4,.serif{
-    font-family:'Lora',serif;
-}
-
-button{
-    cursor:pointer;
-    border:none;
-    font-family:inherit;
-}
-
-a{
-    text-decoration:none;
-    color:inherit;
-}
+h1,h2,h3,h4,.serif{font-family:'Lora',serif;}
+button{cursor:pointer;border:none;font-family:inherit;}
+a{text-decoration:none;color:inherit;}
 
 /* ================= BACKGROUND ================= */
-
-#bg-effects{
-    position:fixed;
-    inset:0;
-    width:100vw;
-    height:100vh;
-    pointer-events:none;
-    z-index:1;
-    overflow:hidden;
-}
-
-.floating-decoration{
-    position:absolute;
-    top:-10%;
-    user-select:none;
-    opacity:.45;
-    animation:freeFall linear infinite;
-}
-
+#bg-effects{position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:1;overflow:hidden;}
+.floating-decoration{position:absolute;top:-10%;user-select:none;opacity:.45;animation:freeFall linear infinite;}
 @keyframes freeFall{
-    0%{
-        transform:translate3d(0,-15vh,0) rotate(0deg);
-        opacity:0;
-    }
-    10%{
-        opacity:.45;
-    }
-    35%{
-        transform:translate3d(50px,35vh,0) rotate(100deg);
-    }
-    65%{
-        transform:translate3d(-60px,70vh,0) rotate(220deg);
-    }
-    90%{
-        opacity:.4;
-    }
-    100%{
-        transform:translate3d(40px,115vh,0) rotate(360deg);
-        opacity:0;
-    }
+    0%{transform:translate3d(0,-15vh,0) rotate(0deg);opacity:0;}
+    10%{opacity:.45;}
+    35%{transform:translate3d(50px,35vh,0) rotate(100deg);}
+    65%{transform:translate3d(-60px,70vh,0) rotate(220deg);}
+    90%{opacity:.4;}
+    100%{transform:translate3d(40px,115vh,0) rotate(360deg);opacity:0;}
 }
 
 /* ================= INTRO ================= */
-
-#intro-screen{
-    position:fixed;
-    inset:0;
-    background:var(--ivory);
-    z-index:9999;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    transition:opacity 1.2s ease,visibility 1.2s ease;
-    overflow:hidden;
-}
-
-#intro-screen h1{
-    font-size:2.5rem;
-    color:var(--warm-brown);
-    margin-bottom:10px;
-    text-align:center;
-}
-
-#intro-screen p{
-    font-style:italic;
-    color:var(--text-light);
-    margin-bottom:40px;
-    font-size:1.1rem;
-    text-align:center;
-}
-
-.btn-vintage{
-    background:var(--champagne);
-    color:var(--text-dark);
-    padding:12px 35px;
-    border-radius:30px;
-    font-size:1.1rem;
-    font-weight:600;
-    box-shadow:var(--shadow);
-    transition:var(--transition);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:10px;
-    border:1px solid var(--beige);
-}
-
-.btn-vintage:hover{
-    background:var(--dusty-pink);
-    color:white;
-    transform:translateY(-3px);
-}
-
-.intro-pigeon{
-    position:absolute;
-    font-size:3rem;
-    opacity:0;
-    transform:translateX(-100vw);
-}
-
-.pigeon-fly{
-    animation:flyBy 1.2s ease-in-out forwards;
-}
-
+#intro-screen{position:fixed;inset:0;background:var(--ivory);z-index:9999;display:flex;flex-direction:column;justify-content:center;align-items:center;transition:opacity 1.2s ease,visibility 1.2s ease;overflow:hidden;}
+#intro-screen h1{font-size:2.5rem;color:var(--warm-brown);margin-bottom:10px;text-align:center;}
+#intro-screen p{font-style:italic;color:var(--text-light);margin-bottom:40px;font-size:1.1rem;text-align:center;}
+.btn-vintage{background:var(--champagne);color:var(--text-dark);padding:12px 35px;border-radius:30px;font-size:1.1rem;font-weight:600;box-shadow:var(--shadow);transition:var(--transition);display:flex;align-items:center;justify-content:center;gap:10px;border:1px solid var(--beige);}
+.btn-vintage:hover{background:var(--dusty-pink);color:white;transform:translateY(-3px);}
+.intro-pigeon{position:absolute;font-size:3rem;opacity:0;transform:translateX(-100vw);}
+.pigeon-fly{animation:flyBy 1.2s ease-in-out forwards;}
 @keyframes flyBy{
-    0%{
-        opacity:1;
-        transform:translateX(-50vw);
-    }
-    100%{
-        opacity:1;
-        transform:translateX(100vw) translateY(-20vh);
-    }
+    0%{opacity:1;transform:translateX(-50vw);}
+    100%{opacity:1;transform:translateX(100vw) translateY(-20vh);}
 }
 
 /* ================= MAIN APP ================= */
+#main-app{opacity:0;visibility:hidden;transition:opacity 1s ease;position:relative;z-index:10;}
+header{padding:15px 40px;display:flex;justify-content:space-between;align-items:center;background:rgba(253,251,247,.92);backdrop-filter:blur(12px);position:sticky;top:0;z-index:500;border-bottom:1px solid var(--beige);}
+.logo{font-size:1.5rem;font-weight:600;color:var(--warm-brown);}
+.header-right{display:flex;align-items:center;gap:15px;}
+nav{display:flex;gap:15px;}
+nav a{font-weight:500;transition:var(--transition);padding:7px 12px;border-radius:15px;}
+nav a:hover,nav a.active{color:var(--dusty-pink);background:var(--ivory);}
+.admin-button{width:42px;height:42px;border-radius:50%;background:var(--champagne);color:var(--warm-brown);display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow);border:1px solid var(--beige);transition:var(--transition);}
+.admin-button:hover{transform:translateY(-3px) rotate(-5deg);background:var(--dusty-pink);color:white;}
+.section{display:none;padding:40px 8%;min-height:80vh;animation:fadeIn .6s ease;}
+.section.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+.section-title{text-align:center;font-size:2rem;color:var(--warm-brown);margin-bottom:30px;}
+.section-title span{font-size:1.1rem;color:var(--sage);display:block;margin-top:5px;font-family:'Quicksand',sans-serif;}
 
-#main-app{
-    opacity:0;
-    visibility:hidden;
-    transition:opacity 1s ease;
-    position:relative;
-    z-index:10;
-}
-
-header{
-    padding:15px 40px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    background:rgba(253,251,247,.92);
-    backdrop-filter:blur(12px);
-    position:sticky;
-    top:0;
-    z-index:500;
-    border-bottom:1px solid var(--beige);
-}
-
-.logo{
-    font-size:1.5rem;
-    font-weight:600;
-    color:var(--warm-brown);
-}
-
-.header-right{
-    display:flex;
-    align-items:center;
-    gap:15px;
-}
-
-nav{
-    display:flex;
-    gap:15px;
-}
-
-nav a{
-    font-weight:500;
-    transition:var(--transition);
-    padding:7px 12px;
-    border-radius:15px;
-}
-
-nav a:hover,
-nav a.active{
-    color:var(--dusty-pink);
-    background:var(--ivory);
-}
-
-/* ================= ADMIN BUTTON ================= */
-
-.admin-button{
-    width:42px;
-    height:42px;
-    border-radius:50%;
-    background:var(--champagne);
-    color:var(--warm-brown);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    box-shadow:var(--shadow);
-    border:1px solid var(--beige);
-    transition:var(--transition);
-}
-
-.admin-button:hover{
-    transform:translateY(-3px) rotate(-5deg);
-    background:var(--dusty-pink);
-    color:white;
-}
-
-.section{
-    display:none;
-    padding:40px 8%;
-    min-height:80vh;
-    animation:fadeIn .6s ease;
-}
-
-.section.active{
-    display:block;
-}
-
-@keyframes fadeIn{
-    from{
-        opacity:0;
-        transform:translateY(10px);
-    }
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
-}
-
-.section-title{
-    text-align:center;
-    font-size:2rem;
-    color:var(--warm-brown);
-    margin-bottom:30px;
-}
-
-.section-title span{
-    font-size:1.1rem;
-    color:var(--sage);
-    display:block;
-    margin-top:5px;
-    font-family:'Quicksand',sans-serif;
-}
-
-/* ================= HOME ================= */
-
-.home-box{
-    max-width:900px;
-    margin:20px auto;
-    padding:45px;
-    background:rgba(255,255,255,.78);
-    border:1px solid var(--beige);
-    border-radius:25px;
-    box-shadow:var(--shadow);
-    text-align:center;
-}
-
-.home-box p{
-    line-height:1.9;
-    color:var(--text-light);
-}
-
-.home-decoration{
-    font-size:2rem;
-    margin-bottom:15px;
-}
-
-/* ================= SEARCH ================= */
-
-.search-area{
-    max-width:900px;
-    margin:0 auto 30px;
-}
-
-.search-box{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    background:white;
-    border:1px solid var(--beige);
-    border-radius:30px;
-    padding:5px 18px;
-    box-shadow:var(--shadow);
-}
-
-.search-box i{
-    color:var(--sage);
-}
-
-.search-box input{
-    width:100%;
-    border:none;
-    outline:none;
-    background:transparent;
-    padding:12px;
-    font-family:inherit;
-    font-size:1rem;
-    color:var(--text-dark);
-}
-
-.tag-filter{
-    display:flex;
-    justify-content:center;
-    flex-wrap:wrap;
-    gap:8px;
-    margin-top:15px;
-}
-
-.tag-button{
-    background:var(--ivory);
-    color:var(--text-light);
-    border:1px solid var(--beige);
-    padding:7px 14px;
-    border-radius:20px;
-    transition:var(--transition);
-}
-
-.tag-button:hover,
-.tag-button.active{
-    background:var(--dusty-pink);
-    color:white;
-}
+/* ================= HOME & SEARCH ================= */
+.home-box{max-width:900px;margin:20px auto;padding:45px;background:rgba(255,255,255,.78);border:1px solid var(--beige);border-radius:25px;box-shadow:var(--shadow);text-align:center;}
+.home-box p{line-height:1.9;color:var(--text-light);}
+.home-decoration{font-size:2rem;margin-bottom:15px;}
+.search-area{max-width:900px;margin:0 auto 30px;}
+.search-box{display:flex;align-items:center;gap:10px;background:white;border:1px solid var(--beige);border-radius:30px;padding:5px 18px;box-shadow:var(--shadow);}
+.search-box i{color:var(--sage);}
+.search-box input{width:100%;border:none;outline:none;background:transparent;padding:12px;font-family:inherit;font-size:1rem;color:var(--text-dark);}
+.tag-filter{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;margin-top:15px;}
+.tag-button{background:var(--ivory);color:var(--text-light);border:1px solid var(--beige);padding:7px 14px;border-radius:20px;transition:var(--transition);}
+.tag-button:hover,.tag-button.active{background:var(--dusty-pink);color:white;}
 
 /* ================= LETTER / CHAR ================= */
+.char-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:25px;max-width:1100px;margin:auto;}
+.letter-card{background:linear-gradient(145deg,#fff,#faf6ed);border-radius:18px;padding:22px;text-align:center;box-shadow:var(--shadow);position:relative;overflow:hidden;transition:var(--transition);border:1px solid var(--beige);}
+.letter-card:hover{transform:translateY(-6px) rotate(.3deg);box-shadow:0 15px 35px rgba(140,106,93,.14);}
+.letter-card::before{content:"✉️";position:absolute;top:10px;left:12px;font-size:1.2rem;opacity:.55;}
+.letter-card::after{content:"🕊️";position:absolute;bottom:8px;right:12px;font-size:1.2rem;opacity:.35;}
+.char-avatar{width:105px;height:105px;border-radius:50%;object-fit:cover;border:3px solid var(--champagne);margin-bottom:15px;background:var(--ivory);}
+.char-name{color:var(--warm-brown);margin-bottom:8px;font-size:1.35rem;}
+.char-slogan{font-size:.9rem;font-style:italic;color:var(--text-light);margin-bottom:12px;min-height:40px;}
+.char-tags{display:flex;justify-content:center;flex-wrap:wrap;gap:5px;margin-bottom:15px;}
+.char-tag{background:var(--ivory);color:var(--sage);border-radius:15px;padding:4px 9px;font-size:.75rem;}
+.locked-label{display:inline-block;background:#f1e6d8;color:var(--warm-brown);padding:6px 12px;border-radius:20px;font-size:.8rem;margin-bottom:12px;}
+.unlocked-label{display:inline-block;background:#e5eee8;color:#6d8879;padding:6px 12px;border-radius:20px;font-size:.8rem;margin-bottom:12px;}
 
-.char-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(270px,1fr));
-    gap:25px;
-    max-width:1100px;
-    margin:auto;
-}
+/* ================= MODALS & ADMIN ================= */
+.overlay{position:fixed;inset:0;background:rgba(92,74,67,.25);backdrop-filter:blur(7px);display:flex;align-items:center;justify-content:center;z-index:5000;opacity:0;visibility:hidden;transition:var(--transition);padding:20px;}
+.overlay.active{opacity:1;visibility:visible;}
+.modal-box{background:var(--cream);border:2px solid var(--champagne);border-radius:22px;box-shadow:0 20px 60px rgba(92,74,67,.2);width:min(700px,95vw);max-height:90vh;overflow-y:auto;padding:30px;position:relative;animation:modalIn .35s ease;}
+@keyframes modalIn{from{opacity:0;transform:translateY(20px) scale(.96);}to{opacity:1;transform:none;}}
+.close-modal{position:absolute;top:12px;right:15px;width:35px;height:35px;border-radius:50%;background:var(--ivory);color:var(--warm-brown);border:1px solid var(--beige);}
+.modal-avatar{display:block;width:110px;height:110px;border-radius:50%;object-fit:cover;margin:0 auto 15px;border:3px solid var(--champagne);}
+.plot-content{background:#fffdf8;border:1px solid var(--beige);border-radius:15px;padding:20px;margin:20px 0;line-height:1.9;white-space:pre-wrap;text-align:left;max-height:400px;overflow-y:auto;}
+.modal-actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;}
+.btn-secondary{background:var(--ivory);color:var(--text-light);padding:10px 20px;border-radius:25px;border:1px solid var(--beige);}
+.btn-danger{background:#ead6d2;color:#8b5e57;padding:10px 20px;border-radius:25px;}
 
-.letter-card{
-    background:linear-gradient(145deg,#fff,#faf6ed);
-    border-radius:18px;
-    padding:22px;
-    text-align:center;
-    box-shadow:var(--shadow);
-    position:relative;
-    overflow:hidden;
-    transition:var(--transition);
-    border:1px solid var(--beige);
-}
-
-.letter-card:hover{
-    transform:translateY(-6px) rotate(.3deg);
-    box-shadow:0 15px 35px rgba(140,106,93,.14);
-}
-
-.letter-card::before{
-    content:"✉️";
-    position:absolute;
-    top:10px;
-    left:12px;
-    font-size:1.2rem;
-    opacity:.55;
-}
-
-.letter-card::after{
-    content:"🕊️";
-    position:absolute;
-    bottom:8px;
-    right:12px;
-    font-size:1.2rem;
-    opacity:.35;
-}
-
-.char-avatar{
-    width:105px;
-    height:105px;
-    border-radius:50%;
-    object-fit:cover;
-    border:3px solid var(--champagne);
-    margin-bottom:15px;
-    background:var(--ivory);
-}
-
-.char-name{
-    color:var(--warm-brown);
-    margin-bottom:8px;
-    font-size:1.35rem;
-}
-
-.char-slogan{
-    font-size:.9rem;
-    font-style:italic;
-    color:var(--text-light);
-    margin-bottom:12px;
-    min-height:40px;
-}
-
-.char-tags{
-    display:flex;
-    justify-content:center;
-    flex-wrap:wrap;
-    gap:5px;
-    margin-bottom:15px;
-}
-
-.char-tag{
-    background:var(--ivory);
-    color:var(--sage);
-    border-radius:15px;
-    padding:4px 9px;
-    font-size:.75rem;
-}
-
-.locked-label{
-    display:inline-block;
-    background:#f1e6d8;
-    color:var(--warm-brown);
-    padding:6px 12px;
-    border-radius:20px;
-    font-size:.8rem;
-    margin-bottom:12px;
-}
-
-.unlocked-label{
-    display:inline-block;
-    background:#e5eee8;
-    color:#6d8879;
-    padding:6px 12px;
-    border-radius:20px;
-    font-size:.8rem;
-    margin-bottom:12px;
-}
-
-/* ================= CHAR MODAL ================= */
-
-.overlay{
-    position:fixed;
-    inset:0;
-    background:rgba(92,74,67,.25);
-    backdrop-filter:blur(7px);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    z-index:5000;
-    opacity:0;
-    visibility:hidden;
-    transition:var(--transition);
-    padding:20px;
-}
-
-.overlay.active{
-    opacity:1;
-    visibility:visible;
-}
-
-.modal-box{
-    background:var(--cream);
-    border:2px solid var(--champagne);
-    border-radius:22px;
-    box-shadow:0 20px 60px rgba(92,74,67,.2);
-    width:min(700px,95vw);
-    max-height:90vh;
-    overflow-y:auto;
-    padding:30px;
-    position:relative;
-    animation:modalIn .35s ease;
-}
-
-@keyframes modalIn{
-    from{
-        opacity:0;
-        transform:translateY(20px) scale(.96);
-    }
-    to{
-        opacity:1;
-        transform:none;
-    }
-}
-
-.close-modal{
-    position:absolute;
-    top:12px;
-    right:15px;
-    width:35px;
-    height:35px;
-    border-radius:50%;
-    background:var(--ivory);
-    color:var(--warm-brown);
-    border:1px solid var(--beige);
-}
-
-.modal-avatar{
-    display:block;
-    width:110px;
-    height:110px;
-    border-radius:50%;
-    object-fit:cover;
-    margin:0 auto 15px;
-    border:3px solid var(--champagne);
-}
-
-.plot-content{
-    background:#fffdf8;
-    border:1px solid var(--beige);
-    border-radius:15px;
-    padding:20px;
-    margin:20px 0;
-    line-height:1.9;
-    white-space:pre-wrap;
-    text-align:left;
-    max-height:400px;
-    overflow-y:auto;
-}
-
-.modal-actions{
-    display:flex;
-    justify-content:center;
-    gap:10px;
-    flex-wrap:wrap;
-}
-
-.btn-secondary{
-    background:var(--ivory);
-    color:var(--text-light);
-    padding:10px 20px;
-    border-radius:25px;
-    border:1px solid var(--beige);
-}
-
-.btn-danger{
-    background:#ead6d2;
-    color:#8b5e57;
-    padding:10px 20px;
-    border-radius:25px;
-}
-
-/* ================= ADMIN ================= */
-
-.admin-modal{
-    width:min(850px,96vw);
-}
-
-.admin-login{
-    text-align:center;
-}
-
-.admin-login-icon{
-    font-size:3rem;
-    margin-bottom:15px;
-}
-
-.admin-password{
-    width:100%;
-    max-width:400px;
-    margin:20px auto;
-    display:block;
-    padding:13px 18px;
-    border-radius:25px;
-    border:1px solid var(--beige);
-    outline:none;
-    font-family:inherit;
-    background:white;
-    color:var(--text-dark);
-}
-
-.admin-error{
-    color:#a26b64;
-    font-size:.9rem;
-    min-height:20px;
-}
-
-.admin-panel{
-    display:none;
-}
-
-.admin-panel.active{
-    display:block;
-}
-
-.admin-form{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:15px;
-}
-
-.form-group{
-    display:flex;
-    flex-direction:column;
-    gap:7px;
-}
-
-.form-group.full{
-    grid-column:1/-1;
-}
-
-.form-group label{
-    font-weight:600;
-    color:var(--warm-brown);
-}
-
-.form-group input,
-.form-group textarea,
-.form-group select{
-    width:100%;
-    padding:11px 13px;
-    border-radius:12px;
-    border:1px solid var(--beige);
-    background:#fff;
-    color:var(--text-dark);
-    outline:none;
-    font-family:inherit;
-}
-
-.form-group textarea{
-    min-height:120px;
-    resize:vertical;
-    line-height:1.7;
-}
-
-.avatar-preview{
-    width:90px;
-    height:90px;
-    object-fit:cover;
-    border-radius:50%;
-    border:2px solid var(--champagne);
-    margin-top:5px;
-    background:var(--ivory);
-}
-
-.admin-actions{
-    display:flex;
-    justify-content:center;
-    gap:10px;
-    margin-top:20px;
-    flex-wrap:wrap;
-}
-
-.admin-list{
-    margin-top:30px;
-}
-
-.admin-char-row{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:15px;
-    background:white;
-    padding:12px;
-    border:1px solid var(--beige);
-    border-radius:15px;
-    margin-bottom:10px;
-}
-
-.admin-char-info{
-    display:flex;
-    align-items:center;
-    gap:10px;
-}
-
-.admin-char-info img{
-    width:50px;
-    height:50px;
-    border-radius:50%;
-    object-fit:cover;
-}
-
-.admin-row-actions{
-    display:flex;
-    gap:5px;
-    flex-wrap:wrap;
-}
+.admin-modal{width:min(850px,96vw);}
+.admin-login{text-align:center;}
+.admin-login-icon{font-size:3rem;margin-bottom:15px;}
+.admin-password{width:100%;max-width:400px;margin:20px auto;display:block;padding:13px 18px;border-radius:25px;border:1px solid var(--beige);outline:none;font-family:inherit;background:white;color:var(--text-dark);}
+.admin-error{color:#a26b64;font-size:.9rem;min-height:20px;}
+.admin-panel{display:none;}
+.admin-panel.active{display:block;}
+.admin-form{display:grid;grid-template-columns:1fr 1fr;gap:15px;}
+.form-group{display:flex;flex-direction:column;gap:7px;}
+.form-group.full{grid-column:1/-1;}
+.form-group label{font-weight:600;color:var(--warm-brown);}
+.form-group input,.form-group textarea,.form-group select{width:100%;padding:11px 13px;border-radius:12px;border:1px solid var(--beige);background:#fff;color:var(--text-dark);outline:none;font-family:inherit;}
+.form-group textarea{min-height:120px;resize:vertical;line-height:1.7;}
+.avatar-preview{width:90px;height:90px;object-fit:cover;border-radius:50%;border:2px solid var(--champagne);margin-top:5px;background:var(--ivory);}
+.admin-actions{display:flex;justify-content:center;gap:10px;margin-top:20px;flex-wrap:wrap;}
+.admin-list{margin-top:30px;}
+.admin-char-row{display:flex;align-items:center;justify-content:space-between;gap:15px;background:white;padding:12px;border:1px solid var(--beige);border-radius:15px;margin-bottom:10px;}
+.admin-char-info{display:flex;align-items:center;gap:10px;}
+.admin-char-info img{width:50px;height:50px;border-radius:50%;object-fit:cover;}
+.admin-row-actions{display:flex;gap:5px;flex-wrap:wrap;}
 
 /* ================= UNLOCK ================= */
-
-.unlock-box{
-    text-align:center;
-}
-
-.question-box{
-    background:#fffdf8;
-    border:1px solid var(--beige);
-    border-radius:15px;
-    padding:15px;
-    margin:15px 0;
-    text-align:left;
-}
-
-.question-box strong{
-    color:var(--warm-brown);
-}
-
-.unlock-input{
-    width:100%;
-    padding:12px 15px;
-    border-radius:25px;
-    border:1px solid var(--beige);
-    outline:none;
-    font-family:inherit;
-    margin:10px 0;
-}
+.unlock-box{text-align:center;}
+.question-box{background:#fffdf8;border:1px solid var(--beige);border-radius:15px;padding:15px;margin:15px 0;text-align:left;}
+.question-box strong{color:var(--warm-brown);}
+.unlock-input{width:100%;padding:12px 15px;border-radius:25px;border:1px solid var(--beige);outline:none;font-family:inherit;margin:10px 0;}
 
 /* ================= MUSIC ================= */
-
-.music-player{
-    position:fixed;
-    bottom:20px;
-    left:20px;
-    background:rgba(255,255,255,.85);
-    backdrop-filter:blur(8px);
-    padding:10px 18px;
-    border-radius:30px;
-    box-shadow:var(--shadow);
-    display:flex;
-    align-items:center;
-    gap:10px;
-    z-index:1000;
-    border:1px solid var(--beige);
-}
-
-.music-player button{
-    background:none;
-    color:var(--warm-brown);
-    font-size:1rem;
-}
-
-#youtube-player{
-    position:fixed;
-    width:1px;
-    height:1px;
-    opacity:0;
-    pointer-events:none;
-    left:-100px;
-    top:-100px;
-}
+.music-player{position:fixed;bottom:20px;left:20px;background:rgba(255,255,255,.85);backdrop-filter:blur(8px);padding:10px 18px;border-radius:30px;box-shadow:var(--shadow);display:flex;align-items:center;gap:10px;z-index:1000;border:1px solid var(--beige);}
+.music-player button{background:none;color:var(--warm-brown);font-size:1rem;}
+#youtube-player{position:fixed;width:1px;height:1px;opacity:0;pointer-events:none;left:-100px;top:-100px;}
 
 /* ================= GAME ================= */
+#game-container{max-width:900px;margin:0 auto;background:white;border-radius:20px;box-shadow:var(--shadow);border:2px solid var(--champagne);overflow:hidden;position:relative;}
+.game-header{background:var(--ivory);padding:15px 30px;display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid var(--beige);}
+.game-title{font-size:1.5rem;color:var(--sage);display:flex;align-items:center;gap:10px;}
+.game-stats{display:flex;gap:20px;font-weight:600;color:var(--warm-brown);font-size:1.1rem;}
+.game-nav{display:flex;justify-content:center;background:var(--cream);border-bottom:1px solid var(--beige);}
+.game-nav button{flex:1;padding:15px;background:none;color:var(--text-light);font-weight:600;font-size:1rem;transition:var(--transition);border-bottom:3px solid transparent;}
+.game-nav button:hover,.game-nav button.active{color:var(--dusty-pink);border-bottom:3px solid var(--dusty-pink);background:var(--ivory);}
+.game-view{display:none;padding:30px;min-height:400px;background:var(--ivory);}
+.game-view.active{display:block;animation:fadeIn .4s ease;}
 
-#game-container{
-    max-width:900px;
-    margin:0 auto;
-    background:white;
-    border-radius:20px;
-    box-shadow:var(--shadow);
-    border:2px solid var(--champagne);
-    overflow:hidden;
-    position:relative;
-}
+.garden-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;max-width:500px;margin:0 auto;}
+.garden-plot{background:#A68B7C;aspect-ratio:1;border-radius:15px;border:4px solid #8C6A5D;display:flex;justify-content:center;align-items:center;font-size:3rem;cursor:pointer;position:relative;box-shadow:inset 0 5px 10px rgba(0,0,0,.1);transition:var(--transition);}
+.garden-plot:hover{transform:scale(1.02);filter:brightness(1.1);}
+.garden-plot.empty{background:#C4A493;}
+.plot-number{position:absolute;top:5px;left:8px;font-size:0.7rem;color:rgba(255,255,255,0.7);font-weight:bold;}
+.water-drop{position:absolute;top:5px;right:5px;font-size:1.2rem;animation:bounce 1s infinite;}
+.progress-bar{position:absolute;bottom:5px;width:80%;height:6px;background:rgba(255,255,255,.5);border-radius:3px;overflow:hidden;}
+.progress-fill{height:100%;background:var(--sage);width:0%;transition:width 1s linear;}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
 
-.game-header{
-    background:var(--ivory);
-    padding:15px 30px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    border-bottom:2px solid var(--beige);
-}
-
-.game-title{
-    font-size:1.5rem;
-    color:var(--sage);
-    display:flex;
-    align-items:center;
-    gap:10px;
-}
-
-.game-stats{
-    display:flex;
-    gap:20px;
-    font-weight:600;
-    color:var(--warm-brown);
-    font-size:1.1rem;
-}
-
-.game-stats span{
-    display:flex;
-    align-items:center;
-    gap:5px;
-}
-
-.game-nav{
-    display:flex;
-    justify-content:center;
-    background:var(--cream);
-    border-bottom:1px solid var(--beige);
-}
-
-.game-nav button{
-    flex:1;
-    padding:15px;
-    background:none;
-    color:var(--text-light);
-    font-weight:600;
-    font-size:1rem;
-    transition:var(--transition);
-    border-bottom:3px solid transparent;
-}
-
-.game-nav button:hover{
-    color:var(--dusty-pink);
-    background:var(--ivory);
-}
-
-.game-nav button.active{
-    color:var(--dusty-pink);
-    border-bottom:3px solid var(--dusty-pink);
-}
-
-.game-view{
-    display:none;
-    padding:30px;
-    min-height:400px;
-    background:var(--ivory);
-}
-
-.game-view.active{
-    display:block;
-    animation:fadeIn .4s ease;
-}
-
-.garden-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:15px;
-    max-width:500px;
-    margin:0 auto;
-}
-
-.garden-plot{
-    background:#A68B7C;
-    aspect-ratio:1;
-    border-radius:15px;
-    border:4px solid #8C6A5D;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-size:3rem;
-    cursor:pointer;
-    position:relative;
-    box-shadow:inset 0 5px 10px rgba(0,0,0,.1);
-    transition:var(--transition);
-}
-
-.garden-plot:hover{
-    transform:scale(1.02);
-    filter:brightness(1.1);
-}
-
-.garden-plot.empty{
-    background:#C4A493;
-}
-
-.water-drop{
-    position:absolute;
-    top:5px;
-    right:5px;
-    font-size:1.2rem;
-    animation:bounce 1s infinite;
-}
-
-.progress-bar{
-    position:absolute;
-    bottom:5px;
-    width:80%;
-    height:6px;
-    background:rgba(255,255,255,.5);
-    border-radius:3px;
-    overflow:hidden;
-}
-
-.progress-fill{
-    height:100%;
-    background:var(--sage);
-    width:0%;
-}
-
-@keyframes bounce{
-    0%,100%{transform:translateY(0)}
-    50%{transform:translateY(-5px)}
-}
-
-.item-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
-    gap:20px;
-}
-
-.item-card{
-    background:white;
-    padding:15px;
-    border-radius:15px;
-    border:1px solid var(--beige);
-    text-align:center;
-    box-shadow:0 4px 10px rgba(0,0,0,.05);
-}
-
-.item-icon{
-    font-size:3rem;
-    margin-bottom:10px;
-}
-
-.item-name{
-    font-weight:600;
-    color:var(--warm-brown);
-    margin-bottom:5px;
-}
-
-.item-price{
-    color:#b18b36;
-    font-weight:bold;
-    margin-bottom:10px;
-}
-
+.item-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:20px;}
+.item-card{background:white;padding:15px;border-radius:15px;border:1px solid var(--beige);text-align:center;box-shadow:0 4px 10px rgba(0,0,0,.05);}
+.item-icon{font-size:3rem;margin-bottom:10px;}
+.item-name{font-weight:600;color:var(--warm-brown);margin-bottom:5px;}
+.item-price{color:#b18b36;font-weight:bold;margin-bottom:10px;}
 .rarity-thuong{color:var(--sage)}
 .rarity-hiem{color:#6495ED}
 .rarity-suthi{color:#9370DB}
 .rarity-huyenthoai{color:#D78A32}
 
-.pigeon-helper{
-    position:absolute;
-    top:100px;
-    right:20px;
-    background:white;
-    padding:10px 15px;
-    border-radius:20px 20px 0 20px;
-    box-shadow:var(--shadow);
-    border:1px solid var(--champagne);
-    display:flex;
-    align-items:center;
-    gap:10px;
-    animation:float 3s ease-in-out infinite;
-    z-index:10;
-    max-width:250px;
-}
+.pigeon-helper{position:absolute;top:100px;right:20px;background:white;padding:10px 15px;border-radius:20px 20px 0 20px;box-shadow:var(--shadow);border:1px solid var(--champagne);display:flex;align-items:center;gap:10px;animation:float 3s ease-in-out infinite;z-index:10;max-width:250px;}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
 
-@keyframes float{
-    0%,100%{transform:translateY(0)}
-    50%{transform:translateY(-10px)}
-}
+.game-modal{position:absolute;inset:0;background:rgba(253,251,247,.8);backdrop-filter:blur(5px);display:flex;justify-content:center;align-items:center;z-index:100;opacity:0;visibility:hidden;transition:var(--transition);}
+.game-modal.active{opacity:1;visibility:visible;}
+.g-modal-content{background:white;padding:30px;border-radius:20px;border:2px solid var(--champagne);text-align:center;min-width:300px;max-width:90%;box-shadow:var(--shadow);}
 
-.game-modal{
-    position:absolute;
-    inset:0;
-    background:rgba(253,251,247,.8);
-    backdrop-filter:blur(5px);
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    z-index:100;
-    opacity:0;
-    visibility:hidden;
-    transition:var(--transition);
-}
-
-.game-modal.active{
-    opacity:1;
-    visibility:visible;
-}
-
-.g-modal-content{
-    background:white;
-    padding:30px;
-    border-radius:20px;
-    border:2px solid var(--champagne);
-    text-align:center;
-    min-width:300px;
-    max-width:90%;
-    box-shadow:var(--shadow);
-}
-
-#toast-container{
-    position:fixed;
-    bottom:80px;
-    left:50%;
-    transform:translateX(-50%);
-    z-index:9999;
-    display:flex;
-    flex-direction:column;
-    gap:10px;
-    pointer-events:none;
-}
-
-.toast{
-    background:var(--warm-brown);
-    color:white;
-    padding:10px 20px;
-    border-radius:30px;
-    font-size:.9rem;
-    box-shadow:0 5px 15px rgba(0,0,0,.2);
-    animation:toastUp .3s ease,fadeOut .3s ease 2.7s forwards;
-}
-
-@keyframes toastUp{
-    from{opacity:0;transform:translateY(20px)}
-    to{opacity:1;transform:translateY(0)}
-}
-
-@keyframes fadeOut{
-    to{opacity:0}
-}
+/* ================= TOAST ================= */
+#toast-container{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);z-index:9999;display:flex;flex-direction:column;gap:10px;pointer-events:none;}
+.toast{background:var(--warm-brown);color:white;padding:10px 20px;border-radius:30px;font-size:.9rem;box-shadow:0 5px 15px rgba(0,0,0,.2);animation:toastUp .3s ease,fadeOut .3s ease 2.7s forwards;}
+@keyframes toastUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeOut{to{opacity:0}}
 
 /* ================= RESPONSIVE ================= */
-
 @media(max-width:768px){
-
-    header{
-        padding:12px 15px;
-    }
-
-    .logo{
-        font-size:1rem;
-    }
-
-    nav{
-        gap:3px;
-    }
-
-    nav a{
-        font-size:.78rem;
-        padding:6px;
-    }
-
-    .header-right{
-        gap:5px;
-    }
-
-    .admin-button{
-        width:36px;
-        height:36px;
-    }
-
-    .section{
-        padding:30px 15px;
-    }
-
-    .section-title{
-        font-size:1.6rem;
-    }
-
-    .admin-form{
-        grid-template-columns:1fr;
-    }
-
-    .form-group.full{
-        grid-column:auto;
-    }
-
-    .admin-char-row{
-        align-items:flex-start;
-        flex-direction:column;
-    }
-
-    .game-header{
-        flex-direction:column;
-        gap:10px;
-    }
-
-    .game-nav{
-        overflow-x:auto;
-    }
-
-    .game-nav button{
-        font-size:.75rem;
-        padding:10px 5px;
-        min-width:90px;
-    }
-
-    .garden-grid{
-        gap:10px;
-    }
-
-    .garden-plot{
-        font-size:2rem;
-    }
-
-    .pigeon-helper{
-        display:none;
-    }
-
-    .home-box{
-        padding:25px 18px;
-    }
+    header{padding:12px 15px;}
+    .logo{font-size:1rem;}
+    nav{gap:3px;}
+    nav a{font-size:.78rem;padding:6px;}
+    .header-right{gap:5px;}
+    .admin-button{width:36px;height:36px;}
+    .section{padding:30px 15px;}
+    .section-title{font-size:1.6rem;}
+    .admin-form{grid-template-columns:1fr;}
+    .admin-char-row{align-items:flex-start;flex-direction:column;}
+    .game-header{flex-direction:column;gap:10px;}
+    .game-nav{overflow-x:auto;}
+    .game-nav button{font-size:.75rem;padding:10px 5px;min-width:90px;}
+    .garden-grid{gap:10px;}
+    .garden-plot{font-size:2rem;}
+    .pigeon-helper{display:none;}
+    .home-box{padding:25px 18px;}
 }
 </style>
 </head>
-
 <body>
 
 <div id="bg-effects"></div>
 <div id="toast-container"></div>
 
 <!-- ================= INTRO ================= -->
+<div id="intro-screen">
+    <h1 class="serif">🕊️ Bưu Điện Của Những Nỗi Nhớ</h1>
+    <p>“Có những lá thư không cần người gửi, chỉ cần một người chịu mở.”</p>
+    <button id="start-btn" class="btn-vintage">
+        <i class="fa-regular fa-envelope"></i> GỬI THƯ
+    </button>
+    <div class="intro-pigeon">🕊️</div>
+</div>
 
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-
-    const startBtn = document.getElementById("start-btn");
-    const introScreen = document.getElementById("intro-screen");
-    const mainApp = document.getElementById("main-app");
-    const pigeon = document.querySelector(".intro-pigeon");
-
-    if (startBtn) {
-        startBtn.addEventListener("click", function () {
-
-            // Hiệu ứng bồ câu bay
-            if (pigeon) {
-                pigeon.classList.add("pigeon-fly");
-            }
-
-            // Mở trang chủ
-            setTimeout(function () {
-                introScreen.style.opacity = "0";
-                introScreen.style.visibility = "hidden";
-
-                mainApp.style.visibility = "visible";
-                mainApp.style.opacity = "1";
-
-                // Đảm bảo mở đúng Trang chủ
-                document.querySelectorAll(".section").forEach(section => {
-                    section.classList.remove("active");
-                });
-
-                const home = document.getElementById("home");
-                if (home) {
-                    home.classList.add("active");
-                }
-
-                // Đặt nút Trang chủ active
-                document.querySelectorAll("nav a").forEach(a => {
-                    a.classList.remove("active");
-                });
-
-                const homeNav = document.querySelector('nav a[onclick*="home"]');
-                if (homeNav) {
-                    homeNav.classList.add("active");
-                }
-
-                // Phát nhạc nền
-                playBackgroundMusic();
-
-            }, 600);
-        });
-    }
-
-});
-</script>
 <!-- ================= YOUTUBE MUSIC ================= -->
-
-<div id="youtube-player" style="display:none;"></div>
-
-<script>
-let ytPlayer;
-
-function onYouTubeIframeAPIReady() {
-    ytPlayer = new YT.Player("youtube-player", {
-        videoId: "VIDEO_ID_CUA_BAN",
-        playerVars: {
-            autoplay: 0,
-            controls: 0,
-            loop: 1,
-            playlist: "https://youtu.be/GEGSzh4vUuE?si=P8MgWrBMrSV584Vc"
-        }
-    });
-}
-
-function playBackgroundMusic() {
-    if (ytPlayer && ytPlayer.playVideo) {
-        ytPlayer.playVideo();
-    }
-}
-
-// Tải YouTube API
-const ytScript = document.createElement("script");
-ytScript.src = "https://www.youtube.com/iframe_api";
-document.head.appendChild(ytScript);
-</script>
+<div id="youtube-player"></div>
 
 <!-- ================= MAIN APP ================= -->
-
 <div id="main-app">
-
-<header>
-
-    <div class="logo serif">
-        🕊️ Bưu Điện Của Những Nỗi Nhớ
-    </div>
-
-    <div class="header-right">
-
-        <nav>
-
-            <a href="#" onclick="nav('home',this)">
-                🏠 Trang chủ
-            </a>
-
-            <a href="#" onclick="nav('chars',this)">
-                ✉️ Nhân vật
-            </a>
-
-            <a href="#" onclick="nav('games',this)">
-                🎮 Game
-            </a>
-
-        </nav>
-
-        <!-- ADMIN -->
-        <button
-            class="admin-button"
-            onclick="openAdmin()"
-            title="Quản lý"
-        >
-            👑
-        </button>
-
-    </div>
-
-</header>
-
-<!-- ================= HOME ================= -->
-
-<section id="home" class="section active">
-
-    <h2 class="section-title serif">
-
-        Chào mừng bạn đến với Bưu Điện
-
-        <span>
-            Nơi cất giữ những ký ức không tên 🍂
-        </span>
-
-    </h2>
-
-    <div class="home-box">
-
-        <div class="home-decoration">
-            🕊️ ✉️ 🎀 🦋
+    <header>
+        <div class="logo serif">🕊️ Bưu Điện Của Những Nỗi Nhớ</div>
+        <div class="header-right">
+            <nav>
+                <a href="#" onclick="nav('home',this)" class="active">🏠 Trang chủ</a>
+                <a href="#" onclick="nav('chars',this)">✉️ Nhân vật</a>
+                <a href="#" onclick="nav('games',this)">🎮 Game</a>
+            </nav>
+            <button class="admin-button" onclick="openAdmin()" title="Quản lý">👑</button>
         </div>
+    </header>
 
-        <p>
-            Đây là một góc nhỏ dành riêng cho những nhân vật,
-            những câu chuyện và những thế giới mà bạn muốn lưu giữ.
-        </p>
-
-        <br>
-
-        <p>
-            Mỗi nhân vật là một lá thư.
-            Mỗi lá thư chứa một câu chuyện.
-            Và mỗi câu chuyện đang chờ một người mở ra.
-        </p>
-
-        <br>
-
-        <p>
-            Hãy ghé qua mục <b>Nhân vật</b> để tìm người bạn muốn gặp,
-            hoặc bước vào <b>Khu Vườn Bồ Câu</b> để gieo những hạt giống đầu tiên.
-        </p>
-
-    </div>
-
-</section>
-
-<!-- ================= CHAR ================= -->
-
-<section id="chars" class="section">
-
-    <h2 class="section-title serif">
-
-        Những Lá Thư Nhân Vật ✉️
-
-        <span>
-            Những người đang chờ bạn mở thư
-        </span>
-
-    </h2>
-
-    <!-- SEARCH -->
-
-    <div class="search-area">
-
-        <div class="search-box">
-
-            <i class="fa-solid fa-magnifying-glass"></i>
-
-            <input
-                id="char-search"
-                type="search"
-                placeholder="Tìm theo tên nhân vật hoặc tag..."
-                oninput="filterCharacters()"
-            >
-
+    <!-- HOME -->
+    <section id="home" class="section active">
+        <h2 class="section-title serif">Chào mừng bạn đến với Bưu Điện<span>Nơi cất giữ những ký ức không tên 🍂</span></h2>
+        <div class="home-box">
+            <div class="home-decoration">🕊️ ✉️ 🎀 🦋</div>
+            <p>Đây là một góc nhỏ dành riêng cho những nhân vật, những câu chuyện và những thế giới mà bạn muốn lưu giữ.</p><br>
+            <p>Mỗi nhân vật là một lá thư. Mỗi lá thư chứa một câu chuyện. Và mỗi câu chuyện đang chờ một người mở ra.</p><br>
+            <p>Hãy ghé qua mục <b>Nhân vật</b> để tìm người bạn muốn gặp, hoặc bước vào <b>Khu Vườn Bồ Câu</b> để gieo những hạt giống đầu tiên.</p>
         </div>
+    </section>
 
-        <div
-            id="tag-filter"
-            class="tag-filter"
-        ></div>
+    <!-- CHARS -->
+    <section id="chars" class="section">
+        <h2 class="section-title serif">Những Lá Thư Nhân Vật ✉️<span>Những người đang chờ bạn mở thư</span></h2>
+        <div class="search-area">
+            <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input id="char-search" type="search" placeholder="Tìm theo tên nhân vật hoặc tag..." oninput="filterCharacters()">
+            </div>
+            <div id="tag-filter" class="tag-filter"></div>
+        </div>
+        <div class="char-grid" id="char-grid"></div>
+    </section>
 
-    </div>
-
-    <!-- CHARACTER LIST -->
-
-    <div
-        class="char-grid"
-        id="char-grid"
-    ></div>
-
-</section>
-
-<!-- ================= GAME ================= -->
-
-<section id="games" class="section">
-
-    <h2 class="section-title serif">
-
-        Khu Vườn Bồ Câu 🌸
-
-        <span>
-            Nơi gieo mầm những ký ức ngọt ngào
-        </span>
-
-    </h2>
-
-    <div id="game-container">
-
-        <div class="game-header">
-
-            <div class="game-title serif">
-                🕊️ Garden of Memories
+    <!-- GAMES (KHU VƯỜN BỒ CÂU) -->
+    <section id="games" class="section">
+        <h2 class="section-title serif">Khu Vườn Bồ Câu 🌸<span>Nơi gieo mầm những ký ức ngọt ngào</span></h2>
+        <div id="game-container">
+            <div class="game-header">
+                <div class="game-title serif">🕊️ Garden of Memories</div>
+                <div class="game-stats"><span>🪙 <span id="ui-xu">1000</span> Xu</span></div>
+            </div>
+            <div class="game-nav">
+                <button class="active" onclick="switchGameView('view-garden',this)">🌱 Vườn</button>
+                <button onclick="switchGameView('view-bag',this)">🎒 Túi Đồ</button>
+                <button onclick="switchGameView('view-shop',this)">🏪 Tiệm Hoa</button>
+                <button onclick="switchGameView('view-market',this)">💰 Bán Hoa</button>
+            </div>
+            
+            <div class="pigeon-helper">
+                <span style="font-size:1.5rem;">🕊️</span>
+                <span id="pigeon-text" style="font-size:.85rem;font-style:italic;color:var(--text-light)">Chào mừng bạn đến với khu vườn!</span>
             </div>
 
-            <div class="game-stats">
-
-                <span>
-                    🪙
-                    <span id="ui-xu">1000</span>
-                    Xu
-                </span>
-
+            <!-- VƯỜN -->
+            <div id="view-garden" class="game-view active">
+                <div class="garden-grid" id="garden-grid"></div>
+            </div>
+            <!-- TÚI -->
+            <div id="view-bag" class="game-view">
+                <h3 class="serif" style="color:var(--sage);margin-bottom:20px;text-align:center">🎒 Hạt giống & Hoa</h3>
+                <div class="item-grid" id="bag-grid"></div>
+            </div>
+            <!-- SHOP -->
+            <div id="view-shop" class="game-view">
+                <h3 class="serif" style="color:var(--dusty-pink);margin-bottom:20px;text-align:center">🏪 Tiệm Hoa Của Bồ Câu</h3>
+                <div class="item-grid" id="shop-grid"></div>
+            </div>
+            <!-- MARKET -->
+            <div id="view-market" class="game-view">
+                <h3 class="serif" style="color:var(--warm-brown);margin-bottom:20px;text-align:center">💰 Quầy Bán Hoa</h3>
+                <div class="item-grid" id="market-grid"></div>
             </div>
 
-        </div>
-
-        <div class="game-nav">
-
-            <button
-                class="active"
-                onclick="switchGameView('view-garden',this)"
-            >
-                🌱 Vườn
-            </button>
-
-            <button
-                onclick="switchGameView('view-bag',this)"
-            >
-                🎒 Túi Đồ
-            </button>
-
-            <button
-                onclick="switchGameView('view-shop',this)"
-            >
-                🏪 Tiệm Hoa
-            </button>
-
-            <button
-                onclick="switchGameView('view-market',this)"
-            >
-                💰 Bán Hoa
-            </button>
-
-        </div>
-
-        <div class="pigeon-helper">
-
-            <span style="font-size:1.5rem;">
-                🕊️
-            </span>
-
-            <span
-                id="pigeon-text"
-                style="font-size:.85rem;font-style:italic;color:var(--text-light)"
-            >
-                Chào mừng bạn đến với khu vườn!
-                Hãy mua hạt giống nhé.
-            </span>
-
-        </div>
-
-        <!-- VƯỜN -->
-
-        <div
-            id="view-garden"
-            class="game-view active"
-        >
-
-            <div
-                class="garden-grid"
-                id="garden-grid"
-            ></div>
-
-        </div>
-
-        <!-- TÚI -->
-
-        <div
-            id="view-bag"
-            class="game-view"
-        >
-
-            <h3
-                class="serif"
-                style="color:var(--sage);margin-bottom:20px;text-align:center"
-            >
-                🎒 Hạt giống & Hoa đã thu hoạch
-            </h3>
-
-            <div
-                class="item-grid"
-                id="bag-grid"
-            ></div>
-
-        </div>
-
-        <!-- SHOP -->
-
-        <div
-            id="view-shop"
-            class="game-view"
-        >
-
-            <h3
-                class="serif"
-                style="color:var(--dusty-pink);margin-bottom:20px;text-align:center"
-            >
-                🏪 Tiệm Hoa Của Bồ Câu
-            </h3>
-
-            <div
-                class="item-grid"
-                id="shop-grid"
-            ></div>
-
-        </div>
-
-        <!-- MARKET -->
-
-        <div
-            id="view-market"
-            class="game-view"
-        >
-
-            <h3
-                class="serif"
-                style="color:var(--warm-brown);margin-bottom:20px;text-align:center"
-            >
-                💰 Quầy Bán Hoa
-            </h3>
-
-            <p style="text-align:center;margin-bottom:20px;font-size:.9rem">
-                Bán những bông hoa bạn đã chăm sóc để kiếm Xu nhé.
-            </p>
-
-            <div
-                class="item-grid"
-                id="market-grid"
-            ></div>
-
-        </div>
-
-        <!-- PLOT MODAL -->
-
-        <div
-            class="game-modal"
-            id="plot-modal"
-        >
-
-            <div class="g-modal-content">
-
-                <h3
-                    id="pm-title"
-                    class="serif"
-                    style="color:var(--warm-brown);margin-bottom:15px"
-                >
-                    Ô đất
-                </h3>
-
-                <div
-                    id="pm-icon"
-                    style="font-size:4rem;margin-bottom:15px"
-                >
-                    🌱
+            <!-- PLOT MODAL -->
+            <div class="game-modal" id="plot-modal">
+                <div class="g-modal-content">
+                    <h3 id="pm-title" class="serif" style="color:var(--warm-brown);margin-bottom:15px">Ô đất</h3>
+                    <div id="pm-icon" style="font-size:4rem;margin-bottom:15px">🌱</div>
+                    <p id="pm-status" style="margin-bottom:10px;font-weight:bold"></p>
+                    <div id="pm-actions" style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap"></div>
+                    <button onclick="closeGameModal('plot-modal')" style="margin-top:20px;background:none;color:var(--text-light);text-decoration:underline">Đóng</button>
                 </div>
-
-                <p
-                    id="pm-status"
-                    style="margin-bottom:10px;font-weight:bold"
-                ></p>
-
-                <div
-                    id="pm-actions"
-                    style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap"
-                ></div>
-
-                <button
-                    onclick="closeGameModal()"
-                    style="margin-top:20px;background:none;color:var(--text-light);text-decoration:underline"
-                >
-                    Đóng
-                </button>
-
             </div>
 
-        </div>
-
-        <!-- SEED MODAL -->
-
-        <div
-            class="game-modal"
-            id="seed-modal"
-        >
-
-            <div
-                class="g-modal-content"
-                style="max-width:500px;width:90%"
-            >
-
-                <h3
-                    class="serif"
-                    style="color:var(--sage);margin-bottom:15px"
-                >
-                    Chọn hạt giống để trồng
-                </h3>
-
-                <div
-                    class="item-grid"
-                    id="seed-select-grid"
-                    style="grid-template-columns:repeat(auto-fill,minmax(120px,1fr));max-height:300px;overflow-y:auto"
-                ></div>
-
-                <button
-                    onclick="closeGameModal()"
-                    style="margin-top:20px;background:none;color:var(--text-light);text-decoration:underline"
-                >
-                    Hủy
-                </button>
-
+            <!-- SEED MODAL -->
+            <div class="game-modal" id="seed-modal">
+                <div class="g-modal-content" style="max-width:500px;width:90%">
+                    <h3 class="serif" style="color:var(--sage);margin-bottom:15px">Chọn hạt giống để trồng</h3>
+                    <div class="item-grid" id="seed-select-grid" style="grid-template-columns:repeat(auto-fill,minmax(120px,1fr));max-height:300px;overflow-y:auto"></div>
+                    <button onclick="closeGameModal('seed-modal')" style="margin-top:20px;background:none;color:var(--text-light);text-decoration:underline">Hủy</button>
+                </div>
             </div>
-
         </div>
+    </section>
 
+    <!-- MUSIC CONTROL -->
+    <div class="music-player">
+        <i class="fa-solid fa-music"></i>
+        <span style="font-size:.85rem;font-weight:600">Giai điệu mùa thu</span>
+        <button id="music-toggle" onclick="toggleMusic()" title="Bật / tắt nhạc">🔊</button>
     </div>
-
-</section>
-
-<!-- MUSIC CONTROL -->
-
-<div class="music-player">
-
-    <i class="fa-solid fa-music"></i>
-
-    <span style="font-size:.85rem;font-weight:600">
-        Giai điệu mùa thu
-    </span>
-
-    <button
-        id="music-toggle"
-        onclick="toggleMusic()"
-        title="Bật / tắt nhạc"
-    >
-        🔊
-    </button>
-
 </div>
 
-</div>
-
-<!-- ========================================================= -->
-<!-- ================= CHAR DETAIL MODAL ===================== -->
-<!-- ========================================================= -->
-
-<div
-    class="overlay"
-    id="char-modal"
->
-
+<!-- ================= MODALS (CHAR & ADMIN) ================= -->
+<div class="overlay" id="char-modal">
     <div class="modal-box">
-
-        <button
-            class="close-modal"
-            onclick="closeOverlay('char-modal')"
-        >
-            ×
-        </button>
-
+        <button class="close-modal" onclick="closeOverlay('char-modal')">×</button>
         <div id="char-modal-content"></div>
-
     </div>
-
 </div>
 
-<!-- ========================================================= -->
-<!-- ================= ADMIN LOGIN MODAL ===================== -->
-<!-- ========================================================= -->
-
-<div
-    class="overlay"
-    id="admin-modal"
->
-
+<div class="overlay" id="admin-modal">
     <div class="modal-box admin-modal">
-
-        <button
-            class="close-modal"
-            onclick="closeAdmin()"
-        >
-            ×
-        </button>
-
-        <!-- LOGIN -->
-
-        <div
-            id="admin-login"
-            class="admin-login"
-        >
-
-            <div class="admin-login-icon">
-                👑
-            </div>
-
-            <h2 class="serif">
-                Khu Vực Quản Lý
-            </h2>
-
-            <p style="color:var(--text-light);margin-top:8px">
-                Chỉ chính chủ mới có quyền truy cập.
-            </p>
-
-            <input
-                id="admin-password"
-                class="admin-password"
-                type="password"
-                placeholder="Nhập mật khẩu quản lý..."
-                const ADMIN_PASSWORD = "omlaynoinho";
-                autocomplete="off"
-            >
-
-            <div
-                id="admin-error"
-                class="admin-error"
-            ></div>
-
-            <button
-                class="btn-vintage"
-                onclick="loginAdmin()"
-                style="margin:auto"
-            >
-                🔐 Đăng nhập
-            </button>
-
+        <button class="close-modal" onclick="closeAdmin()">×</button>
+        <div id="admin-login" class="admin-login">
+            <div class="admin-login-icon">👑</div>
+            <h2 class="serif">Khu Vực Quản Lý</h2>
+            <p style="color:var(--text-light);margin-top:8px">Chỉ chính chủ mới có quyền truy cập.</p>
+            <input id="admin-password" class="admin-password" type="password" placeholder="Nhập mật khẩu quản lý..." autocomplete="off">
+            <div id="admin-error" class="admin-error"></div>
+            <button class="btn-vintage" onclick="loginAdmin()" style="margin:auto">🔐 Đăng nhập</button>
         </div>
-
-        <!-- ADMIN PANEL -->
-
-        <div
-            id="admin-panel"
-            class="admin-panel"
-        >
-
-            <h2
-                class="section-title serif"
-                style="font-size:1.6rem;margin-bottom:20px"
-            >
-                👑 Quản Lý Nhân Vật
-            </h2>
-
-            <form
-                class="admin-form"
-                onsubmit="saveCharacter(event)"
-            >
-
-                <!-- TÊN -->
-
-                <div class="form-group">
-
-                    <label>
-                        👤 Tên nhân vật
-                    </label>
-
-                    <input
-                        id="admin-name"
-                        type="text"
-                        required
-                        placeholder="Tên character"
-                    >
-
-                </div>
-
-                <!-- AVATAR -->
-
-                <div class="form-group">
-
-                    <label>
-                        🖼️ Avatar Google Drive
-                    </label>
-
-                    <input
-                        id="admin-avatar"
-                        type="url"
-                        placeholder="Link chia sẻ Google Drive"
-                        oninput="previewAvatar()"
-                    >
-
-                    <img
-                        id="avatar-preview"
-                        class="avatar-preview"
-                        alt="Avatar preview"
-                    >
-
-                </div>
-
-                <!-- TAG -->
-
-                <div class="form-group">
-
-                    <label>
-                        🏷️ Tag
-                    </label>
-
-                    <input
-                        id="admin-tags"
-                        type="text"
-                        placeholder="#BL, #BG, #ChiếmHữu..."
-                    >
-
-                </div>
-
-                <!-- GỢI Ý NỘI DUNG -->
-
-                <div class="form-group">
-
-                    <label>
-                        💡 Gợi ý nội dung
-                    </label>
-
-                    <input
-                        id="admin-slogan"
-                        type="text"
-                        placeholder="Một câu giới thiệu ngắn..."
-                    >
-
-                </div>
-
-                <!-- PLOT -->
-
-                <div class="form-group full">
-
-                    <label>
-                        📖 Bối cảnh / Plot
-                    </label>
-
-                    <textarea
-                        id="admin-plot"
-                        placeholder="Nhập bối cảnh nhân vật...
-
-Có thể xuống dòng.
-Có thể cách dòng.
-Nội dung sẽ được giữ nguyên khi hiển thị."
-                    ></textarea>
-
-                </div>
-
-                <!-- GOOGLE AI STUDIO -->
-
-                <div class="form-group full">
-
-                    <label>
-                        🔗 Link nhân vật Google AI Studio
-                    </label>
-
-                    <input
-                        id="admin-ai-link"
-                        type="url"
-                        placeholder="Dán link Google AI Studio..."
-                    >
-
-                </div>
-
-                <!-- CÂU HỎI -->
-
-                <div class="form-group">
-
-                    <label>
-                        ❓ Câu hỏi mở khóa
-                    </label>
-
-                    <textarea
-                        id="admin-question"
-                        placeholder="Nhập câu hỏi..."
-                    ></textarea>
-
-                </div>
-
-                <!-- GỢI Ý -->
-
-                <div class="form-group">
-
-                    <label>
-                        💡 Gợi ý giải mật khẩu
-                    </label>
-
-                    <textarea
-                        id="admin-hint"
-                        placeholder="Nhập gợi ý..."
-                    ></textarea>
-
-                </div>
-
-                <!-- PASSWORD -->
-
-                <div class="form-group full">
-
-                    <label>
-                        🔐 Mật khẩu mở khóa nhân vật
-                    </label>
-
-                    <input
-                        id="admin-char-password"
-                        type="password"
-                        autocomplete="new-password"
-                        placeholder="Mật khẩu mở khóa"
-                    >
-
-                </div>
-
+        <div id="admin-panel" class="admin-panel">
+            <h2 class="section-title serif" style="font-size:1.6rem;margin-bottom:20px">👑 Quản Lý Nhân Vật</h2>
+            <form class="admin-form" onsubmit="saveCharacter(event)">
+                <div class="form-group"><label>👤 Tên nhân vật</label><input id="admin-name" type="text" required placeholder="Tên character"></div>
+                <div class="form-group"><label>🖼️ Avatar Google Drive</label><input id="admin-avatar" type="url" placeholder="Link chia sẻ Google Drive" oninput="previewAvatar()"><img id="avatar-preview" class="avatar-preview" alt="Avatar preview"></div>
+                <div class="form-group"><label>🏷️ Tag</label><input id="admin-tags" type="text" placeholder="#BL, #BG, #ChiếmHữu..."></div>
+                <div class="form-group"><label>💡 Gợi ý nội dung</label><input id="admin-slogan" type="text" placeholder="Một câu giới thiệu ngắn..."></div>
+                <div class="form-group full"><label>📖 Bối cảnh / Plot</label><textarea id="admin-plot" placeholder="Nhập bối cảnh nhân vật..."></textarea></div>
+                <div class="form-group full"><label>🔗 Link nhân vật Google AI Studio</label><input id="admin-ai-link" type="url" placeholder="Dán link Google AI Studio..."></div>
+                <div class="form-group"><label>❓ Câu hỏi mở khóa</label><textarea id="admin-question" placeholder="Nhập câu hỏi..."></textarea></div>
+                <div class="form-group"><label>💡 Gợi ý giải mật khẩu</label><textarea id="admin-hint" placeholder="Nhập gợi ý..."></textarea></div>
+                <div class="form-group full"><label>🔐 Mật khẩu mở khóa</label><input id="admin-char-password" type="password" autocomplete="new-password" placeholder="Mật khẩu mở khóa"></div>
                 <div class="admin-actions">
-
-                    <button
-                        type="submit"
-                        class="btn-vintage"
-                    >
-                        💾 Lưu nhân vật / Đăng nhân vật
-                    </button>
-
-                    <button
-                        type="button"
-                        class="btn-secondary"
-                        onclick="resetAdminForm()"
-                    >
-                        ↩️ Làm mới
-                    </button>
-
-                    <button
-                        type="button"
-                        class="btn-danger"
-                        onclick="closeAdmin()"
-                    >
-                        🚪 Thoát quản lý
-                    </button>
-
+                    <button type="submit" class="btn-vintage">💾 Lưu nhân vật</button>
+                    <button type="button" class="btn-secondary" onclick="resetAdminForm()">↩️ Làm mới</button>
+                    <button type="button" class="btn-danger" onclick="closeAdmin()">🚪 Thoát quản lý</button>
                 </div>
-
             </form>
-
             <div class="admin-list">
-
-                <h3
-                    class="serif"
-                    style="color:var(--warm-brown);margin-bottom:15px"
-                >
-                    📚 Nhân vật đã đăng
-                </h3>
-
+                <h3 class="serif" style="color:var(--warm-brown);margin-bottom:15px">📚 Nhân vật đã đăng</h3>
                 <div id="admin-character-list"></div>
-
             </div>
-
         </div>
-
     </div>
-
 </div>
 
-<!-- ========================================================= -->
-<!-- ================= UNLOCK MODAL =========================== -->
-<!-- ========================================================= -->
-
-<div
-    class="overlay"
-    id="unlock-modal"
->
-
+<div class="overlay" id="unlock-modal">
     <div class="modal-box">
-
-        <button
-            class="close-modal"
-            onclick="closeOverlay('unlock-modal')"
-        >
-            ×
-        </button>
-
+        <button class="close-modal" onclick="closeOverlay('unlock-modal')">×</button>
         <div class="unlock-box">
-
-            <div style="font-size:3rem">
-                🔐
-            </div>
-
-            <h2
-                id="unlock-title"
-                class="serif"
-                style="color:var(--warm-brown)"
-            >
-                Nhân vật đang khóa
-            </h2>
-
-            <div
-                id="unlock-question"
-                class="question-box"
-            ></div>
-
-            <div
-                id="unlock-hint"
-                class="question-box"
-            ></div>
-
-            <input
-                id="unlock-password"
-                class="unlock-input"
-                type="password"
-                autocomplete="off"
-                placeholder="Nhập mật khẩu giải khóa..."
-            >
-
-            <div
-                id="unlock-error"
-                style="color:#a26b64;min-height:20px;margin-bottom:10px"
-            ></div>
-
-            <button
-                class="btn-vintage"
-                onclick="unlockCharacter()"
-                style="margin:auto"
-            >
-                🔓 Giải mật khẩu
-            </button>
-
+            <div style="font-size:3rem">🔐</div>
+            <h2 id="unlock-title" class="serif" style="color:var(--warm-brown)">Nhân vật đang khóa</h2>
+            <div id="unlock-question" class="question-box"></div>
+            <div id="unlock-hint" class="question-box"></div>
+            <input id="unlock-password" class="unlock-input" type="password" autocomplete="off" placeholder="Nhập mật khẩu giải khóa...">
+            <div id="unlock-error" style="color:#a26b64;min-height:20px;margin-bottom:10px"></div>
+            <button class="btn-vintage" onclick="unlockCharacter()" style="margin:auto">🔓 Giải mật khẩu</button>
         </div>
-
     </div>
-
 </div>
 
+<!-- ================= JAVASCRIPT LOGIC ================= -->
 <script>
+// --- UTILS ---
+function escapeHTML(value) {
+    return String(value ?? "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");
+}
+function escapeAttribute(value) { return escapeHTML(value); }
 
-/* ============================================================
-   ================= BACKGROUND DECORATION ====================
-   ============================================================ */
+function showToast(message) {
+    const container = document.getElementById("toast-container");
+    const toast = document.createElement("div");
+    toast.className = "toast";
+    toast.innerText = message;
+    container.appendChild(toast);
+    setTimeout(() => toast.remove(), 3000);
+}
 
-const decorations = [
-    "🍂",
-    "🍁",
-    "🌸",
-    "🌼",
-    "🌿",
-    "🦋",
-    "🐦",
-    "🕊️"
-];
-
-function createBackgroundDecorations(){
-
-    const container =
-        document.getElementById("bg-effects");
-
-    for(let i=0;i<25;i++){
-
-        const item =
-            document.createElement("div");
-
-        item.className =
-            "floating-decoration";
-
-        item.innerText =
-            decorations[
-                Math.floor(
-                    Math.random()*decorations.length
-                )
-            ];
-
-        item.style.left =
-            Math.random()*100 + "%";
-
-        item.style.fontSize =
-            (0.7 + Math.random()*1.1) + "rem";
-
-        item.style.animationDuration =
-            (12 + Math.random()*18) + "s";
-
-        item.style.animationDelay =
-            (-Math.random()*20) + "s";
-
+// --- BACKGROUND DECOR ---
+const decorations = ["🍂","🍁","🌸","🌼","🌿","🦋","🐦","🕊️"];
+function createBackgroundDecorations() {
+    const container = document.getElementById("bg-effects");
+    for(let i=0; i<25; i++) {
+        const item = document.createElement("div");
+        item.className = "floating-decoration";
+        item.innerText = decorations[Math.floor(Math.random()*decorations.length)];
+        item.style.left = Math.random()*100 + "%";
+        item.style.fontSize = (0.7 + Math.random()*1.1) + "rem";
+        item.style.animationDuration = (12 + Math.random()*18) + "s";
+        item.style.animationDelay = (-Math.random()*20) + "s";
         container.appendChild(item);
     }
 }
-
 createBackgroundDecorations();
 
-
-/* ============================================================
-   ================= NAVIGATION ===============================
-   ============================================================ */
-
-function nav(sectionId,element){
-
-    document
-        .querySelectorAll("nav a")
-        .forEach(a =>
-            a.classList.remove("active")
-        );
-
-    if(element){
-        element.classList.add("active");
-    }
-
-    document
-        .querySelectorAll(".section")
-        .forEach(sec =>
-            sec.classList.remove("active")
-        );
-
-    document
-        .getElementById(sectionId)
-        .classList.add("active");
-
-    if(sectionId === "chars"){
-        renderCharacters();
-    }
-}
-
-
-/* ============================================================
-   ================= TOAST ====================================
-   ============================================================ */
-
-function showToast(message){
-
-    const container =
-        document.getElementById("toast-container");
-
-    const toast =
-        document.createElement("div");
-
-    toast.className = "toast";
-
-    toast.innerText = message;
-
-    container.appendChild(toast);
-
-    setTimeout(()=>{
-        toast.remove();
-    },3000);
-}
-
-
-/* ============================================================
-   ================= YOUTUBE MUSIC ============================
-   ============================================================ */
-
-/*
-   DÁN LINK VIDEO YOUTUBE CỦA BẠN VÀO ĐÂY.
-
-   Ví dụ:
-   const YOUTUBE_MUSIC_URL = "LINK_VIDEO_YOUTUBE_CUA_BAN";
-*/
-
-const YOUTUBE_MUSIC_URL = "https://youtu.be/GEGSzh4vUuE?si=Z_RXCtPngF-33RIJ";
-
-
-/* Lấy YouTube ID */
-
-function getYoutubeID(url){
-
-    if(!url) return "";
-
-    const patterns = [
-        /youtu\.be\/([^?&]+)/,
-        /youtube\.com\/watch\?v=([^?&]+)/,
-        /youtube\.com\/embed\/([^?&]+)/,
-        /youtube\.com\/shorts\/([^?&]+)/
-    ];
-
-    for(const pattern of patterns){
-
-        const match =
-            url.match(pattern);
-
-        if(match){
-            return match[1];
-        }
-
-    }
-
-    return "";
-}
-
-
+// --- MUSIC ---
+let ytPlayer;
 let musicPlaying = false;
-let youtubeIframe = null;
-
-
-function startYoutubeMusic(){
-
-    const videoId =
-        getYoutubeID(YOUTUBE_MUSIC_URL);
-
-    if(!videoId){
-
-        showToast(
-            "🎵 Hãy thêm link YouTube vào YOUTUBE_MUSIC_URL."
-        );
-
-        return;
-    }
-
-    if(youtubeIframe){
-
-        youtubeIframe.src =
-            youtubeIframe.src.replace(
-                "&mute=1",
-                "&mute=0"
-            );
-
-        musicPlaying = true;
-
-        document.getElementById(
-            "music-toggle"
-        ).innerText = "🔊";
-
-        return;
-    }
-
-    youtubeIframe =
-        document.createElement("iframe");
-
-    youtubeIframe.width = "1";
-    youtubeIframe.height = "1";
-
-    youtubeIframe.src =
-        "https://www.youtube.com/embed/" +
-        videoId +
-        "?autoplay=1&mute=0&loop=1&playlist=" +
-        videoId +
-        "&controls=0&playsinline=1";
-
-    youtubeIframe.allow =
-        "autoplay; encrypted-media";
-
-    youtubeIframe.style.position = "fixed";
-    youtubeIframe.style.left = "-100px";
-    youtubeIframe.style.top = "-100px";
-    youtubeIframe.style.opacity = "0";
-
-    document.body.appendChild(youtubeIframe);
-
-    musicPlaying = true;
-
-    document.getElementById(
-        "music-toggle"
-    ).innerText = "🔊";
-}
-
-
-function toggleMusic(){
-
-    if(!youtubeIframe){
-
-        startYoutubeMusic();
-
-        return;
-    }
-
-    if(musicPlaying){
-
-        youtubeIframe.src =
-            youtubeIframe.src.replace(
-                "autoplay=1",
-                "autoplay=0"
-            );
-
-        musicPlaying = false;
-
-        document.getElementById(
-            "music-toggle"
-        ).innerText = "🔇";
-
-    }else{
-
-        youtubeIframe.src =
-            youtubeIframe.src.replace(
-                "autoplay=0",
-                "autoplay=1"
-            );
-
-        musicPlaying = true;
-
-        document.getElementById(
-            "music-toggle"
-        ).innerText = "🔊";
-    }
-}
-
-
-/* ============================================================
-   ================= INTRO ====================================
-   ============================================================ */
-
-document
-    .getElementById("start-btn")
-    .addEventListener("click",()=>{
-
-        /*
-           QUAN TRỌNG:
-           Nhạc được gọi NGAY trong thao tác click
-           "GỬI THƯ" để tận dụng user gesture của trình duyệt.
-        */
-
-        startYoutubeMusic();
-
-        document
-            .querySelector(".intro-pigeon")
-            .classList.add("pigeon-fly");
-
-        setTimeout(()=>{
-
-            document
-                .getElementById("intro-screen")
-                .style.opacity = "0";
-
-            document
-                .getElementById("intro-screen")
-                .style.visibility = "hidden";
-
-            setTimeout(()=>{
-
-                document
-                    .getElementById("main-app")
-                    .style.visibility = "visible";
-
-                document
-                    .getElementById("main-app")
-                    .style.opacity = "1";
-
-            },600);
-
-        },600);
-
+function onYouTubeIframeAPIReady() {
+    ytPlayer = new YT.Player("youtube-player", {
+        videoId: "GEGSzh4vUuE", // Đổi ID video ở đây
+        playerVars: { autoplay: 0, controls: 0, loop: 1, playlist: "GEGSzh4vUuE" }
     });
+}
+function toggleMusic() {
+    if(!ytPlayer || !ytPlayer.getPlayerState) return;
+    const btn = document.getElementById("music-toggle");
+    if(musicPlaying) {
+        ytPlayer.pauseVideo();
+        musicPlaying = false;
+        btn.innerText = "🔇";
+    } else {
+        ytPlayer.playVideo();
+        musicPlaying = true;
+        btn.innerText = "🔊";
+    }
+}
+const ytScript = document.createElement("script");
+ytScript.src = "https://www.youtube.com/iframe_api";
+document.head.appendChild(ytScript);
 
+// --- APP INIT & INTRO ---
+document.getElementById("start-btn").addEventListener("click", () => {
+    if(ytPlayer && ytPlayer.playVideo) { ytPlayer.playVideo(); musicPlaying = true; }
+    document.querySelector(".intro-pigeon").classList.add("pigeon-fly");
+    setTimeout(() => {
+        document.getElementById("intro-screen").style.opacity = "0";
+        document.getElementById("intro-screen").style.visibility = "hidden";
+        setTimeout(() => {
+            document.getElementById("main-app").style.visibility = "visible";
+            document.getElementById("main-app").style.opacity = "1";
+        }, 600);
+    }, 600);
+});
 
-/* ============================================================
-   ================= CHARACTER DATABASE =======================
-   ============================================================ */
+function nav(sectionId, element) {
+    document.querySelectorAll("nav a").forEach(a => a.classList.remove("active"));
+    if(element) element.classList.add("active");
+    document.querySelectorAll(".section").forEach(sec => sec.classList.remove("active"));
+    document.getElementById(sectionId).classList.add("active");
+    if(sectionId === "chars") renderCharacters();
+}
 
+// ========================================================
+// ================= CHARACTERS & ADMIN ===================
+// ========================================================
 let characters = [];
-
-
-/*
-   Dữ liệu character mẫu.
-   Có thể xóa nếu muốn website bắt đầu hoàn toàn trống.
-*/
-
-const DEFAULT_CHARACTERS = [
-    {
-        id:"default-kaelen",
-        name:"Kaelen",
-        avatar:"",
-        tags:["#Fantasy"],
-        slogan:"Một lá thư chưa bao giờ được gửi.",
-        plot:
-`Một nhân vật đang chờ câu chuyện của riêng mình.
-
-Bạn có thể thay đổi toàn bộ nội dung này trong khu vực quản lý.`,
-        aiLink:"",
-        question:"Nhân vật này đang chờ điều gì?",
-        hint:"Một thứ liên quan đến những lá thư.",
-        password:""
-    }
-];
-
-
-function loadCharacters(){
-
-    const saved =
-        localStorage.getItem(
-            "boCauCharacters"
-        );
-
-    if(saved){
-
-        try{
-
-            characters =
-                JSON.parse(saved);
-
-        }catch(error){
-
-            characters =
-                DEFAULT_CHARACTERS;
-
-        }
-
-    }else{
-
-        characters =
-            DEFAULT_CHARACTERS;
-
-        saveCharacters();
-
-    }
-
-}
-
-
-function saveCharacters(){
-
-    localStorage.setItem(
-        "boCauCharacters",
-        JSON.stringify(characters)
-    );
-
-}
-
-
-/* ============================================================
-   ================= GOOGLE DRIVE IMAGE =======================
-   ============================================================ */
+const DEFAULT_CHARACTERS = [{
+    id:"default-kaelen", name:"Kaelen", avatar:"", tags:["#Fantasy"],
+    slogan:"Một lá thư chưa bao giờ được gửi.",
+    plot:"Một nhân vật đang chờ câu chuyện của riêng mình.",
+    aiLink:"", question:"Nhân vật này đang chờ điều gì?", hint:"Một thứ liên quan đến những lá thư.", password:""
+}];
 
 function convertGoogleDriveURL(url){
-
     if(!url) return "";
-
-    /*
-       Hỗ trợ link dạng:
-       https://drive.google.com/file/d/FILE_ID/view
-    */
-
-    const match =
-        url.match(
-            /\/file\/d\/([^/]+)/
-        );
-
-    if(match){
-
-        return "https://drive.google.com/uc?export=view&id=" + match[1];
-
-    }
-
-    /*
-       Hỗ trợ dạng open?id=FILE_ID
-    */
-
-    const idMatch =
-        url.match(
-            /[?&]id=([^&]+)/
-        );
-
-    if(idMatch){
-
-        return "https://drive.google.com/uc?export=view&id=" + idMatch[1];
-
-    }
-
+    const match = url.match(/\/file\/d\/([^/]+)/);
+    if(match) return "https://drive.google.com/uc?export=view&id=" + match[1];
+    const idMatch = url.match(/[?&]id=([^&]+)/);
+    if(idMatch) return "https://drive.google.com/uc?export=view&id=" + idMatch[1];
     return url;
 }
 
-
-/* ============================================================
-   ================= TAG SYSTEM ================================
-   ============================================================ */
-
-function getAllTags(){
-
-    const set =
-        new Set();
-
-    characters.forEach(char=>{
-
-        (char.tags || [])
-            .forEach(tag=>{
-
-                if(tag.trim()){
-                    set.add(tag.trim());
-                }
-
-            });
-
-    });
-
-    return [...set].sort();
-
-}
-
-
 let selectedTag = "all";
-
-
-function renderTags(){
-
-    const container =
-        document.getElementById(
-            "tag-filter"
-        );
-
+function renderTags() {
+    const container = document.getElementById("tag-filter");
     container.innerHTML = "";
+    const set = new Set();
+    characters.forEach(char => (char.tags || []).forEach(tag => { if(tag.trim()) set.add(tag.trim()); }));
+    
+    const allBtn = document.createElement("button");
+    allBtn.className = "tag-button " + (selectedTag === "all" ? "active" : "");
+    allBtn.innerText = "🌸 Tất cả";
+    allBtn.onclick = () => { selectedTag = "all"; renderTags(); filterCharacters(); };
+    container.appendChild(allBtn);
 
-    const allButton =
-        document.createElement("button");
-
-    allButton.className =
-        "tag-button " +
-        (selectedTag === "all"
-            ? "active"
-            : "");
-
-    allButton.innerText =
-        "🌸 Tất cả";
-
-    allButton.onclick = ()=>{
-
-        selectedTag = "all";
-
-        renderTags();
-        filterCharacters();
-
-    };
-
-    container.appendChild(allButton);
-
-
-    getAllTags().forEach(tag=>{
-
-        const button =
-            document.createElement("button");
-
-        button.className =
-            "tag-button " +
-            (selectedTag === tag
-                ? "active"
-                : "");
-
-        button.innerText = tag;
-
-        button.onclick = ()=>{
-
-            selectedTag = tag;
-
-            renderTags();
-            filterCharacters();
-
-        };
-
-        container.appendChild(button);
-
+    [...set].sort().forEach(tag => {
+        const btn = document.createElement("button");
+        btn.className = "tag-button " + (selectedTag === tag ? "active" : "");
+        btn.innerText = tag;
+        btn.onclick = () => { selectedTag = tag; renderTags(); filterCharacters(); };
+        container.appendChild(btn);
     });
-
 }
 
-
-/* ============================================================
-   ================= RENDER CHARACTER ==========================
-   ============================================================ */
-
-function renderCharacters(){
-
-    renderTags();
-
-    filterCharacters();
-
-}
-
-
-function filterCharacters(){
-
-    const grid =
-        document.getElementById(
-            "char-grid"
-        );
-
-    const search =
-        (
-            document.getElementById(
-                "char-search"
-            )?.value || ""
-        )
-        .trim()
-        .toLowerCase();
-
+function filterCharacters() {
+    const grid = document.getElementById("char-grid");
+    const search = (document.getElementById("char-search")?.value || "").trim().toLowerCase();
     grid.innerHTML = "";
-
-    const filtered =
-        characters.filter(char=>{
-
-            const nameMatch =
-                char.name
-                    .toLowerCase()
-                    .includes(search);
-
-            const tagMatch =
-                (char.tags || [])
-                    .some(tag =>
-                        tag
-                            .toLowerCase()
-                            .includes(search)
-                    );
-
-            const selectedMatch =
-                selectedTag === "all" ||
-                (char.tags || [])
-                    .includes(selectedTag);
-
-            return (
-                (nameMatch || tagMatch) &&
-                selectedMatch
-            );
-
-        });
-
-
-    if(filtered.length === 0){
-
-        grid.innerHTML = `
-            <div style="
-                grid-column:1/-1;
-                text-align:center;
-                padding:50px;
-                color:var(--text-light)
-            ">
-                🕊️ Không tìm thấy lá thư phù hợp.
-            </div>
-        `;
-
-        return;
-    }
-
-
-    filtered.forEach(char=>{
-
-        const card =
-            document.createElement("div");
-
-        card.className =
-            "letter-card";
-
-        const avatar =
-            convertGoogleDriveURL(
-                char.avatar
-            );
-
-        const tags =
-            (char.tags || [])
-                .map(tag =>
-                    `<span class="char-tag">${escapeHTML(tag)}</span>`
-                )
-                .join("");
-
-        const locked =
-            char.password &&
-            char.password.trim() !== "";
-
-        card.innerHTML = `
-
-            ${
-                avatar
-                ?
-                `<img
-                    src="${escapeAttribute(avatar)}"
-                    class="char-avatar"
-                    onerror="this.style.display='none'"
-                >`
-                :
-                `<div
-                    class="char-avatar"
-                    style="
-                        display:flex;
-                        align-items:center;
-                        justify-content:center;
-                        font-size:3rem;
-                    "
-                >
-                    🕊️
-                </div>`
-            }
-
-            <h3 class="char-name serif">
-                ${escapeHTML(char.name)}
-            </h3>
-
-            <p class="char-slogan">
-                ${escapeHTML(char.slogan || "Một lá thư đang chờ được mở...")}
-            </p>
-
-            <div class="char-tags">
-                ${tags}
-            </div>
-
-            ${
-                locked
-                ?
-                `<div class="locked-label">
-                    🔒 Thư bị khóa
-                </div>`
-                :
-                `<div class="unlocked-label">
-                    🔓 Có thể mở thư
-                </div>`
-            }
-
-            <button
-                class="btn-vintage"
-                style="width:100%;padding:9px"
-                onclick="openCharacter('${char.id}')"
-            >
-                ${
-                    locked
-                    ? "🔐 Mở thư"
-                    : "✉️ Đọc thư"
-                }
-            </button>
-
-        `;
-
-        grid.appendChild(card);
-
+    const filtered = characters.filter(char => {
+        const nameMatch = char.name.toLowerCase().includes(search);
+        const tagMatch = (char.tags || []).some(tag => tag.toLowerCase().includes(search));
+        const selectedMatch = selectedTag === "all" || (char.tags || []).includes(selectedTag);
+        return (nameMatch || tagMatch) && selectedMatch;
     });
 
-}
-
-
-/* ============================================================
-   ================= OPEN CHARACTER ============================
-   ============================================================ */
-
-function openCharacter(id){
-
-    const char =
-        characters.find(
-            c => c.id === id
-        );
-
-    if(!char) return;
-
-    if(
-        char.password &&
-        char.password.trim() !== ""
-    ){
-
-        openUnlockModal(char);
-
-    }else{
-
-        showCharacterPlot(char);
-
-    }
-
-}
-
-
-function showCharacterPlot(char){
-
-    const modal =
-        document.getElementById(
-            "char-modal"
-        );
-
-    const content =
-        document.getElementById(
-            "char-modal-content"
-        );
-
-    const avatar =
-        convertGoogleDriveURL(
-            char.avatar
-        );
-
-    const tags =
-        (char.tags || [])
-            .map(tag =>
-                `<span class="char-tag">${escapeHTML(tag)}</span>`
-            )
-            .join("");
-
-    content.innerHTML = `
-
-        ${
-            avatar
-            ?
-            `<img
-                src="${escapeAttribute(avatar)}"
-                class="modal-avatar"
-                onerror="this.style.display='none'"
-            >`
-            :
-            `<div style="
-                text-align:center;
-                font-size:4rem;
-                margin-bottom:15px;
-            ">
-                🕊️
-            </div>`
-        }
-
-        <h2
-            class="serif"
-            style="
-                text-align:center;
-                color:var(--warm-brown);
-            "
-        >
-            ${escapeHTML(char.name)}
-        </h2>
-
-        <p
-            style="
-                text-align:center;
-                color:var(--text-light);
-                font-style:italic;
-                margin:8px 0 12px;
-            "
-        >
-            ${escapeHTML(char.slogan || "")}
-        </p>
-
-        <div
-            class="char-tags"
-            style="margin-bottom:15px"
-        >
-            ${tags}
-        </div>
-
-        <h3
-            class="serif"
-            style="
-                color:var(--sage);
-                margin-top:15px;
-            "
-        >
-            📖 Bối cảnh
-        </h3>
-
-        <div class="plot-content">
-            ${escapeHTML(char.plot || "Chưa có bối cảnh.")}
-        </div>
-
-        <div class="modal-actions">
-
-            ${
-                char.aiLink
-                ?
-                `<button
-                    class="btn-vintage"
-                    onclick="openAILink('${escapeAttribute(char.aiLink)}')"
-                >
-                    🤖 Mở GG AI
-                </button>`
-                :
-                `<button
-                    class="btn-secondary"
-                    disabled
-                >
-                    🤖 Chưa có link GG AI
-                </button>`
-            }
-
-        </div>
-
-    `;
-
-    modal.classList.add("active");
-
-}
-
-
-function openAILink(url){
-
-    if(!url){
-
-        showToast(
-            "❌ Nhân vật chưa có link Google AI Studio."
-        );
-
+    if(filtered.length === 0) {
+        grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:50px;color:var(--text-light)">🕊️ Không tìm thấy lá thư phù hợp.</div>`;
         return;
     }
 
-    window.open(
-        url,
-        "_blank",
-        "noopener,noreferrer"
-    );
-
+    filtered.forEach(char => {
+        const card = document.createElement("div");
+        card.className = "letter-card";
+        const avatar = convertGoogleDriveURL(char.avatar);
+        const tags = (char.tags || []).map(t => `<span class="char-tag">${escapeHTML(t)}</span>`).join("");
+        const locked = char.password && char.password.trim() !== "";
+        card.innerHTML = `
+            ${avatar ? `<img src="${escapeAttribute(avatar)}" class="char-avatar" onerror="this.style.display='none'">` : `<div class="char-avatar" style="display:flex;align-items:center;justify-content:center;font-size:3rem;">🕊️</div>`}
+            <h3 class="char-name serif">${escapeHTML(char.name)}</h3>
+            <p class="char-slogan">${escapeHTML(char.slogan || "Một lá thư đang chờ được mở...")}</p>
+            <div class="char-tags">${tags}</div>
+            ${locked ? `<div class="locked-label">🔒 Thư bị khóa</div>` : `<div class="unlocked-label">🔓 Có thể mở thư</div>`}
+            <button class="btn-vintage" style="width:100%;padding:9px" onclick="openCharacter('${char.id}')">${locked ? "🔐 Mở thư" : "✉️ Đọc thư"}</button>
+        `;
+        grid.appendChild(card);
+    });
 }
-
-
-/* ============================================================
-   ================= UNLOCK CHARACTER ==========================
-   ============================================================ */
 
 let unlockingCharacterId = null;
-
-
-function openUnlockModal(char){
-
-    unlockingCharacterId =
-        char.id;
-
-    document.getElementById(
-        "unlock-title"
-    ).innerText =
-        "🔐 " + char.name;
-
-    document.getElementById(
-        "unlock-question"
-    ).innerHTML =
-        `<strong>❓ Câu hỏi:</strong><br>
-         ${escapeHTML(char.question || "Không có câu hỏi.")}`;
-
-    document.getElementById(
-        "unlock-hint"
-    ).innerHTML =
-        `<strong>💡 Gợi ý:</strong><br>
-         ${escapeHTML(char.hint || "Không có gợi ý.")}`;
-
-    document.getElementById(
-        "unlock-password"
-    ).value = "";
-
-    document.getElementById(
-        "unlock-error"
-    ).innerText = "";
-
-    document
-        .getElementById("unlock-modal")
-        .classList.add("active");
-
-}
-
-
-function unlockCharacter(){
-
-    const char =
-        characters.find(
-            c =>
-                c.id ===
-                unlockingCharacterId
-        );
-
+function openCharacter(id) {
+    const char = characters.find(c => c.id === id);
     if(!char) return;
-
-    const entered =
-        document.getElementById(
-            "unlock-password"
-        ).value;
-
-    if(
-        entered ===
-        char.password
-    ){
-
-        /*
-           Lưu trạng thái mở khóa
-        */
-
-        localStorage.setItem(
-            "unlocked_" + char.id,
-            "true"
-        );
-
-        closeOverlay("unlock-modal");
-
+    if(char.password && char.password.trim() !== "") {
+        unlockingCharacterId = char.id;
+        document.getElementById("unlock-title").innerText = "🔐 " + char.name;
+        document.getElementById("unlock-question").innerHTML = `<strong>❓ Câu hỏi:</strong><br>${escapeHTML(char.question || "Không có câu hỏi.")}`;
+        document.getElementById("unlock-hint").innerHTML = `<strong>💡 Gợi ý:</strong><br>${escapeHTML(char.hint || "Không có gợi ý.")}`;
+        document.getElementById("unlock-password").value = "";
+        document.getElementById("unlock-error").innerText = "";
+        document.getElementById("unlock-modal").classList.add("active");
+    } else {
         showCharacterPlot(char);
-
-        showToast(
-            "🔓 Giải mật khẩu thành công!"
-        );
-
-    }else{
-
-        document.getElementById(
-            "unlock-error"
-        ).innerText =
-            "❌ Mật khẩu không chính xác.";
-
     }
-
 }
 
-
-/* ============================================================
-   ================= ADMIN =====================================
-   ============================================================ */
-
-const ADMIN_PASSWORD =
-    "omlaynoinho";
-
-
-function openAdmin(){
-
-    document
-        .getElementById("admin-modal")
-        .classList.add("active");
-
-    document
-        .getElementById("admin-login")
-        .style.display = "block";
-
-    document
-        .getElementById("admin-panel")
-        .classList.remove("active");
-
-    document
-        .getElementById("admin-password")
-        .value = "";
-
-    document
-        .getElementById("admin-error")
-        .innerText = "";
-
+function unlockCharacter() {
+    const char = characters.find(c => c.id === unlockingCharacterId);
+    if(!char) return;
+    if(document.getElementById("unlock-password").value === char.password) {
+        closeOverlay("unlock-modal");
+        showCharacterPlot(char);
+        showToast("🔓 Giải mật khẩu thành công!");
+    } else {
+        document.getElementById("unlock-error").innerText = "❌ Mật khẩu không chính xác.";
+    }
 }
 
-
-function closeAdmin(){
-
-    document
-        .getElementById("admin-modal")
-        .classList.remove("active");
-
-    resetAdminForm();
-
+function showCharacterPlot(char) {
+    const content = document.getElementById("char-modal-content");
+    const avatar = convertGoogleDriveURL(char.avatar);
+    const tags = (char.tags || []).map(t => `<span class="char-tag">${escapeHTML(t)}</span>`).join("");
+    content.innerHTML = `
+        ${avatar ? `<img src="${escapeAttribute(avatar)}" class="modal-avatar" onerror="this.style.display='none'">` : `<div style="text-align:center;font-size:4rem;margin-bottom:15px;">🕊️</div>`}
+        <h2 class="serif" style="text-align:center;color:var(--warm-brown);">${escapeHTML(char.name)}</h2>
+        <p style="text-align:center;color:var(--text-light);font-style:italic;margin:8px 0 12px;">${escapeHTML(char.slogan || "")}</p>
+        <div class="char-tags" style="margin-bottom:15px">${tags}</div>
+        <h3 class="serif" style="color:var(--sage);margin-top:15px;">📖 Bối cảnh</h3>
+        <div class="plot-content">${escapeHTML(char.plot || "Chưa có bối cảnh.")}</div>
+        <div class="modal-actions">
+            ${char.aiLink ? `<button class="btn-vintage" onclick="window.open('${escapeAttribute(char.aiLink)}','_blank')">🤖 Mở GG AI</button>` : `<button class="btn-secondary" disabled>🤖 Chưa có link GG AI</button>`}
+        </div>
+    `;
+    document.getElementById("char-modal").classList.add("active");
 }
 
+function closeOverlay(id) { document.getElementById(id).classList.remove("active"); }
 
-function loginAdmin(){
-
-    const entered =
-        document
-            .getElementById(
-                "admin-password"
-            )
-            .value;
-
-    if(
-        entered ===
-        ADMIN_PASSWORD
-    ){
-
-        document
-            .getElementById(
-                "admin-login"
-            )
-            .style.display = "none";
-
-        document
-            .getElementById(
-                "admin-panel"
-            )
-            .classList.add("active");
-
+// Admin logic
+const ADMIN_PASSWORD = "omlaynoinho";
+function openAdmin() { document.getElementById("admin-modal").classList.add("active"); document.getElementById("admin-login").style.display = "block"; document.getElementById("admin-panel").classList.remove("active"); }
+function closeAdmin() { document.getElementById("admin-modal").classList.remove("active"); resetAdminForm(); }
+function loginAdmin() {
+    if(document.getElementById("admin-password").value === ADMIN_PASSWORD) {
+        document.getElementById("admin-login").style.display = "none";
+        document.getElementById("admin-panel").classList.add("active");
         renderAdminCharacterList();
-
-        showToast(
-            "👑 Đăng nhập quản lý thành công!"
-        );
-
-    }else{
-
-        document
-            .getElementById(
-                "admin-error"
-            )
-            .innerText =
-            "❌ Mật khẩu không chính xác.";
-
+        showToast("👑 Đăng nhập quản lý thành công!");
+    } else {
+        document.getElementById("admin-error").innerText = "❌ Mật khẩu sai.";
     }
-
 }
-
-
-/* ============================================================
-   ================= ADMIN AVATAR PREVIEW ======================
-   ============================================================ */
-
-function previewAvatar(){
-
-    const input =
-        document.getElementById(
-            "admin-avatar"
-        );
-
-    const preview =
-        document.getElementById(
-            "avatar-preview"
-        );
-
-    const url =
-        convertGoogleDriveURL(
-            input.value.trim()
-        );
-
-    if(url){
-
-        preview.src = url;
-        preview.style.display = "block";
-
-    }else{
-
-        preview.removeAttribute("src");
-        preview.style.display = "none";
-
-    }
-
+function previewAvatar() {
+    const url = convertGoogleDriveURL(document.getElementById("admin-avatar").value.trim());
+    const preview = document.getElementById("avatar-preview");
+    if(url) { preview.src = url; preview.style.display = "block"; } else { preview.style.display = "none"; }
 }
-
-
-/* ============================================================
-   ================= ADMIN SAVE CHARACTER ======================
-   ============================================================ */
 
 let editingCharacterId = null;
+function saveCharacter(e) {
+    e.preventDefault();
+    const charData = {
+        name: document.getElementById("admin-name").value.trim(),
+        avatar: document.getElementById("admin-avatar").value.trim(),
+        tags: document.getElementById("admin-tags").value.split(",").map(t=>t.trim()).filter(Boolean),
+        slogan: document.getElementById("admin-slogan").value.trim(),
+        plot: document.getElementById("admin-plot").value,
+        aiLink: document.getElementById("admin-ai-link").value.trim(),
+        question: document.getElementById("admin-question").value.trim(),
+        hint: document.getElementById("admin-hint").value.trim(),
+        password: document.getElementById("admin-char-password").value
+    };
 
-
-function saveCharacter(event){
-
-    event.preventDefault();
-
-    const name =
-        document
-            .getElementById("admin-name")
-            .value
-            .trim();
-
-    const avatar =
-        document
-            .getElementById("admin-avatar")
-            .value
-            .trim();
-
-    const tagsRaw =
-        document
-            .getElementById("admin-tags")
-            .value
-            .trim();
-
-    const slogan =
-        document
-            .getElementById("admin-slogan")
-            .value
-            .trim();
-
-    const plot =
-        document
-            .getElementById("admin-plot")
-            .value;
-
-    const aiLink =
-        document
-            .getElementById("admin-ai-link")
-            .value
-            .trim();
-
-    const question =
-        document
-            .getElementById("admin-question")
-            .value
-            .trim();
-
-    const hint =
-        document
-            .getElementById("admin-hint")
-            .value
-            .trim();
-
-    const password =
-        document
-            .getElementById("admin-char-password")
-            .value;
-
-
-    const tags =
-        tagsRaw
-            .split(",")
-            .map(tag=>tag.trim())
-            .filter(Boolean);
-
-
-    if(!name){
-
-        showToast(
-            "❌ Chưa nhập tên nhân vật."
-        );
-
-        return;
-    }
-
-
-    if(editingCharacterId){
-
-        const char =
-            characters.find(
-                c =>
-                    c.id ===
-                    editingCharacterId
-            );
-
-        if(char){
-
-            char.name = name;
-            char.avatar = avatar;
-            char.tags = tags;
-            char.slogan = slogan;
-            char.plot = plot;
-            char.aiLink = aiLink;
-            char.question = question;
-            char.hint = hint;
-
-            /*
-               Nếu ô mật khẩu được để trống
-               khi chỉnh sửa thì giữ mật khẩu cũ.
-            */
-
-            if(password.trim() !== ""){
-
-                char.password =
-                    password;
-
-            }
-
+    if(editingCharacterId) {
+        const idx = characters.findIndex(c => c.id === editingCharacterId);
+        if(idx !== -1) {
+            characters[idx] = { ...characters[idx], ...charData };
+            if(charData.password.trim() === "") characters[idx].password = characters[idx].password; // keep old if empty
         }
-
-        showToast(
-            "💾 Đã cập nhật nhân vật!"
-        );
-
-    }else{
-
-        const newCharacter = {
-
-            id:
-                "char-" +
-                Date.now() +
-                "-" +
-                Math.random()
-                    .toString(36)
-                    .slice(2,8),
-
-            name:name,
-
-            avatar:avatar,
-
-            tags:tags,
-
-            slogan:slogan,
-
-            plot:plot,
-
-            aiLink:aiLink,
-
-            question:question,
-
-            hint:hint,
-
-            password:password
-
-        };
-
-        characters.push(
-            newCharacter
-        );
-
-        showToast(
-            "📮 Đã lưu và đăng nhân vật!"
-        );
-
+        showToast("💾 Đã cập nhật!");
+    } else {
+        charData.id = "char-" + Date.now();
+        characters.push(charData);
+        showToast("📮 Đã đăng!");
     }
-
-
-    saveCharacters();
-
-    renderCharacters();
-
-    renderAdminCharacterList();
-
-    resetAdminForm();
-
+    localStorage.setItem("boCauCharacters", JSON.stringify(characters));
+    renderCharacters(); renderAdminCharacterList(); resetAdminForm();
 }
 
-
-/* ============================================================
-   ================= ADMIN CHARACTER LIST ======================
-   ============================================================ */
-
-function renderAdminCharacterList(){
-
-    const container =
-        document.getElementById(
-            "admin-character-list"
-        );
-
-    container.innerHTML = "";
-
-    if(characters.length === 0){
-
-        container.innerHTML =
-            `<p style="color:var(--text-light)">
-                Chưa có nhân vật nào.
-            </p>`;
-
-        return;
-    }
-
-
-    characters.forEach(char=>{
-
-        const row =
-            document.createElement("div");
-
-        row.className =
-            "admin-char-row";
-
-        const avatar =
-            convertGoogleDriveURL(
-                char.avatar
-            );
-
-        const locked =
-            char.password &&
-            char.password.trim() !== "";
-
-        row.innerHTML = `
-
+function renderAdminCharacterList() {
+    const list = document.getElementById("admin-character-list");
+    list.innerHTML = "";
+    characters.forEach(char => {
+        const div = document.createElement("div"); div.className = "admin-char-row";
+        div.innerHTML = `
             <div class="admin-char-info">
-
-                ${
-                    avatar
-                    ?
-                    `<img
-                        src="${escapeAttribute(avatar)}"
-                        onerror="this.style.display='none'"
-                    >`
-                    :
-                    `<div
-                        style="
-                            width:50px;
-                            height:50px;
-                            border-radius:50%;
-                            display:flex;
-                            align-items:center;
-                            justify-content:center;
-                            background:var(--ivory);
-                            font-size:1.5rem;
-                        "
-                    >
-                        🕊️
-                    </div>`
-                }
-
-                <div>
-
-                    <strong>
-                        ${escapeHTML(char.name)}
-                    </strong>
-
-                    <div
-                        style="
-                            font-size:.75rem;
-                            color:var(--text-light);
-                        "
-                    >
-                        ${
-                            locked
-                            ? "🔒 Có mật khẩu"
-                            : "🔓 Không khóa"
-                        }
-                    </div>
-
-                </div>
-
+                ${char.avatar ? `<img src="${escapeAttribute(convertGoogleDriveURL(char.avatar))}">` : `<div>🕊️</div>`}
+                <div><strong>${escapeHTML(char.name)}</strong><br><small>${char.password ? '🔒 Khóa' : '🔓 Mở'}</small></div>
             </div>
-
             <div class="admin-row-actions">
-
-                <button
-                    class="btn-secondary"
-                    onclick="editCharacter('${char.id}')"
-                >
-                    ✏️ Sửa
-                </button>
-
-                <button
-                    class="btn-danger"
-                    onclick="deleteCharacter('${char.id}')"
-                >
-                    🗑️ Xóa
-                </button>
-
+                <button class="btn-secondary" onclick="editCharacter('${char.id}')">✏️ Sửa</button>
+                <button class="btn-danger" onclick="deleteCharacter('${char.id}')">🗑️ Xóa</button>
             </div>
-
         `;
-
-        container.appendChild(row);
-
+        list.appendChild(div);
     });
-
 }
 
-
-/* ============================================================
-   ================= EDIT CHARACTER ============================
-   ============================================================ */
-
-function editCharacter(id){
-
-    const char =
-        characters.find(
-            c => c.id === id
-        );
-
-    if(!char) return;
-
-    editingCharacterId =
-        id;
-
-    document.getElementById(
-        "admin-name"
-    ).value =
-        char.name || "";
-
-    document.getElementById(
-        "admin-avatar"
-    ).value =
-        char.avatar || "";
-
-    document.getElementById(
-        "admin-tags"
-    ).value =
-        (char.tags || []).join(", ");
-
-    document.getElementById(
-        "admin-slogan"
-    ).value =
-        char.slogan || "";
-
-    document.getElementById(
-        "admin-plot"
-    ).value =
-        char.plot || "";
-
-    document.getElementById(
-        "admin-ai-link"
-    ).value =
-        char.aiLink || "";
-
-    document.getElementById(
-        "admin-question"
-    ).value =
-        char.question || "";
-
-    document.getElementById(
-        "admin-hint"
-    ).value =
-        char.hint || "";
-
-    /*
-       Không tự động đưa mật khẩu cũ
-       vào ô password.
-    */
-
-    document.getElementById(
-        "admin-char-password"
-    ).value = "";
-
+function editCharacter(id) {
+    const char = characters.find(c => c.id === id); if(!char) return;
+    editingCharacterId = id;
+    document.getElementById("admin-name").value = char.name;
+    document.getElementById("admin-avatar").value = char.avatar;
+    document.getElementById("admin-tags").value = char.tags.join(", ");
+    document.getElementById("admin-slogan").value = char.slogan;
+    document.getElementById("admin-plot").value = char.plot;
+    document.getElementById("admin-ai-link").value = char.aiLink;
+    document.getElementById("admin-question").value = char.question;
+    document.getElementById("admin-hint").value = char.hint;
+    document.getElementById("admin-char-password").value = "";
     previewAvatar();
-
-    window.scrollTo({
-        top:0,
-        behavior:"smooth"
-    });
-
-    showToast(
-        "✏️ Đang chỉnh sửa " +
-        char.name
-    );
-
 }
 
-
-/* ============================================================
-   ================= DELETE CHARACTER ==========================
-   ============================================================ */
-
-function deleteCharacter(id){
-
-    const char =
-        characters.find(
-            c => c.id === id
-        );
-
-    if(!char) return;
-
-    const confirmed =
-        confirm(
-            "Bạn có chắc muốn xóa nhân vật \"" +
-            char.name +
-            "\" không?"
-        );
-
-    if(!confirmed) return;
-
-    characters =
-        characters.filter(
-            c => c.id !== id
-        );
-
-    localStorage.removeItem(
-        "unlocked_" + id
-    );
-
-    saveCharacters();
-
-    renderCharacters();
-
-    renderAdminCharacterList();
-
-    showToast(
-        "🗑️ Đã xóa nhân vật."
-    );
-
+function deleteCharacter(id) {
+    if(!confirm("Xóa nhân vật này?")) return;
+    characters = characters.filter(c => c.id !== id);
+    localStorage.setItem("boCauCharacters", JSON.stringify(characters));
+    renderCharacters(); renderAdminCharacterList(); showToast("🗑️ Đã xóa.");
 }
 
-
-/* ============================================================
-   ================= RESET ADMIN FORM ==========================
-   ============================================================ */
-
-function resetAdminForm(){
-
+function resetAdminForm() {
     editingCharacterId = null;
-
-    const ids = [
-        "admin-name",
-        "admin-avatar",
-        "admin-tags",
-        "admin-slogan",
-        "admin-plot",
-        "admin-ai-link",
-        "admin-question",
-        "admin-hint",
-        "admin-char-password"
-    ];
-
-    ids.forEach(id=>{
-
-        const element =
-            document.getElementById(id);
-
-        if(element){
-            element.value = "";
-        }
-
-    });
-
-    const preview =
-        document.getElementById(
-            "avatar-preview"
-        );
-
-    preview.removeAttribute("src");
-    preview.style.display = "none";
-
+    document.querySelector(".admin-form").reset();
+    document.getElementById("avatar-preview").style.display = "none";
 }
 
 
-/* ============================================================
-   ================= OVERLAY ===================================
-   ============================================================ */
-
-function closeOverlay(id){
-
-    document
-        .getElementById(id)
-        .classList.remove("active");
-
-}
-
-
-/* ============================================================
-   ================= SECURITY / ESCAPE =========================
-   ============================================================ */
-
-function escapeHTML(value){
-
-    return String(value ?? "")
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
-
-}
-
-
-function escapeAttribute(value){
-
-    return escapeHTML(value);
-
-}
-
-
-/* ============================================================
-   ================= GAME DATABASE =============================
-   ============================================================ */
-
+// ========================================================
+// ================= GAME: KHU VƯỜN =======================
+// ========================================================
 const FLOWER_DB = [
-
-    {
-        id:1,
-        name:"Hoa Tulip",
-        icon:"🌷",
-        rarity:"thuong",
-        buy:20,
-        sell:35,
-        time:30
-    },
-
-    {
-        id:2,
-        name:"Hoa Hướng Dương",
-        icon:"🌻",
-        rarity:"thuong",
-        buy:25,
-        sell:45,
-        time:45
-    },
-
-    {
-        id:3,
-        name:"Hoa Hồng",
-        icon:"🌹",
-        rarity:"thuong",
-        buy:35,
-        sell:60,
-        time:60
-    },
-
-    {
-        id:4,
-        name:"Hoa Cúc",
-        icon:"🌼",
-        rarity:"thuong",
-        buy:15,
-        sell:25,
-        time:20
-    },
-
-    {
-        id:5,
-        name:"Hoa Anh Đào",
-        icon:"🌸",
-        rarity:"thuong",
-        buy:40,
-        sell:70,
-        time:75
-    },
-
-    {
-        id:6,
-        name:"Hoa Oải Hương",
-        icon:"💠",
-        rarity:"thuong",
-        buy:30,
-        sell:55,
-        time:50
-    },
-
-    {
-        id:7,
-        name:"Hoa Dâm Bụt",
-        icon:"🌺",
-        rarity:"thuong",
-        buy:20,
-        sell:35,
-        time:35
-    },
-
-    {
-        id:8,
-        name:"Hoa Cẩm Tú Cầu",
-        icon:"🌿",
-        rarity:"thuong",
-        buy:45,
-        sell:80,
-        time:90
-    },
-
-    {
-        id:9,
-        name:"Hoa Iris",
-        icon:"🪻",
-        rarity:"hiem",
-        buy:100,
-        sell:200,
-        time:180
-    },
-
-    {
-        id:10,
-        name:"Hoa Mẫu Đơn",
-        icon:"🏵️",
-        rarity:"hiem",
-        buy:120,
-        sell:250,
-        time:240
-    },
-
-    {
-        id:11,
-        name:"Hoa Đào",
-        icon:"🍑",
-        rarity:"hiem",
-        buy:150,
-        sell:300,
-        time:300
-    },
-
-    {
-        id:12,
-        name:"Hoa Camellia",
-        icon:"💮",
-        rarity:"hiem",
-        buy:130,
-        sell:260,
-        time:270
-    },
-
-    {
-        id:13,
-        name:"Hoa Cúc Họa Mi",
-        icon:"🏵️",
-        rarity:"hiem",
-        buy:110,
-        sell:220,
-        time:200
-    },
-
-    {
-        id:14,
-        name:"Hoa Sen",
-        icon:"🪷",
-        rarity:"hiem",
-        buy:180,
-        sell:380,
-        time:400
-    },
-
-    {
-        id:15,
-        name:"Hoa Ly",
-        icon:"⚜️",
-        rarity:"hiem",
-        buy:160,
-        sell:330,
-        time:360
-    },
-
-    {
-        id:16,
-        name:"Hoa Tử Đằng",
-        icon:"🍇",
-        rarity:"hiem",
-        buy:200,
-        sell:420,
-        time:450
-    },
-
-    {
-        id:17,
-        name:"Hoa Violet",
-        icon:"🪻",
-        rarity:"hiem",
-        buy:140,
-        sell:280,
-        time:280
-    },
-
-    {
-        id:18,
-        name:"Hoa Lan",
-        icon:"🌺",
-        rarity:"suthi",
-        buy:500,
-        sell:1200,
-        time:900
-    },
-
-    {
-        id:19,
-        name:"Hoa Hồng Đen",
-        icon:"🥀",
-        rarity:"suthi",
-        buy:600,
-        sell:1500,
-        time:1200
-    },
-
-    {
-        id:20,
-        name:"Hoa Linh Lan",
-        icon:"🎐",
-        rarity:"suthi",
-        buy:700,
-        sell:1800,
-        time:1500
-    },
-
-    {
-        id:21,
-        name:"Hoa Nguyệt Quang",
-        icon:"✨",
-        rarity:"huyenthoai",
-        buy:1500,
-        sell:4000,
-        time:3600
-    },
-
-    {
-        id:22,
-        name:"Hoa Bồ Câu",
-        icon:"🕊️",
-        rarity:"huyenthoai",
-        buy:2000,
-        sell:6000,
-        time:7200
-    }
-
+    {id:1,name:"Hoa Tulip",icon:"🌷",rarity:"thuong",buy:20,sell:35,time:30},
+    {id:2,name:"Hoa Hướng Dương",icon:"🌻",rarity:"thuong",buy:25,sell:45,time:45},
+    {id:3,name:"Hoa Hồng",icon:"🌹",rarity:"thuong",buy:35,sell:60,time:60},
+    {id:4,name:"Hoa Cúc",icon:"🌼",rarity:"thuong",buy:15,sell:25,time:20},
+    {id:5,name:"Hoa Anh Đào",icon:"🌸",rarity:"thuong",buy:40,sell:70,time:75},
+    {id:6,name:"Hoa Oải Hương",icon:"💠",rarity:"thuong",buy:30,sell:55,time:50},
+    {id:7,name:"Hoa Dâm Bụt",icon:"🌺",rarity:"thuong",buy:20,sell:35,time:35},
+    {id:8,name:"Hoa Cẩm Tú Cầu",icon:"🌿",rarity:"thuong",buy:45,sell:80,time:90},
+    {id:9,name:"Hoa Iris",icon:"🪻",rarity:"hiem",buy:100,sell:200,time:180},
+    {id:10,name:"Hoa Mẫu Đơn",icon:"🏵️",rarity:"hiem",buy:120,sell:250,time:240},
+    {id:11,name:"Hoa Đào",icon:"🍑",rarity:"hiem",buy:150,sell:300,time:300},
+    {id:12,name:"Hoa Camellia",icon:"💮",rarity:"hiem",buy:130,sell:260,time:270},
+    {id:13,name:"Hoa Cúc Họa Mi",icon:"🌼",rarity:"hiem",buy:110,sell:220,time:200},
+    {id:14,name:"Hoa Sen",icon:"🪷",rarity:"hiem",buy:180,sell:380,time:400},
+    {id:15,name:"Hoa Ly",icon:"⚜️",rarity:"hiem",buy:160,sell:330,time:360},
+    {id:16,name:"Hoa Tử Đằng",icon:"🍇",rarity:"hiem",buy:200,sell:420,time:450},
+    {id:17,name:"Hoa Violet",icon:"🪻",rarity:"hiem",buy:140,sell:280,time:280},
+    {id:18,name:"Hoa Lan",icon:"🌺",rarity:"suthi",buy:500,sell:1200,time:900},
+    {id:19,name:"Hoa Hồng Đen",icon:"🥀",rarity:"suthi",buy:600,sell:1500,time:1200},
+    {id:20,name:"Hoa Linh Lan",icon:"🎐",rarity:"suthi",buy:700,sell:1800,time:1500},
+    {id:21,name:"Hoa Nguyệt Quang",icon:"✨",rarity:"huyenthoai",buy:1500,sell:4000,time:3600},
+    {id:22,name:"Hoa Bồ Câu",icon:"🕊️",rarity:"huyenthoai",buy:2000,sell:6000,time:7200}
 ];
 
-
-const RARITY_LABELS = {
-
-    thuong:"⭐ Thường",
-
-    hiem:"🌟 Hiếm",
-
-    suthi:"🔮 Sử Thi",
-
-    huyenthoai:"👑 Huyền Thoại"
-
-};
-
+const RARITY_LABELS = {thuong:"⭐ Thường", hiem:"🌟 Hiếm", suthi:"🔮 Sử Thi", huyenthoai:"👑 Huyền Thoại"};
 
 let gameState = {
-
-    xu:1000,
-
-    inventory:{
-        seeds:{},
-        flowers:{}
-    },
-
-    garden:
-        Array(9)
-            .fill(null)
-            .map(() => ({
-                plantId:null,
-                plantedAt:null,
-                watered:true,
-                stage:0
-            }))
-
+    xu: 1000,
+    inventory: { seeds: {}, flowers: {} },
+    garden: Array(9).fill(null).map(() => ({ plantId: null, plantedAt: null, watered: true, stage: 0 }))
 };
 
+function saveGame() {
+    localStorage.setItem("gardenOfMemories", JSON.stringify(gameState));
+    document.getElementById("ui-xu").innerText = gameState.xu;
+}
+
+function switchGameView(id, btn) {
+    document.querySelectorAll(".game-nav button").forEach(x => x.classList.remove("active"));
+    btn.classList.add("active");
+    document.querySelectorAll(".game-view").forEach(x => x.classList.remove("active"));
+    document.getElementById(id).classList.add("active");
+    if(id === "view-garden") renderGarden();
+    if(id === "view-bag") renderBag();
+    if(id === "view-shop") renderShop();
+    if(id === "view-market") renderMarket();
+}
+
+function getStageIcon(stage, icon) {
+    if(stage===0) return "🌰"; if(stage===1) return "🌱"; if(stage===2) return "🌿"; if(stage===3) return "🌷";
+    return icon;
+}
+
+function renderGarden() {
+    const grid = document.getElementById("garden-grid");
+    grid.innerHTML = "";
+    gameState.garden.forEach((plot, index) => {
+        const div = document.createElement("div");
+        div.className = "garden-plot " + (plot.plantId ? "planted" : "empty");
+        div.innerHTML = `<span class="plot-number">Ô ${index+1}</span>`;
+        if(plot.plantId) {
+            const flower = FLOWER_DB.find(f => f.id == plot.plantId);
+            const progress = Math.min(100, ((Date.now() - plot.plantedAt) / (flower.time * 1000)) * 100);
+            div.innerHTML += getStageIcon(plot.stage, flower.icon);
+            div.innerHTML += `<div class="progress-bar"><div class="progress-fill" style="width:${progress}%"></div></div>`;
+            if(!plot.watered && progress < 100) div.innerHTML += `<div class="water-drop">💧</div>`;
+        } else {
+            div.innerHTML += "🌱";
+        }
+        div.onclick = () => openPlot(index);
+        grid.appendChild(div);
+    });
+}
 
 let currentPlotIndex = null;
-
-
-/* =========================================================
-   GAME
-========================================================= */
-
-/* 22 LOÀI HOA */
-
-const FLOWER_DB=[
-
-{id:1,name:"Hoa Tulip",icon:"🌷",rarity:"thuong",buy:20,sell:35,time:30},
-{id:2,name:"Hoa Hướng Dương",icon:"🌻",rarity:"thuong",buy:25,sell:45,time:45},
-{id:3,name:"Hoa Hồng",icon:"🌹",rarity:"thuong",buy:35,sell:60,time:60},
-{id:4,name:"Hoa Cúc",icon:"🌼",rarity:"thuong",buy:15,sell:25,time:20},
-{id:5,name:"Hoa Anh Đào",icon:"🌸",rarity:"thuong",buy:40,sell:70,time:75},
-{id:6,name:"Hoa Oải Hương",icon:"💠",rarity:"thuong",buy:30,sell:55,time:50},
-{id:7,name:"Hoa Dâm Bụt",icon:"🌺",rarity:"thuong",buy:20,sell:35,time:35},
-{id:8,name:"Hoa Cẩm Tú Cầu",icon:"🌿",rarity:"thuong",buy:45,sell:80,time:90},
-
-{id:9,name:"Hoa Iris",icon:"🪻",rarity:"hiem",buy:100,sell:200,time:180},
-{id:10,name:"Hoa Mẫu Đơn",icon:"🏵️",rarity:"hiem",buy:120,sell:250,time:240},
-{id:11,name:"Hoa Đào",icon:"🍑",rarity:"hiem",buy:150,sell:300,time:300},
-{id:12,name:"Hoa Camellia",icon:"💮",rarity:"hiem",buy:130,sell:260,time:270},
-{id:13,name:"Hoa Cúc Họa Mi",icon:"🌼",rarity:"hiem",buy:110,sell:220,time:200},
-{id:14,name:"Hoa Sen",icon:"🪷",rarity:"hiem",buy:180,sell:380,time:400},
-{id:15,name:"Hoa Ly",icon:"⚜️",rarity:"hiem",buy:160,sell:330,time:360},
-{id:16,name:"Hoa Tử Đằng",icon:"🍇",rarity:"hiem",buy:200,sell:420,time:450},
-{id:17,name:"Hoa Violet",icon:"🪻",rarity:"hiem",buy:140,sell:280,time:280},
-
-{id:18,name:"Hoa Lan",icon:"🌺",rarity:"suthi",buy:500,sell:1200,time:900},
-{id:19,name:"Hoa Hồng Đen",icon:"🥀",rarity:"suthi",buy:600,sell:1500,time:1200},
-{id:20,name:"Hoa Linh Lan",icon:"🎐",rarity:"suthi",buy:700,sell:1800,time:1500},
-
-{id:21,name:"Hoa Nguyệt Quang",icon:"✨",rarity:"huyenthoai",buy:1500,sell:4000,time:3600},
-{id:22,name:"Hoa Bồ Câu",icon:"🕊️",rarity:"huyenthoai",buy:2000,sell:6000,time:7200}
-
-];
-
-const RARITY_LABELS={
-
-    thuong:"⭐ Thường",
-    hiem:"🌟 Hiếm",
-    suthi:"🔮 Sử Thi",
-    huyenthoai:"👑 Huyền Thoại"
-
-};
-
-/* GAME STATE */
-
-let gameState=
-JSON.parse(
-    localStorage.getItem("gardenOfMemories")
-)||{
-
-    xu:1000,
-
-    inventory:{
-        seeds:{1:5,2:3},
-        flowers:{}
-    },
-
-    garden:Array.from(
-        {length:9},
-        ()=>({
-            plantId:null,
-            plantedAt:null,
-            watered:true,
-            stage:0
-        })
-    )
-
-};
-
-let currentPlotIndex=null;
-
-/* SAVE */
-
-function saveGame(){
-
-    localStorage.setItem(
-        "gardenOfMemories",
-        JSON.stringify(gameState)
-    );
-
-    updateHeaderUI();
-
-}
-
-/* HEADER */
-
-function updateHeaderUI(){
-
-    document.getElementById("ui-xu")
-        .innerText=gameState.xu;
-
-}
-
-/* GAME NAV */
-
-function switchGameView(id,button){
-
-    document.querySelectorAll(".game-nav button")
-        .forEach(x=>x.classList.remove("active"));
-
-    button.classList.add("active");
-
-    document.querySelectorAll(".game-view")
-        .forEach(x=>x.classList.remove("active"));
-
-    document.getElementById(id)
-        .classList.add("active");
-
-    if(id==="view-garden")
-        renderGarden();
-
-    if(id==="view-bag")
-        renderBag();
-
-    if(id==="view-shop")
-        renderShop();
-
-    if(id==="view-market")
-        renderMarket();
-
-}
-
-/* STAGE */
-
-function getStageIcon(stage,icon){
-
-    if(stage===0)return"🌰";
-    if(stage===1)return"🌱";
-    if(stage===2)return"🌿";
-    if(stage===3)return"🌷";
-
-    return icon;
-
-}
-
-/* RENDER GARDEN */
-
-function renderGarden(){
-
-    const grid=
-        document.getElementById("garden-grid");
-
-    grid.innerHTML="";
-
-    gameState.garden.forEach((plot,index)=>{
-
-        const div=
-            document.createElement("div");
-
-        div.className=
-            "garden-plot "
-            +(plot.plantId?"planted":"empty");
-
-        div.innerHTML=
-            `<span class="plot-number">
-                Ô ${index+1}
-            </span>`;
-
-        if(plot.plantId){
-
-            const flower=
-                FLOWER_DB.find(
-                    f=>f.id==plot.plantId
-                );
-
-            const progress=
-                Math.min(
-                    100,
-                    ((Date.now()-plot.plantedAt)/
-                    (flower.time*1000))*100
-                );
-
-            div.innerHTML+=
-                getStageIcon(
-                    plot.stage,
-                    flower.icon
-                );
-
-            div.innerHTML+=`
-
-                <div class="progress-bar">
-
-                    <div
-                        class="progress-fill"
-                        style="width:${progress}%">
-                    </div>
-
-                </div>
-            `;
-
-            if(!plot.watered && progress<100){
-
-                div.innerHTML+=`
-                    <div class="water-drop">
-                        💧
-                    </div>
-                `;
-
-            }
-
-        }else{
-
-            div.innerHTML+="🌱";
-
+function openPlot(index) {
+    currentPlotIndex = index;
+    const plot = gameState.garden[index];
+    const actions = document.getElementById("pm-actions");
+    actions.innerHTML = "";
+
+    if(!plot.plantId) {
+        document.getElementById("pm-title").innerText = "🌱 Ô đất " + (index+1);
+        document.getElementById("pm-icon").innerText = "🪹";
+        document.getElementById("pm-status").innerText = "Ô đất đang trống. Hãy chọn hạt giống.";
+        actions.innerHTML = `<button class="btn-vintage" onclick="openSeedSelect()">🌱 Trồng cây</button>`;
+    } else {
+        const flower = FLOWER_DB.find(f => f.id == plot.plantId);
+        const progress = Math.min(100, ((Date.now() - plot.plantedAt) / (flower.time * 1000)) * 100);
+        document.getElementById("pm-title").innerText = flower.name;
+        document.getElementById("pm-icon").innerText = getStageIcon(plot.stage, flower.icon);
+        document.getElementById("pm-status").innerText = `Tiến độ: ${Math.floor(progress)}%`;
+
+        if(progress >= 100) {
+            actions.innerHTML = `<button class="btn-vintage" onclick="harvestFlower()">✨ Thu hoạch</button>`;
+        } else if(!plot.watered) {
+            actions.innerHTML = `<button class="btn-vintage" onclick="waterPlant()">💧 Tưới nước</button>`;
+        } else {
+            actions.innerHTML = `<p style="color:var(--sage)">🌿 Cây đang phát triển tốt.</p>`;
         }
+    }
+    document.getElementById("plot-modal").classList.add("active");
+}
 
-        div.onclick=()=>{
-            openPlot(index);
-        };
+function openGameModal(id) { document.getElementById(id).classList.add("active"); }
+function closeGameModal(id) { document.getElementById(id).classList.remove("active"); }
 
-        grid.appendChild(div);
-
+function openSeedSelect() {
+    closeGameModal("plot-modal");
+    const grid = document.getElementById("seed-select-grid");
+    grid.innerHTML = "";
+    let found = false;
+    Object.entries(gameState.inventory.seeds).forEach(([id, qty]) => {
+        if(qty <= 0) return; found = true;
+        const flower = FLOWER_DB.find(f => f.id == id);
+        grid.innerHTML += `
+            <div class="item-card">
+                <div class="item-icon">${flower.icon}</div>
+                <div class="item-name">${flower.name}</div>
+                <div>Có: ${qty}</div><br>
+                <button class="btn-vintage" style="width:100%" onclick="plantSeed(${id})">Trồng</button>
+            </div>
+        `;
     });
-
+    if(!found) grid.innerHTML = `<p style="grid-column:1/-1;text-align:center">🎒 Bạn không có hạt giống nào.</p>`;
+    openGameModal("seed-modal");
 }
 
-/* OPEN PLOT */
-
-function openPlot(index){
-
-    currentPlotIndex=index;
-
-    const plot=
-        gameState.garden[index];
-
-    const title=
-        document.getElementById("game-modal-title");
-
-    const icon=
-        document.getElementById("game-modal-icon");
-
-    const status=
-        document.getElementById("game-modal-status");
-
-    const actions=
-        document.getElementById("game-modal-actions");
-
-    actions.innerHTML="";
-
-    if(!plot.plantId){
-
-        title.innerText=
-            "🌱 Ô đất "+(index+1);
-
-        icon.innerText="🪹";
-
-        status.innerText=
-            "Ô đất đang trống. Hãy chọn hạt giống.";
-
-        actions.innerHTML=`
-
-            <button
-                class="btn-vintage"
-                onclick="openSeedSelect()">
-
-                🌱 Trồng cây
-
-            </button>
-        `;
-
-    }else{
-
-        const flower=
-            FLOWER_DB.find(
-                f=>f.id==plot.plantId
-            );
-
-        const progress=
-            Math.min(
-                100,
-                ((Date.now()-plot.plantedAt)/
-                (flower.time*1000))*100
-            );
-
-        title.innerText=
-            flower.name;
-
-        icon.innerText=
-            getStageIcon(
-                plot.stage,
-                flower.icon
-            );
-
-        status.innerText=
-            "Tiến độ: "
-            +Math.floor(progress)
-            +"%";
-
-        if(progress>=100){
-
-            actions.innerHTML=`
-
-                <button
-                    class="btn-vintage"
-                    onclick="harvestFlower()">
-
-                    ✨ Thu hoạch
-
-                </button>
-
-            `;
-
-        }else if(!plot.watered){
-
-            actions.innerHTML=`
-
-                <button
-                    class="btn-vintage"
-                    onclick="waterPlant()">
-
-                    💧 Tưới nước
-
-                </button>
-
-            `;
-
-        }else{
-
-            actions.innerHTML=`
-
-                <p style="color:var(--sage)">
-                    🌿 Cây đang phát triển tốt.
-                </p>
-
-            `;
-
-        }
-
-    }
-
-    openModal("game-modal");
-
-}
-
-/* SEED SELECT */
-
-function openSeedSelect(){
-
-    closeModal("game-modal");
-
-    const grid=
-        document.getElementById("seed-grid");
-
-    grid.innerHTML="";
-
-    let found=false;
-
-    Object.entries(
-        gameState.inventory.seeds
-    ).forEach(([id,qty])=>{
-
-        if(qty<=0)return;
-
-        found=true;
-
-        const flower=
-            FLOWER_DB.find(f=>f.id==id);
-
-        const card=
-            document.createElement("div");
-
-        card.className="item-card";
-
-        card.innerHTML=`
-
-            <div class="item-icon">
-                ${flower.icon}
-            </div>
-
-            <div class="item-name">
-                ${flower.name}
-            </div>
-
-            <div>
-                数量: ${qty}
-            </div>
-
-            <br>
-
-            <button
-                class="btn-vintage"
-                onclick="plantSeed(${id})">
-
-                Trồng
-
-            </button>
-
-        `;
-
-        grid.appendChild(card);
-
-    });
-
-    if(!found){
-
-        grid.innerHTML=`
-            <p style="grid-column:1/-1;text-align:center">
-                🎒 Bạn không có hạt giống.
-            </p>
-        `;
-
-    }
-
-    openModal("seed-modal");
-
-}
-
-/* PLANT */
-
-function plantSeed(id){
-
-    if(!gameState.inventory.seeds[id]){
-        return;
-    }
-
+function plantSeed(id) {
+    if(!gameState.inventory.seeds[id]) return;
     gameState.inventory.seeds[id]--;
-
-    gameState.garden[currentPlotIndex]={
-
-        plantId:id,
-
-        plantedAt:Date.now(),
-
-        watered:true,
-
-        stage:0
-
-    };
-
-    saveGame();
-
-    renderGarden();
-
-    closeModal("seed-modal");
-
-    showToast(
-        "🌱 Đã gieo hạt thành công!"
-    );
-
+    gameState.garden[currentPlotIndex] = { plantId: id, plantedAt: Date.now(), watered: true, stage: 0 };
+    saveGame(); renderGarden(); closeGameModal("seed-modal"); showToast("🌱 Đã gieo hạt!");
+}
+function waterPlant() {
+    gameState.garden[currentPlotIndex].watered = true;
+    saveGame(); renderGarden(); closeGameModal("plot-modal"); showToast("💧 Đã tưới nước!");
+}
+function harvestFlower() {
+    const plot = gameState.garden[currentPlotIndex];
+    const flower = FLOWER_DB.find(f => f.id == plot.plantId);
+    gameState.inventory.flowers[plot.plantId] = (gameState.inventory.flowers[plot.plantId] || 0) + 1;
+    gameState.garden[currentPlotIndex] = { plantId: null, plantedAt: null, watered: true, stage: 0 };
+    saveGame(); renderGarden(); closeGameModal("plot-modal"); showToast(`✨ Thu hoạch 1 ${flower.name}`);
 }
 
-/* WATER */
-
-function waterPlant(){
-
-    gameState.garden[currentPlotIndex]
-        .watered=true;
-
-    saveGame();
-
-    renderGarden();
-
-    closeModal("game-modal");
-
-    showToast(
-        "💧 Cây đã được tưới mát!"
-    );
-
-}
-
-/* HARVEST */
-
-function harvestFlower(){
-
-    const plot=
-        gameState.garden[currentPlotIndex];
-
-    const flower=
-        FLOWER_DB.find(
-            f=>f.id==plot.plantId
-        );
-
-    gameState.inventory.flowers[
-        plot.plantId
-    ]=
-        (gameState.inventory.flowers[
-            plot.plantId
-        ]||0)+1;
-
-    gameState.garden[currentPlotIndex]={
-
-        plantId:null,
-        plantedAt:null,
-        watered:true,
-        stage:0
-
-    };
-
-    saveGame();
-
-    renderGarden();
-
-    closeModal("game-modal");
-
-    showToast(
-        "✨ Thu hoạch "
-        +flower.icon
-        +" "
-        +flower.name
-    );
-
-}
-
-/* SHOP */
-
-function renderShop(){
-
-    const grid=
-        document.getElementById("shop-grid");
-
-    grid.innerHTML="";
-
-    FLOWER_DB.forEach(flower=>{
-
-        const card=
-            document.createElement("div");
-
-        card.className="item-card";
-
-        card.innerHTML=`
-
-            <div class="item-icon">
-                ${flower.icon}
-            </div>
-
-            <div class="item-name">
-                ${flower.name}
-            </div>
-
-            <div class="rarity-${flower.rarity}">
-                ${RARITY_LABELS[flower.rarity]}
-            </div>
-
-            <div style="margin:7px 0">
-                ⏰ ${flower.time}s
-            </div>
-
-            <div class="item-price">
-                ${flower.buy} 🪙
-            </div>
-
-            <button
-                class="btn-vintage"
-                onclick="buySeed(${flower.id})">
-
-                Mua hạt
-
-            </button>
-        `;
-
-        grid.appendChild(card);
-
-    });
-
-}
-
-/* BUY */
-
-function buySeed(id){
-
-    const flower=
-        FLOWER_DB.find(f=>f.id===id);
-
-    if(gameState.xu<flower.buy){
-
-        showToast(
-            "❌ Không đủ Xu!"
-        );
-
-        return;
-    }
-
-    gameState.xu-=flower.buy;
-
-    gameState.inventory.seeds[id]=
-        (gameState.inventory.seeds[id]||0)+1;
-
-    saveGame();
-
-    showToast(
-        "🛒 Đã mua 1 hạt "
-        +flower.name
-    );
-
-}
-
-/* BAG */
-
-function renderBag(){
-
-    const grid=
-        document.getElementById("bag-grid");
-
-    grid.innerHTML="";
-
-    let found=false;
-
-    Object.entries(
-        gameState.inventory.seeds
-    ).forEach(([id,qty])=>{
-
-        if(qty<=0)return;
-
-        found=true;
-
-        const f=
-            FLOWER_DB.find(x=>x.id==id);
-
-        grid.innerHTML+=`
-
+function renderShop() {
+    const grid = document.getElementById("shop-grid");
+    grid.innerHTML = "";
+    FLOWER_DB.forEach(f => {
+        grid.innerHTML += `
             <div class="item-card">
-
-                <div class="item-icon">
-                    🌰
-                </div>
-
-                <div class="item-name">
-                    ${f.name}
-                </div>
-
-                <div>
-                    Hạt giống: ${qty}
-                </div>
-
+                <div class="item-icon">${f.icon}</div>
+                <div class="item-name">${f.name}</div>
+                <div class="rarity-${f.rarity}">${RARITY_LABELS[f.rarity]}</div>
+                <div style="margin:7px 0">⏰ ${f.time}s</div>
+                <div class="item-price">${f.buy} 🪙</div>
+                <button class="btn-vintage" onclick="buySeed(${f.id})" style="width:100%">Mua hạt</button>
             </div>
-
         `;
-
     });
-
-    Object.entries(
-        gameState.inventory.flowers
-    ).forEach(([id,qty])=>{
-
-        if(qty<=0)return;
-
-        found=true;
-
-        const f=
-            FLOWER_DB.find(x=>x.id==id);
-
-        grid.innerHTML+=`
-
-            <div class="item-card">
-
-                <div class="item-icon">
-                    ${f.icon}
-                </div>
-
-                <div class="item-name">
-                    ${f.name}
-                </div>
-
-                <div>
-                    Hoa: ${qty}
-                </div>
-
-            </div>
-
-        `;
-
-    });
-
-    if(!found){
-
-        grid.innerHTML=`
-            <p style="grid-column:1/-1;text-align:center">
-                🎒 Túi đồ đang trống.
-            </p>
-        `;
-
-    }
-
+}
+function buySeed(id) {
+    const f = FLOWER_DB.find(x => x.id === id);
+    if(gameState.xu < f.buy) { showToast("❌ Không đủ Xu!"); return; }
+    gameState.xu -= f.buy;
+    gameState.inventory.seeds[id] = (gameState.inventory.seeds[id] || 0) + 1;
+    saveGame(); showToast(`🛒 Mua 1 hạt ${f.name}`);
 }
 
-/* MARKET */
-
-function renderMarket(){
-
-    const grid=
-        document.getElementById("market-grid");
-
-    grid.innerHTML="";
-
-    let found=false;
-
-    Object.entries(
-        gameState.inventory.flowers
-    ).forEach(([id,qty])=>{
-
-        if(qty<=0)return;
-
-        found=true;
-
-        const f=
-            FLOWER_DB.find(x=>x.id==id);
-
-        grid.innerHTML+=`
-
-            <div class="item-card">
-
-                <div class="item-icon">
-                    ${f.icon}
-                </div>
-
-                <div class="item-name">
-                    ${f.name}
-                </div>
-
-                <div>
-                    Đang có: ${qty}
-                </div>
-
-                <div class="item-price">
-                    +${f.sell} 🪙
-                </div>
-
-                <button
-                    class="btn-vintage"
-                    onclick="sellFlower(${f.id})">
-
-                    💰 Bán 1 bông
-
-                </button>
-
-            </div>
-
-        `;
-
+function renderBag() {
+    const grid = document.getElementById("bag-grid");
+    grid.innerHTML = ""; let found = false;
+    Object.entries(gameState.inventory.seeds).forEach(([id, qty]) => {
+        if(qty <= 0) return; found = true; const f = FLOWER_DB.find(x => x.id == id);
+        grid.innerHTML += `<div class="item-card"><div class="item-icon">🌰</div><div class="item-name">${f.name}</div><div>Hạt: ${qty}</div></div>`;
     });
-
-    if(!found){
-
-        grid.innerHTML=`
-            <p style="grid-column:1/-1;text-align:center">
-                🌸 Chưa có hoa để bán.
-            </p>
-        `;
-
-    }
-
+    Object.entries(gameState.inventory.flowers).forEach(([id, qty]) => {
+        if(qty <= 0) return; found = true; const f = FLOWER_DB.find(x => x.id == id);
+        grid.innerHTML += `<div class="item-card"><div class="item-icon">${f.icon}</div><div class="item-name">${f.name}</div><div>Hoa: ${qty}</div></div>`;
+    });
+    if(!found) grid.innerHTML = `<p style="grid-column:1/-1;text-align:center">🎒 Túi đồ đang trống.</p>`;
 }
 
-/* SELL */
+function renderMarket() {
+    const grid = document.getElementById("market-grid");
+    grid.innerHTML = ""; let found = false;
+    Object.entries(gameState.inventory.flowers).forEach(([id, qty]) => {
+        if(qty <= 0) return; found = true; const f = FLOWER_DB.find(x => x.id == id);
+        grid.innerHTML += `
+            <div class="item-card">
+                <div class="item-icon">${f.icon}</div>
+                <div class="item-name">${f.name}</div>
+                <div>Đang có: ${qty}</div>
+                <div class="item-price">+${f.sell} 🪙 / bông</div>
+                <button class="btn-vintage" onclick="sellFlower(${f.id})" style="width:100%; margin-bottom:5px">💰 Bán 1</button>
+                <button class="btn-secondary" onclick="sellAllFlower(${f.id})" style="width:100%">💰 Bán Tất Cả</button>
+            </div>
+        `;
+    });
+    if(!found) grid.innerHTML = `<p style="grid-column:1/-1;text-align:center">🌸 Chưa có hoa để bán.</p>`;
+}
 
-function sellFlower(id){
-
-    const f=
-        FLOWER_DB.find(x=>x.id===id);
-
-    if(!gameState.inventory.flowers[id]){
-        return;
-    }
-
+function sellFlower(id) {
+    const f = FLOWER_DB.find(x => x.id === id);
+    if(!gameState.inventory.flowers[id]) return;
     gameState.inventory.flowers[id]--;
-
-    gameState.xu+=f.sell;
-
-    saveGame();
-
-    renderMarket();
-
-    showToast(
-        "💰 Bán hoa +"
-        +f.sell
-        +" Xu!"
-    );
-
+    gameState.xu += f.sell; saveGame(); renderMarket(); showToast(`💰 +${f.sell} Xu!`);
+}
+function sellAllFlower(id) {
+    const f = FLOWER_DB.find(x => x.id === id);
+    const qty = gameState.inventory.flowers[id];
+    if(!qty) return;
+    gameState.inventory.flowers[id] = 0;
+    const total = f.sell * qty;
+    gameState.xu += total; saveGame(); renderMarket(); showToast(`💰 Bán sạch thu về +${total} Xu!`);
 }
 
-/* =========================================================
-   GAME LOOP
-========================================================= */
-
-setInterval(()=>{
-
-    let changed=false;
-
-    const now=Date.now();
-
-    gameState.garden.forEach(plot=>{
-
-        if(!plot.plantId)return;
-
-        const flower=
-            FLOWER_DB.find(
-                f=>f.id==plot.plantId
-            );
-
-        const progress=
-            (now-plot.plantedAt)/
-            (flower.time*1000);
-
-        let stage=0;
-
-        if(progress>=1)
-            stage=4;
-        else if(progress>=.75)
-            stage=3;
-        else if(progress>=.5)
-            stage=2;
-        else if(progress>=.25)
-            stage=1;
-
-        if(stage!==plot.stage){
-
-            plot.stage=stage;
-
-            changed=true;
-
-        }
-
-        if(
-            Math.random()<.03 &&
-            plot.watered &&
-            stage>0 &&
-            stage<4
-        ){
-
-            plot.watered=false;
-
-            changed=true;
-
-        }
-
+// Game Loop & Pigeon Helper
+const pigeonTexts = [
+    "🌱 Đừng quên tưới cây nhé!", "🌸 Có hoa sắp nở rồi!", 
+    "💰 Chăm hoa để kiếm thêm Xu nhé!", "👀 Hình như có một bông hoa hiếm đang xuất hiện...",
+    "🕊️ Một ngày mùa thu thật đẹp!"
+];
+setInterval(() => {
+    let changed = false; const now = Date.now();
+    gameState.garden.forEach(plot => {
+        if(!plot.plantId) return;
+        const flower = FLOWER_DB.find(f => f.id == plot.plantId);
+        const progress = (now - plot.plantedAt) / (flower.time * 1000);
+        let stage = 0;
+        if(progress >= 1) stage = 4; else if(progress >= .75) stage = 3; else if(progress >= .5) stage = 2; else if(progress >= .25) stage = 1;
+        if(stage !== plot.stage) { plot.stage = stage; changed = true; }
+        // 3% khát nước mỗi giây nếu đang lớn
+        if(Math.random() < 0.03 && plot.watered && stage > 0 && stage < 4) { plot.watered = false; changed = true; }
     });
-
-    if(changed){
-
+    if(changed) {
         saveGame();
-
-        if(
-            document
-            .getElementById("view-garden")
-            .classList
-            .contains("active")
-        ){
-
-            renderGarden();
-
-        }
-
+        if(document.getElementById("view-garden").classList.contains("active")) renderGarden();
     }
+    // Random pigeon text
+    if(Math.random() < 0.05) document.getElementById("pigeon-text").innerText = pigeonTexts[Math.floor(Math.random()*pigeonTexts.length)];
+}, 1000);
 
-},1000);
-
-/* =========================================================
-   ESCAPE HTML
-========================================================= */
-
-function escapeHTML(value){
-
-    return String(value||"")
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
-
-}
-
-/* =========================================================
-   INIT
-========================================================= */
-
-function init(){
-
+// ========================================================
+// ================= INITIALIZATION =======================
+// ========================================================
+window.addEventListener("DOMContentLoaded", () => {
+    // Tải nhân vật
+    const savedChars = localStorage.getItem("boCauCharacters");
+    characters = savedChars ? JSON.parse(savedChars) : DEFAULT_CHARACTERS;
     renderCharacters();
-
-    renderTags();
-
-    renderMails();
-
+    
+    // Tải Game
+    const savedGame = localStorage.getItem("gardenOfMemories");
+    if(savedGame) gameState = JSON.parse(savedGame);
+    else saveGame(); // Save initial if null
+    
+    document.getElementById("ui-xu").innerText = gameState.xu;
     renderGarden();
-
-    renderShop();
-
-    updateHeaderUI();
-
-}
-
-window.addEventListener(
-    "load",
-    init
-);
-
-/* ============================================================
-   ================= INITIALIZE ===============================
-   ============================================================ */
-
-window.addEventListener(
-    "load",
-    ()=>{
-
-        loadCharacters();
-
-        loadGame();
-
-        renderCharacters();
-
-        document
-            .getElementById(
-                "avatar-preview"
-            )
-            .style.display = "none";
-
-    }
-);
-
+});
 </script>
 
 </body>
