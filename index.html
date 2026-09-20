@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hòm Thư Tình Yêu 🕊️💌</title>
+    <!-- Import Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ================= BẢNG MÀU & BIẾN CSS ================= */
+        :root {
+            --dove-white: #FAFAFA;
+            --autumn-beige: #F5F0E6;
+            --blush-pink: #FADADD;
+            --lavender-mist: #E6E6FA;
+            --sage-light: #C1D5C0;
+            --champagne: #F7E7CE;
+            --text-brown: #5C4033;
+            --font-title: 'Playfair Display', serif;
+            --font-body: 'Quicksand', sans-serif;
+        }
+
+        * {
+            margin: 0; padding: 0; box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            color: var(--text-brown);
+            background: linear-gradient(135deg, var(--autumn-beige), var(--blush-pink), var(--champagne));
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* ================= HIỆU ỨNG LÁ RƠI ================= */
+        #falling-leaves {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 1;
+        }
+        .leaf {
+            position: absolute; top: -10%;
+            font-size: 1.2rem; opacity: 0.7;
+            animation: fall linear forwards;
+        }
+        @keyframes fall {
+            to { transform: translateY(110vh) rotate(360deg); }
+        }
+
+        /* ================= MÀN HÌNH LANDING ================= */
+        #landing-page {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            background: rgba(245, 240, 230, 0.9);
+            backdrop-filter: blur(5px);
+            z-index: 100; transition: opacity 1s ease, transform 1s ease;
+        }
+        
+        .landing-content { text-align: center; }
+        .icons { font-size: 3rem; margin-bottom: 20px; animation: float 3s ease-in-out infinite; }
+        .title { font-family: var(--font-title); font-size: 3.5rem; color: var(--text-brown); margin-bottom: 10px; }
+        .subtitle { font-size: 1.2rem; font-style: italic; color: #8B7355; margin-bottom: 40px; }
+        
+        .btn-send {
+            background: var(--dove-white); border: 2px solid var(--sage-light);
+            color: var(--text-brown); font-family: var(--font-body); font-size: 1.2rem; font-weight: 600;
+            padding: 15px 40px; border-radius: 30px; cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: all 0.3s ease;
+        }
+        .btn-send:hover { background: var(--sage-light); transform: translateY(-3px); }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* ================= TRANG CHÍNH ================= */
+        #main-app {
+            display: none; opacity: 0; transition: opacity 1s ease;
+            position: relative; z-index: 10; padding: 20px; max-width: 1200px; margin: 0 auto;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex; justify-content: center; gap: 30px;
+            background: rgba(250, 250, 250, 0.6); backdrop-filter: blur(10px);
+            padding: 15px 30px; border-radius: 50px; margin-bottom: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03); border: 1px solid rgba(255,255,255,0.5);
+        }
+        nav a { text-decoration: none; color: var(--text-brown); font-weight: 600; transition: color 0.3s; cursor: pointer;}
+        nav a:hover { color: #8c9c8b; }
+
+        /* Char Library Grid */
+        .library-title { font-family: var(--font-title); text-align: center; font-size: 2.5rem; margin-bottom: 30px; }
+        
+        .char-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; }
+        
+        .char-card {
+            background: rgba(250, 250, 250, 0.8); backdrop-filter: blur(8px);
+            border-radius: 20px; padding: 20px; text-align: center;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.05); border: 1px solid white;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .char-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(230, 230, 250, 0.8); }
+        
+        .char-avatar { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid var(--champagne); margin-bottom: 15px; }
+        .char-name { font-family: var(--font-title); font-size: 1.5rem; margin-bottom: 5px; }
+        .char-tag { font-size: 0.8rem; background: var(--lavender-mist); padding: 3px 10px; border-radius: 10px; display: inline-block; margin-bottom: 10px;}
+        .char-slogan { font-size: 0.95rem; font-style: italic; color: #7a6352; margin-bottom: 15px; }
+        
+        .btn-view {
+            background: var(--blush-pink); border: none; padding: 10px 20px;
+            border-radius: 20px; color: var(--text-brown); font-weight: 600; cursor: pointer; transition: 0.3s; width: 100%;
+        }
+        .btn-view:hover { background: #f0c5c9; }
+
+        /* ================= POPUP MỞ KHÓA ================= */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.3); backdrop-filter: blur(5px);
+            display: none; justify-content: center; align-items: center; z-index: 1000;
+        }
+        .modal-box {
+            background: var(--dove-white); padding: 40px; border-radius: 20px;
+            text-align: center; max-width: 500px; width: 90%;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1); position: relative;
+        }
+        .close-btn { position: absolute; top: 15px; right: 20px; cursor: pointer; font-size: 1.5rem; }
+        .modal-title { font-family: var(--font-title); font-size: 1.8rem; margin-bottom: 15px; }
+        .modal-input {
+            width: 100%; padding: 12px; margin: 15px 0; border: 2px solid var(--sage-light);
+            border-radius: 10px; font-family: var(--font-body); outline: none; background: #fff;
+        }
+        .error-msg { color: #d9534f; font-size: 0.9rem; margin-bottom: 15px; display: none; }
+        .btn-ai { background: var(--sage-light); display: inline-block; margin-top: 15px; text-decoration: none;}
+
+    </style>
+</head>
+<body>
+
+    <!-- HIỆU ỨNG LÁ RƠI TRẢI ĐỀU -->
+    <div id="falling-leaves"></div>
+
+    <!-- MÀN HÌNH LANDING -->
+    <div id="landing-page">
+        <div class="landing-content">
+            <div class="icons">🕊️ 💌 🌸</div>
+            <h1 class="title">HÒM THƯ TÌNH YÊU</h1>
+            <p class="subtitle">“Một lá thư gửi đến một thế giới khác…”</p>
+            <button class="btn-send" onclick="enterWebsite()">✉️ GỬI THƯ</button>
+        </div>
+    </div>
+
+    <!-- MAIN WEBSITE -->
+    <div id="main-app">
+        <!-- Menu -->
+        <nav>
+            <a href="#">🏠 Trang chủ</a>
+            <a href="#">🔎 Tìm kiếm</a>
+            <a href="#">🏷️ Tag</a>
+            <a href="#">💌 Hộp thư</a>
+            <a href="#">📚 Thư viện</a>
+        </nav>
+
+        <!-- Thư viện Char (Mockup) -->
+        <h2 class="library-title">📚 Thư viện Nhân vật 🍂</h2>
+        <div class="char-grid" id="char-container">
+            <!-- Render bằng Javascript -->
+        </div>
+    </div>
+
+    <!-- POPUP MỞ KHÓA -->
+    <div class="modal-overlay" id="unlock-modal">
+        <div class="modal-box" id="modal-content">
+            <!-- Nội dung thay đổi bằng JS -->
+        </div>
+    </div>
+
+    <!-- TRÌNH PHÁT NHẠC (Ẩn) -->
+    <!-- Sử dụng iframe Youtube tự động phát khi user click -->
+    <div id="music-player-container" style="display:none;"></div>
+
+
+    <!-- ================= JAVASCRIPT LOGIC ================= -->
+    <script>
+        // 1. DỮ LIỆU NHÂN VẬT MẪU (Mô phỏng Database)
+        const characters = [
+            {
+                id: 1,
+                name: "Elias Vance",
+                avatar: "https://i.pinimg.com/564x/4e/c9/a6/4ec9a61b8fba6ab4822edb1ab65b16f3.jpg",
+                tag: "Fantasy / Chiếm hữu",
+                slogan: "Em nghĩ có thể chạy trốn khỏi khu rừng này sao?",
+                isLocked: true,
+                question: "Loài hoa mà Elias tặng bạn trong lần gặp đầu tiên là gì?",
+                hint: "Bắt đầu bằng chữ 'H', có màu đỏ.",
+                pass: "hoahong", // THỰC TẾ: Pass này phải nằm trên Server, không lưu ở đây.
+                plot: "Elias là chúa tể của Khu rừng Tĩnh Lặng. Hắn đã theo dõi bạn từ khi bạn vô tình bước qua ranh giới không gian...<br><br><b>First Message:</b> *Elias nghiêng đầu, chiếc lông chim cài trên mũ hắn khẽ rung rinh.* 'Cuối cùng thư của ta cũng tới tay em.'",
+                aiLink: "https://aistudio.google.com/"
+            },
+            {
+                id: 2,
+                name: "Lucas",
+                avatar: "https://i.pinimg.com/564x/f3/d6/0e/f3d60eeae81beaf96ea2a76ddc22dc9b.jpg",
+                tag: "Hiện đại / Đời thường",
+                slogan: "Này ngốc, uống sữa ấm rồi ngủ sớm đi.",
+                isLocked: false,
+                plot: "Cậu bạn thanh mai trúc mã sống cạnh nhà. Bề ngoài cọc cằn nhưng luôn âm thầm chuẩn bị bữa sáng cho bạn...<br><br><b>First Message:</b> 'Lại thức khuya đọc thư đấy à?'",
+                aiLink: "https://aistudio.google.com/"
+            }
+        ];
+
+        let selectedCharId = null;
+
+        // 2. TẠO HIỆU ỨNG LÁ RƠI
+        function createLeaves() {
+            const container = document.getElementById('falling-leaves');
+            const items = ['🍂', '🍁', '✨', '🌸', '🕊️'];
+            
+            setInterval(() => {
+                const leaf = document.createElement('div');
+                leaf.classList.add('leaf');
+                leaf.innerText = items[Math.floor(Math.random() * items.length)];
+                leaf.style.left = Math.random() * 100 + 'vw';
+                leaf.style.animationDuration = Math.random() * 5 + 10 + 's'; // Rơi chậm 10-15s
+                leaf.style.fontSize = Math.random() * 10 + 10 + 'px';
+                
+                container.appendChild(leaf);
+                
+                // Xóa lá khi rơi xong
+                setTimeout(() => { leaf.remove(); }, 15000);
+            }, 800); // Mỗi 0.8s rớt 1 item
+        }
+
+        // 3. CHUYỂN CẢNH KHI NHẤN "GỬI THƯ"
+        function enterWebsite() {
+            const landing = document.getElementById('landing-page');
+            const mainApp = document.getElementById('main-app');
+
+            // Bật nhạc nền
+            playBackgroundMusic("VwOxsZJzT6E"); // Thay ID Youtube vào đây (nhạc lo-fi/piano nhẹ)
+
+            // Hiệu ứng bay lên và mờ đi
+            landing.style.transform = "translateY(-50px) scale(1.05)";
+            landing.style.opacity = "0";
+
+            setTimeout(() => {
+                landing.style.display = "none";
+                mainApp.style.display = "block";
+                setTimeout(() => { mainApp.style.opacity = "1"; }, 100);
+                renderCharacters(); // Load thẻ char
+            }, 1000);
+        }
+
+        // 4. PHÁT NHẠC (YOUTUBE IFRAME)
+        function playBackgroundMusic(videoId) {
+            const container = document.getElementById('music-player-container');
+            container.innerHTML = `<iframe width="1" height="1" src="https://www.youtube.com/embed/${videoId}?autoplay=1&loop=1&playlist=${videoId}&controls=0" frameborder="0" allow="autoplay"></iframe>`;
+        }
+
+        // 5. HIỂN THỊ DANH SÁCH NHÂN VẬT
+        function renderCharacters() {
+            const container = document.getElementById('char-container');
+            container.innerHTML = "";
+
+            characters.forEach(char => {
+                const lockIcon = char.isLocked ? "🔒" : "📖";
+                const card = `
+                    <div class="char-card">
+                        <img src="${char.avatar}" class="char-avatar" alt="${char.name}">
+                        <h3 class="char-name">${char.name}</h3>
+                        <div class="char-tag">${char.tag}</div>
+                        <p class="char-slogan">"${char.slogan}"</p>
+                        <button class="btn-view" onclick="openChar(${char.id})">
+                            ${lockIcon} XEM THƯ
+                        </button>
+                    </div>
+                `;
+                container.innerHTML += card;
+            });
+        }
+
+        // 6. XỬ LÝ MỞ KHÓA & HIỂN THỊ CHAR
+        function openChar(id) {
+            const char = characters.find(c => c.id === id);
+            selectedCharId = id;
+            const modal = document.getElementById('unlock-modal');
+            const content = document.getElementById('modal-content');
+
+            if (char.isLocked) {
+                // Char bị khóa -> Hiện form nhập mật khẩu
+                content.innerHTML = `
+                    <span class="close-btn" onclick="closeModal()">✖</span>
+                    <h2 class="modal-title">🔒 KHÓA MẬT THƯ</h2>
+                    <p style="color: #666; margin-bottom: 10px;">${char.question}</p>
+                    <p style="font-size: 0.85rem; color: #aaa;">Gợi ý: ${char.hint}</p>
+                    <input type="text" id="pass-input" class="modal-input" placeholder="Nhập mật ngữ vào đây...">
+                    <p id="error-msg" class="error-msg">Hmm… bồ câu chưa nhận được đúng mật thư rồi 🕊️💌</p>
+                    <button class="btn-send" onclick="checkPass()">MỞ KHÓA ✨</button>
+                `;
+            } else {
+                // Char đã mở -> Hiện Plot
+                showPlot(char);
+            }
+            
+            modal.style.display = "flex";
+        }
+
+        function checkPass() {
+            const char = characters.find(c => c.id === selectedCharId);
+            const inputVal = document.getElementById('pass-input').value.toLowerCase().trim();
+            const errorMsg = document.getElementById('error-msg');
+
+            // NOTE: Đây là logic frontend giả lập. Thực tế phải gọi API Backend!
+            if (inputVal === char.pass) {
+                char.isLocked = false; // Cập nhật trạng thái
+                renderCharacters(); // Render lại icon bên ngoài
+                showPlot(char);
+            } else {
+                errorMsg.style.display = "block";
+            }
+        }
+
+        function showPlot(char) {
+            const content = document.getElementById('modal-content');
+            content.innerHTML = `
+                <span class="close-btn" onclick="closeModal()">✖</span>
+                <img src="${char.avatar}" style="width: 80px; height: 80px; border-radius: 50%; margin: 0 auto 10px; display: block; border: 2px solid var(--champagne);">
+                <h2 class="modal-title">📖 PLOT: ${char.name}</h2>
+                <div style="text-align: left; padding: 15px; background: #fff; border-radius: 10px; font-size: 0.95rem; line-height: 1.6; max-height: 300px; overflow-y: auto; border: 1px solid var(--sage-light);">
+                    ${char.plot}
+                </div>
+                <a href="${char.aiLink}" target="_blank" class="btn-send btn-ai">🤖 MỞ GG AI STUDIO</a>
+            `;
+        }
+
+        function closeModal() {
+            document.getElementById('unlock-modal').style.display = "none";
+        }
+
+        // Khởi động lá rơi khi vào web
+        createLeaves();
+
+    </script>
+</body>
+</html>
