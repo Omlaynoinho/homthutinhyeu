@@ -1,539 +1,2078 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HÒM THƯ TÌNH YÊU 🕊️💌</title>
-    
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Quicksand:wght@300;400;500;600&display=swap" rel="stylesheet">
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        dove: '#FAFAFA',
-                        beige: '#F5F0E6',
-                        pink: '#FADADD',
-                        lavender: '#E6E6FA',
-                        sage: '#C1D5C0',
-                        champagne: '#F7E7CE',
-                        brown: '#5C4033'
-                    },
-                    fontFamily: {
-                        serif: ['Playfair Display', 'serif'],
-                        sans: ['Quicksand', 'sans-serif']
-                    }
-                }
-            }
-        }
-    </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🌸 LOVE HAVEN — Secret Flower Garden & AI Characters</title>
+  
+  <!-- Google Fonts: Quicksand (nội dung), Playfair Display (tiêu đề), Caveat (chữ viết tay thư từ) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- Particle.js -->
-    <script src="https://cdn.jsdelivr.net/npm/tsparticles-slim@2.0.6/tsparticles.slim.bundle.min.js"></script>
+  <style>
+    /* ==========================================================================
+       1. VARIABLES & RESET
+       ========================================================================== */
+    :root {
+      --bg-gradient: linear-gradient(135deg, #fdf8f5 0%, #faeef1 45%, #f2f7f2 100%);
+      --primary: #d48b99;
+      --primary-light: #fbebf0;
+      --primary-hover: #c47685;
+      --accent: #93b59b;
+      --accent-soft: #eaf2eb;
+      --lavender: #bda3ce;
+      --text-main: #4a3e42;
+      --text-soft: #7a6b70;
+      --glass-bg: rgba(255, 255, 255, 0.72);
+      --glass-border: rgba(255, 255, 255, 0.9);
+      --glass-shadow: 0 10px 30px rgba(189, 163, 206, 0.15);
+      --card-radius: 24px;
+      --transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
 
-    <!-- FIREBASE SDK (Đã chuyển lên đây cho chuẩn xác) -->
-    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-    <style>
-        body { font-family: 'Quicksand', sans-serif; background-color: #F5F0E6; overflow-x: hidden; color: #5C4033; }
-        h1, h2, h3, .font-serif { font-family: 'Playfair Display', serif; }
-        
-        /* Hiệu ứng mượt */
-        .fade-in { animation: fadeIn 1s ease-in forwards; }
-        .fade-out { animation: fadeOut 1s ease-out forwards; }
-        .float { animation: float 3s ease-in-out infinite; }
-        
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes fadeOut { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-20px); display: none; } }
-        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } }
-        
-        /* Card & UI */
-        .glass-panel { background: rgba(250, 250, 250, 0.85); backdrop-filter: blur(10px); border: 1px solid #F7E7CE; }
-        .char-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(230, 230, 250, 0.8); border-color: #FADADD; }
-        
-        /* Scrollbar dễ thương */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #F5F0E6; }
-        ::-webkit-scrollbar-thumb { background: #F7E7CE; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: #FADADD; }
-    </style>
+    body {
+      font-family: 'Quicksand', sans-serif;
+      background: var(--bg-gradient);
+      color: var(--text-main);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Falling Petals Canvas */
+    #petal-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    /* Floating Butterfly & Lights */
+    .butterfly {
+      position: fixed;
+      font-size: 1.5rem;
+      pointer-events: none;
+      z-index: 999;
+      opacity: 0.75;
+      animation: flyAround 18s ease-in-out infinite alternate;
+    }
+
+    @keyframes flyAround {
+      0% { transform: translate(5vw, 90vh) rotate(5deg) scale(0.9); }
+      30% { transform: translate(45vw, 40vh) rotate(-15deg) scale(1.1); }
+      70% { transform: translate(80vw, 70vh) rotate(20deg) scale(1); }
+      100% { transform: translate(92vw, 15vh) rotate(-10deg) scale(1.05); }
+    }
+
+    /* Glass Effect Class */
+    .glass-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--card-radius);
+      box-shadow: var(--glass-shadow);
+      transition: var(--transition);
+    }
+
+    .glass-card:hover {
+      box-shadow: 0 14px 35px rgba(212, 139, 153, 0.22);
+      transform: translateY(-3px);
+    }
+
+    /* ==========================================================================
+       2. INTRO SCREEN
+       ========================================================================== */
+    #intro-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: linear-gradient(135deg, #fdf6f7 0%, #f6eff2 50%, #edf4ee 100%);
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 20px;
+      transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1), visibility 1.2s;
+    }
+
+    #intro-screen.hide {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .intro-box {
+      max-width: 580px;
+      width: 90%;
+      padding: 48px 36px;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(20px);
+      border: 1.5px solid rgba(255, 230, 235, 0.9);
+      border-radius: 36px;
+      box-shadow: 0 20px 50px rgba(212, 139, 153, 0.2);
+      animation: floatSoft 4s ease-in-out infinite;
+      position: relative;
+    }
+
+    @keyframes floatSoft {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-8px); }
+    }
+
+    .intro-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      color: var(--primary);
+      margin-bottom: 12px;
+      letter-spacing: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .intro-slogan {
+      font-family: 'Caveat', cursive;
+      font-size: 1.6rem;
+      color: var(--text-soft);
+      margin-bottom: 34px;
+    }
+
+    .intro-btn {
+      background: linear-gradient(135deg, #e7a1b0, #d48b99);
+      color: #fff;
+      border: none;
+      font-family: 'Quicksand', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      padding: 16px 42px;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 10px 25px rgba(212, 139, 153, 0.35);
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .intro-btn:hover {
+      transform: scale(1.05) translateY(-2px);
+      box-shadow: 0 15px 32px rgba(212, 139, 153, 0.45);
+      background: linear-gradient(135deg, #d48b99, #c47685);
+    }
+
+    /* ==========================================================================
+       3. MUSIC PLAYER WIDGET
+       ========================================================================== */
+    .music-widget {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 1500;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--glass-border);
+      border-radius: 50px;
+      padding: 8px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+      font-size: 0.9rem;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .music-disc {
+      animation: spin 6s linear infinite;
+      color: var(--primary);
+    }
+
+    .music-disc.paused {
+      animation-play-state: paused;
+    }
+
+    @keyframes spin {
+      100% { transform: rotate(360deg); }
+    }
+
+    #yt-hidden-player {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      top: -9999px;
+      left: -9999px;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* ==========================================================================
+       4. MAIN APP HEADER & NAV
+       ========================================================================== */
+    #main-app {
+      display: none;
+      opacity: 0;
+      transition: opacity 0.8s ease;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 20px 24px 100px 24px;
+    }
+
+    #main-app.active {
+      display: block;
+      opacity: 1;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 28px;
+      padding-top: 15px;
+    }
+
+    .site-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      color: var(--primary);
+      margin-bottom: 6px;
+      letter-spacing: 1px;
+    }
+
+    .site-subtitle {
+      font-family: 'Caveat', cursive;
+      font-size: 1.4rem;
+      color: var(--text-soft);
+    }
+
+    /* Navigation Bar */
+    .nav-bar {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding: 10px 18px;
+      margin-bottom: 35px;
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 40px;
+      box-shadow: 0 6px 20px rgba(212, 139, 153, 0.1);
+    }
+
+    .nav-item {
+      border: none;
+      background: transparent;
+      padding: 10px 20px;
+      border-radius: 30px;
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--text-main);
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-item:hover, .nav-item.active {
+      background: var(--primary-light);
+      color: var(--primary);
+      transform: translateY(-1px);
+    }
+
+    /* ==========================================================================
+       5. SEARCH & TAG FILTER
+       ========================================================================== */
+    .filter-section {
+      margin-bottom: 35px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .search-box {
+      width: 100%;
+      max-width: 580px;
+      position: relative;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 14px 22px 14px 48px;
+      border-radius: 30px;
+      border: 1.5px solid rgba(212, 139, 153, 0.3);
+      background: rgba(255, 255, 255, 0.85);
+      font-family: 'Quicksand', sans-serif;
+      font-size: 0.98rem;
+      color: var(--text-main);
+      outline: none;
+      transition: var(--transition);
+    }
+
+    .search-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 15px rgba(212, 139, 153, 0.25);
+      background: #ffffff;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--primary);
+    }
+
+    .tag-cloud {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      max-width: 800px;
+    }
+
+    .tag-pill {
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid rgba(147, 181, 155, 0.3);
+      color: var(--accent);
+      cursor: pointer;
+      transition: var(--transition);
+      user-select: none;
+    }
+
+    .tag-pill:hover, .tag-pill.active {
+      background: var(--accent);
+      color: #ffffff;
+      border-color: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    /* ==========================================================================
+       6. CHARACTERS GRID
+       ========================================================================== */
+    .char-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 28px;
+    }
+
+    .char-card {
+      padding: 26px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .char-card::before {
+      content: attr(data-floral-decor);
+      position: absolute;
+      top: -12px;
+      right: -8px;
+      font-size: 4rem;
+      opacity: 0.12;
+      pointer-events: none;
+      font-family: serif;
+    }
+
+    .char-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 12px;
+    }
+
+    .char-flower-emblem {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      background: var(--primary-light);
+      flex-shrink: 0;
+      box-shadow: inset 0 2px 6px rgba(0,0,0,0.04);
+    }
+
+    .char-meta h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem;
+      color: var(--text-main);
+      margin-bottom: 4px;
+    }
+
+    .char-flower-name {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .char-slogan {
+      font-style: italic;
+      font-size: 0.92rem;
+      color: var(--text-soft);
+      margin-bottom: 14px;
+      line-height: 1.4;
+    }
+
+    .char-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 18px;
+    }
+
+    .char-tag-item {
+      font-size: 0.75rem;
+      padding: 3px 9px;
+      border-radius: 12px;
+      background: rgba(234, 242, 235, 0.8);
+      color: #58795e;
+      font-weight: 600;
+    }
+
+    .char-status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 18px;
+    }
+
+    .badge-locked {
+      background: #fae6e6;
+      color: #c95d5d;
+    }
+
+    .badge-unlocked {
+      background: #e6f5ea;
+      color: #4b8857;
+    }
+
+    .char-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: auto;
+    }
+
+    .btn-char-action {
+      flex: 1;
+      padding: 10px 14px;
+      border: none;
+      border-radius: 20px;
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-view {
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+    .btn-view:hover {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .btn-ai {
+      background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
+      color: #3b5a82;
+      text-decoration: none;
+    }
+    .btn-ai:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(161, 196, 253, 0.4);
+    }
+
+    /* ==========================================================================
+       7. MAILBOX SECTION (HỘP THƯ)
+       ========================================================================== */
+    .mailbox-container {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 24px;
+      margin-top: 10px;
+    }
+
+    @media (max-width: 860px) {
+      .mailbox-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .mailbox-sidebar {
+      padding: 22px;
+    }
+
+    .mail-nav-btn {
+      width: 100%;
+      text-align: left;
+      padding: 12px 16px;
+      border-radius: 14px;
+      border: none;
+      background: transparent;
+      font-family: 'Quicksand', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-main);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 8px;
+      transition: var(--transition);
+    }
+
+    .mail-nav-btn.active, .mail-nav-btn:hover {
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+
+    .mail-badge-count {
+      margin-left: auto;
+      background: var(--primary);
+      color: #fff;
+      font-size: 0.75rem;
+      padding: 2px 7px;
+      border-radius: 10px;
+    }
+
+    .mailbox-content {
+      padding: 28px;
+      min-height: 480px;
+    }
+
+    .compose-form {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-group label {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-soft);
+    }
+
+    .input-stylish, .select-stylish, .textarea-stylish {
+      padding: 12px 16px;
+      border-radius: 16px;
+      border: 1.5px solid rgba(212, 139, 153, 0.3);
+      background: rgba(255, 255, 255, 0.85);
+      font-family: 'Quicksand', sans-serif;
+      font-size: 0.95rem;
+      color: var(--text-main);
+      outline: none;
+      transition: var(--transition);
+    }
+
+    .input-stylish:focus, .select-stylish:focus, .textarea-stylish:focus {
+      border-color: var(--primary);
+      background: #ffffff;
+      box-shadow: 0 0 12px rgba(212, 139, 153, 0.2);
+    }
+
+    .textarea-stylish {
+      resize: vertical;
+      min-height: 140px;
+      line-height: 1.5;
+    }
+
+    .mail-list-item {
+      padding: 16px 20px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      margin-bottom: 12px;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .mail-list-item:hover {
+      background: #ffffff;
+      transform: translateX(4px);
+      box-shadow: 0 4px 15px rgba(212, 139, 153, 0.15);
+    }
+
+    .mail-sender-tag {
+      font-weight: 700;
+      color: var(--primary);
+      margin-right: 12px;
+    }
+
+    .mail-date {
+      font-size: 0.8rem;
+      color: var(--text-soft);
+    }
+
+    /* ==========================================================================
+       8. ADMIN PANEL & MODALS
+       ========================================================================== */
+    .modal-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(45, 30, 35, 0.45);
+      backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 5000;
+      padding: 16px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal-backdrop.show {
+      display: flex;
+      opacity: 1;
+    }
+
+    .modal-box {
+      width: 100%;
+      max-width: 650px;
+      max-height: 88vh;
+      overflow-y: auto;
+      padding: 32px;
+      background: #ffffff;
+      border-radius: 28px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.2);
+      position: relative;
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .modal-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      color: var(--primary);
+    }
+
+    .modal-close-btn {
+      background: transparent;
+      border: none;
+      font-size: 1.4rem;
+      color: var(--text-soft);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .modal-close-btn:hover {
+      color: var(--primary);
+      transform: rotate(90deg);
+    }
+
+    .admin-subnav {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      padding-bottom: 10px;
+      flex-wrap: wrap;
+    }
+
+    .admin-tab-btn {
+      background: transparent;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-weight: 600;
+      font-family: 'Quicksand', sans-serif;
+      cursor: pointer;
+      color: var(--text-soft);
+      transition: var(--transition);
+    }
+
+    .admin-tab-btn.active, .admin-tab-btn:hover {
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+
+    /* Plot Viewer Modal */
+    .plot-section-title {
+      font-family: 'Playfair Display', serif;
+      color: var(--primary);
+      font-size: 1.15rem;
+      margin-top: 18px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .plot-quote {
+      background: var(--primary-light);
+      padding: 16px 20px;
+      border-radius: 18px;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      color: var(--text-main);
+      border-left: 4px solid var(--primary);
+    }
+
+    /* Notification Toast */
+    #toast-msg {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: rgba(255, 255, 255, 0.95);
+      border: 1px solid var(--primary);
+      color: var(--text-main);
+      padding: 12px 26px;
+      border-radius: 30px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      z-index: 10000;
+      transition: transform 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+      pointer-events: none;
+    }
+
+    #toast-msg.show {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* Common Buttons */
+    .btn-main {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 25px;
+      font-weight: 700;
+      font-family: 'Quicksand', sans-serif;
+      cursor: pointer;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-main:hover {
+      background: var(--primary-hover);
+      box-shadow: 0 6px 20px rgba(212, 139, 153, 0.35);
+      transform: translateY(-2px);
+    }
+
+    .btn-danger {
+      background: #f17373;
+      color: #fff;
+    }
+    .btn-danger:hover {
+      background: #e25555;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* Scrollbar styling */
+    ::-webkit-scrollbar {
+      width: 7px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.03);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(212, 139, 153, 0.4);
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(212, 139, 153, 0.7);
+    }
+  </style>
 </head>
-<body class="relative min-h-screen">
+<body>
 
-    <!-- Vùng chứa hiệu ứng hạt -->
-    <div id="tsparticles" class="fixed inset-0 z-0 pointer-events-none"></div>
+  <!-- Floating Falling Petals / Leaves Canvas -->
+  <canvas id="petal-canvas"></canvas>
 
-    <!-- YouTube Music Player -->
-    <div id="youtube-player" class="hidden"></div>
+  <!-- Atmospheric Butterflies -->
+  <div class="butterfly" style="animation-duration: 22s;">🦋</div>
+  <div class="butterfly" style="animation-duration: 28s; animation-delay: -7s;">✧</div>
+  <div class="butterfly" style="animation-duration: 19s; animation-delay: -12s;">🌸</div>
 
-    <!-- NÚT ADMIN -->
-    <div class="fixed top-4 right-4 z-50">
-        <button onclick="openAdminLogin()" class="text-2xl opacity-40 hover:opacity-100 hover:text-brown transition-all duration-300" title="Quản lý">
-            🗝️
-        </button>
+  <!-- ==========================================================================
+       INTRO SCREEN
+       ========================================================================== -->
+  <div id="intro-screen">
+    <div class="intro-box">
+      <div style="font-size: 2.2rem; margin-bottom: 8px;">🎀</div>
+      <h1 class="intro-title">🌸 LOVE HAVEN 🌸</h1>
+      <p class="intro-slogan" id="intro-slogan-display">Nơi cất giữ những lá thư dịu dàng và những linh hồn AI thơ mộng...</p>
+      
+      <button class="intro-btn" id="btn-enter-haven">
+        <span>💌 GỬI THƯ</span>
+        <i class="fa-solid fa-arrow-right"></i>
+      </button>
+      <div style="margin-top: 20px; font-size: 0.85rem; color: var(--text-soft);">
+        ✿ Chạm nhẹ để bước vào khu vườn bí mật ✿
+      </div>
     </div>
+  </div>
 
-    <!-- TRÌNH ĐIỀU KHIỂN NHẠC -->
-    <div class="fixed bottom-4 left-4 z-50 glass-panel rounded-full px-4 py-2 flex items-center gap-3 shadow-sm hidden" id="music-controls">
-        <button onclick="toggleMusic()" id="music-btn" class="text-xl">🎵</button>
-        <input type="range" id="volume-slider" min="0" max="100" value="50" onchange="changeVolume(this.value)" class="w-20 accent-pink">
-    </div>
+  <!-- ==========================================================================
+       YOUTUBE HIDDEN MUSIC PLAYER
+       ========================================================================== -->
+  <div id="yt-hidden-player"></div>
+  <div class="music-widget" id="music-toggle-btn" title="Bật/Tắt nhạc nền khu vườn">
+    <i class="fa-solid fa-compact-disc music-disc paused" id="music-disc-icon"></i>
+    <span id="music-status-text">Bật Nhạc 🎵</span>
+  </div>
 
-    <!-- MÀN HÌNH MỞ ĐẦU -->
-    <div id="landing-screen" class="fixed inset-0 z-40 flex flex-col items-center justify-center bg-beige transition-opacity duration-1000">
-        <div class="text-center float">
-            <div class="text-6xl mb-4 text-pink">💌</div>
-            <div class="text-3xl mb-2">🕊️ 🌸 🌿</div>
-            <h1 class="text-5xl md:text-6xl text-brown mb-4">HÒM THƯ TÌNH YÊU</h1>
-            <p class="font-serif italic text-lg text-gray-500 mb-8">"Một lá thư gửi đến một thế giới khác..."</p>
-            <button onclick="enterWorld()" class="bg-dove border border-champagne text-brown px-8 py-3 rounded-full text-lg shadow-sm hover:bg-pink hover:text-white transition-all duration-300">
-                ✉️ GỬI THƯ
-            </button>
+  <!-- ==========================================================================
+       MAIN APP CONTAINER
+       ========================================================================== -->
+  <div id="main-app">
+    <header>
+      <div style="font-size: 1.5rem; margin-bottom: 4px;">🌿 ✿ 🎀 ✿ 🌿</div>
+      <h1 class="site-title" id="site-title-display">LOVE HAVEN</h1>
+      <p class="site-subtitle" id="site-subtitle-display">Khu vườn hoa ngát hương &amp; những người bạn tri kỷ AI</p>
+    </header>
+
+    <!-- Global Navigation -->
+    <nav class="nav-bar">
+      <button class="nav-item active" data-tab="home"><i class="fa-solid fa-house"></i> 🏠 Trang chủ</button>
+      <button class="nav-item" data-tab="search"><i class="fa-solid fa-magnifying-glass"></i> 🔎 Tìm kiếm</button>
+      <button class="nav-item" data-tab="tags"><i class="fa-solid fa-tags"></i> 🏷️ Tags</button>
+      <button class="nav-item" data-tab="mailbox"><i class="fa-solid fa-envelope-open-text"></i> 💌 Hộp thư</button>
+      <button class="nav-item" data-tab="char-list"><i class="fa-solid fa-seedling"></i> 🌸 Danh sách Char</button>
+      <button class="nav-item" id="nav-btn-admin"><i class="fa-solid fa-lock"></i> ⚙️ Admin</button>
+    </nav>
+
+    <!-- SECTION: HOME / CHAR LIST & FILTER -->
+    <main id="view-chars" class="view-section">
+      <!-- Search & Tag Quick Filter -->
+      <section class="filter-section">
+        <div class="search-box">
+          <i class="fa-solid fa-magnifying-glass search-icon"></i>
+          <input type="text" id="main-search-input" class="search-input" placeholder="🔎 Tìm kiếm char theo tên, slogan, cốt truyện, tag...">
         </div>
-    </div>
+        <div class="tag-cloud" id="tag-cloud-container">
+          <!-- Dynamic Tags -->
+        </div>
+      </section>
 
-    <!-- GIAO DIỆN CHÍNH -->
-    <div id="main-screen" class="hidden relative z-10 w-full max-w-6xl mx-auto p-4 pt-16">
-        
-        <nav class="glass-panel rounded-full mb-8 flex justify-center gap-4 md:gap-8 p-3 text-sm md:text-base font-semibold shadow-sm">
-            <button onclick="switchTab('home')" class="hover:text-pink transition-colors">🏠 Trang chủ</button>
-            <button onclick="switchTab('library')" class="hover:text-pink transition-colors">📚 Thư viện</button>
-            <button onclick="switchTab('search')" class="hover:text-pink transition-colors">🔎 Tìm kiếm & Tag</button>
-            <button onclick="switchTab('mailbox')" class="hover:text-pink transition-colors">💌 Hộp thư</button>
-        </nav>
+      <!-- Char Grid -->
+      <section class="char-grid" id="char-grid-container">
+        <!-- Rendered via JS -->
+      </section>
+    </main>
 
-        <div id="tab-home" class="fade-in space-y-8">
-            <div class="glass-panel p-8 rounded-2xl text-center shadow-sm">
-                <h2 class="text-3xl mb-4 text-brown">Chào mừng đến với Hòm Thư 🕊️</h2>
-                <p class="text-gray-600 mb-4">Nơi những dòng thư tay kết nối bạn với những tâm hồn ở thế giới khác.<br>Hãy chọn một nhân vật, giải mã mật thư và bắt đầu câu chuyện của riêng bạn.</p>
-                <div class="bg-champagne/30 text-brown p-3 rounded-lg border border-champagne max-w-2xl mx-auto text-sm italic">
-                    📢 Thông báo: Trang web mới được thành lập. Chúc bạn có những phút giây bình yên.
-                </div>
+    <!-- SECTION: MAILBOX (HỘP THƯ) -->
+    <section id="view-mailbox" class="view-section hidden">
+      <div class="mailbox-container">
+        <div class="mailbox-sidebar glass-card">
+          <h3 style="font-family:'Playfair Display', serif; margin-bottom: 18px; color: var(--primary);">
+            💌 Thư Từ Của Bạn
+          </h3>
+          <button class="mail-nav-btn active" data-mailtab="inbox">
+            <i class="fa-solid fa-inbox"></i> 📬 Thư đã nhận
+            <span class="mail-badge-count" id="inbox-count">0</span>
+          </button>
+          <button class="mail-nav-btn" data-mailtab="sent">
+            <i class="fa-solid fa-paper-plane"></i> ✉️ Thư đã gửi
+            <span class="mail-badge-count" id="sent-count">0</span>
+          </button>
+          <button class="mail-nav-btn" data-mailtab="compose">
+            <i class="fa-solid fa-pen-fancy"></i> ✍️ Soạn thư mới
+          </button>
+          <button class="mail-nav-btn" data-mailtab="recipients">
+            <i class="fa-solid fa-users"></i> 👥 Quản lý người nhận
+          </button>
+        </div>
+
+        <div class="mailbox-content glass-card">
+          <!-- SUBTAB: INBOX -->
+          <div id="mail-subtab-inbox">
+            <h3 style="margin-bottom: 16px; color: var(--text-main);">📬 Hộp Thư Đến</h3>
+            <div id="inbox-list"></div>
+          </div>
+
+          <!-- SUBTAB: SENT -->
+          <div id="mail-subtab-sent" class="hidden">
+            <h3 style="margin-bottom: 16px; color: var(--text-main);">✉️ Hộp Thư Đã Gửi</h3>
+            <div id="sent-list"></div>
+          </div>
+
+          <!-- SUBTAB: COMPOSE -->
+          <div id="mail-subtab-compose" class="hidden">
+            <h3 style="margin-bottom: 16px; color: var(--text-main);">✍️ Gửi Thư Đến Người Bạn Thương</h3>
+            <form id="compose-mail-form" class="compose-form">
+              <div class="form-group">
+                <label>Người nhận:</label>
+                <select id="mail-receiver-select" class="select-stylish" required>
+                  <!-- Populated dynamically -->
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Tiêu đề bức thư:</label>
+                <input type="text" id="mail-subject-input" class="input-stylish" placeholder="Ví dụ: Gửi ngọn gió phương xa..." required>
+              </div>
+              <div class="form-group">
+                <label>Nội dung thư:</label>
+                <textarea id="mail-content-input" class="textarea-stylish" placeholder="Hãy viết những lời tự đáy lòng bạn..." required></textarea>
+              </div>
+              <button type="submit" class="btn-main" style="align-self: flex-start;">
+                <i class="fa-solid fa-heart"></i> 💌 Gửi Thư Đi
+              </button>
+            </form>
+          </div>
+
+          <!-- SUBTAB: RECIPIENTS -->
+          <div id="mail-subtab-recipients" class="hidden">
+            <h3 style="margin-bottom: 16px; color: var(--text-main);">👥 Danh Sách Người Nhận</h3>
+            <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+              <input type="text" id="new-recipient-name" class="input-stylish" placeholder="Tên người nhận mới..." style="flex:1;">
+              <button class="btn-main" id="btn-add-recipient"><i class="fa-solid fa-user-plus"></i> Thêm</button>
             </div>
-            
-            <h3 class="text-2xl text-center text-brown mt-8">✨ Thư mới gửi đến ✨</h3>
-            <div id="home-featured-chars" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
+            <div id="recipient-list" style="display:flex; flex-direction:column; gap:8px;"></div>
+          </div>
         </div>
+      </div>
+    </section>
+  </div>
 
-        <div id="tab-library" class="hidden fade-in">
-            <h2 class="text-3xl text-center text-brown mb-8">Thư Viện Nhân Vật 📚</h2>
-            <div id="library-chars" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
+  <!-- ==========================================================================
+       MODAL 1: ADMIN LOGIN
+       ========================================================================== -->
+  <div class="modal-backdrop" id="modal-admin-login">
+    <div class="modal-box" style="max-width: 420px; text-align: center;">
+      <div style="font-size: 2.2rem; color: var(--primary); margin-bottom: 6px;">🔐</div>
+      <h3 style="font-family:'Playfair Display', serif; font-size: 1.6rem; margin-bottom: 8px;">ADMIN LOGIN</h3>
+      <p style="font-size: 0.88rem; color: var(--text-soft); margin-bottom: 20px;">Vui lòng nhập mật mã quản trị khu vườn</p>
+      
+      <form id="admin-login-form">
+        <input type="password" id="admin-pass-input" class="input-stylish" placeholder="Nhập mật mã..." style="width: 100%; margin-bottom: 18px; text-align: center;">
+        <div style="display: flex; gap: 10px; justify-content: center;">
+          <button type="button" class="btn-main" style="background:#e0d7db; color:#555;" onclick="closeModal('modal-admin-login')">Đóng</button>
+          <button type="submit" class="btn-main">Đăng Nhập ✧</button>
         </div>
-
-        <div id="tab-search" class="hidden fade-in text-center">
-            <h2 class="text-3xl text-brown mb-6">Tìm Kiếm Mật Thư 🔎</h2>
-            <input type="text" id="searchInput" oninput="filterChars()" placeholder="Nhập tên, tag, hoặc nội dung..." class="w-full max-w-xl px-6 py-3 rounded-full border border-champagne bg-dove focus:outline-none focus:border-pink mb-8 shadow-sm text-center">
-            <div class="flex flex-wrap justify-center gap-3 max-w-3xl mx-auto mb-8" id="tag-cloud"></div>
-            <div id="search-results" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
-        </div>
-
-        <div id="tab-mailbox" class="hidden fade-in">
-            <div class="glass-panel rounded-2xl p-8 max-w-4xl mx-auto flex flex-col md:flex-row min-h-[500px]">
-                <div class="w-full md:w-1/3 border-b md:border-b-0 md:border-r border-champagne pr-0 md:pr-4 mb-4 md:mb-0">
-                    <h3 class="text-xl mb-4 text-brown font-serif border-b border-champagne pb-2">Hòm Thư 💌</h3>
-                    <ul class="space-y-2 text-gray-600">
-                        <li class="p-2 bg-beige rounded cursor-pointer hover:bg-pink/20">📬 Hộp thư đến (0)</li>
-                        <li class="p-2 cursor-pointer hover:bg-pink/20 rounded">📤 Thư đã gửi (0)</li>
-                        <li class="p-2 cursor-pointer hover:bg-pink/20 rounded text-pink font-semibold mt-4">✍️ Viết thư mới</li>
-                    </ul>
-                </div>
-                <div class="w-full md:w-2/3 pl-0 md:pl-6 flex flex-col">
-                    <input type="text" placeholder="Gửi đến ai? (Nhập tên Char)" class="w-full bg-transparent border-b border-champagne py-2 mb-4 focus:outline-none focus:border-pink text-brown">
-                    <textarea placeholder="Nội dung thư tay..." class="w-full flex-grow bg-transparent border border-champagne rounded-xl p-4 focus:outline-none focus:border-pink text-brown resize-none" style="background-image: repeating-linear-gradient(transparent, transparent 29px, #F7E7CE 30px); line-height: 30px;"></textarea>
-                    <button class="mt-4 bg-sage text-white px-6 py-2 rounded-full self-end hover:opacity-80 transition-opacity shadow-sm">Gửi đi 🕊️</button>
-                </div>
-            </div>
-        </div>
+      </form>
     </div>
+  </div>
 
-    <!-- MODALS -->
-    <div id="unlock-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/20 backdrop-blur-sm">
-        <div class="glass-panel p-8 rounded-2xl w-full max-w-md text-center border border-pink fade-in relative">
-            <button onclick="closeModal('unlock-modal')" class="absolute top-4 right-4 text-gray-400 hover:text-brown">✖</button>
-            <div class="text-4xl mb-4 text-brown">🔒</div>
-            <h3 class="text-2xl text-brown mb-2 font-serif">Mật Thư Bị Khóa</h3>
-            <p id="unlock-question" class="text-gray-600 mb-2 italic">Câu hỏi...</p>
-            <p id="unlock-hint" class="text-xs text-pink mb-6">Gợi ý: ...</p>
-            <input type="text" id="unlock-pass-input" placeholder="Nhập mật thư..." class="w-full px-4 py-2 border border-champagne rounded-lg bg-dove text-center mb-4 focus:outline-none focus:border-pink">
-            <p id="unlock-error" class="text-red-400 text-sm mb-4 hidden">Hmm… bồ câu chưa nhận được đúng mật thư rồi 🕊️💌</p>
-            <button onclick="submitUnlock()" class="bg-pink text-white px-6 py-2 rounded-full w-full hover:bg-brown transition-colors shadow-sm">Mở Khóa ✨</button>
-        </div>
-    </div>
+  <!-- ==========================================================================
+       MODAL 2: ADMIN PANEL
+       ========================================================================== -->
+  <div class="modal-backdrop" id="modal-admin-panel">
+    <div class="modal-box" style="max-width: 800px;">
+      <div class="modal-header">
+        <h3 class="modal-title">🌸 ADMIN PANEL QUẢN TRỊ</h3>
+        <button class="modal-close-btn" onclick="closeModal('modal-admin-panel')">✕</button>
+      </div>
 
-    <div id="plot-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/20 backdrop-blur-sm p-4">
-        <div class="glass-panel p-8 rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto text-left border border-champagne fade-in relative">
-            <button onclick="closeModal('plot-modal')" class="absolute top-4 right-4 text-gray-400 hover:text-brown text-xl">✖</button>
-            <div class="text-center mb-6 border-b border-champagne pb-4">
-                <span class="text-3xl text-pink mb-2 block">🌸</span>
-                <h3 id="plot-name" class="text-3xl text-brown font-serif">Tên Char</h3>
+      <div class="admin-subnav">
+        <button class="admin-tab-btn active" data-admtab="add-char">＋ Thêm Char</button>
+        <button class="admin-tab-btn" data-admtab="manage-chars">Quản lý Char</button>
+        <button class="admin-tab-btn" data-admtab="music">Quản lý Nhạc</button>
+        <button class="admin-tab-btn" data-admtab="site-settings">Cài đặt Website</button>
+      </div>
+
+      <!-- ADMIN TAB: ADD / EDIT CHAR -->
+      <div id="adm-tab-add-char">
+        <form id="admin-char-form" class="compose-form">
+          <input type="hidden" id="edit-char-id">
+          
+          <div class="form-group">
+            <label>Tên Nhân Vật (Char):</label>
+            <input type="text" id="adm-char-name" class="input-stylish" placeholder="VD: Thẩm Ngôn Chi" required>
+          </div>
+
+          <div class="form-group">
+            <label>Tag (phân cách bằng dấu phẩy):</label>
+            <input type="text" id="adm-char-tags" class="input-stylish" placeholder="VD: Boylove, CổTrang, LạnhLùng" required>
+          </div>
+
+          <div class="form-group">
+            <label>Slogan ngắn:</label>
+            <input type="text" id="adm-char-slogan" class="input-stylish" placeholder="VD: Băng sơn sư tôn chỉ ôn nhu với một mình ngươi." required>
+          </div>
+
+          <div class="form-group">
+            <label>Backstory (Cốt truyện):</label>
+            <textarea id="adm-char-backstory" class="textarea-stylish" placeholder="Nhập bối cảnh, câu chuyện quá khứ sâu lắng..." required></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>First Message (Tin nhắn đầu tiên):</label>
+            <textarea id="adm-char-firstmsg" class="textarea-stylish" placeholder="Lời mở đầu của nhân vật..." required></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Link Google AI Studio:</label>
+            <input type="url" id="adm-char-gailink" class="input-stylish" placeholder="https://aistudio.google.com/..." required>
+          </div>
+
+          <div class="form-group" style="margin-top: 10px;">
+            <label style="display:flex; align-items:center; gap: 8px; cursor: pointer;">
+              <input type="checkbox" id="adm-char-locked" style="width: 18px; height: 18px;">
+              <span>🔐 Khóa Nhân Vật Này Bằng Mật Mã</span>
+            </label>
+          </div>
+
+          <div id="adm-lock-settings" style="display: none; background: #fff5f7; padding: 16px; border-radius: 16px; margin-bottom: 12px;">
+            <div class="form-group" style="margin-bottom: 10px;">
+              <label>Câu hỏi mở khóa:</label>
+              <input type="text" id="adm-char-question" class="input-stylish" placeholder="VD: Vật tín định tình của hai ta là gì?">
             </div>
-            <h4 class="text-lg font-bold text-brown mb-2 font-serif">📖 Câu chuyện (Backstory)</h4>
-            <p id="plot-backstory" class="text-gray-700 mb-6 whitespace-pre-line text-sm leading-relaxed"></p>
-            <h4 class="text-lg font-bold text-brown mb-2 font-serif">💌 Lời nhắn đầu tiên</h4>
-            <p id="plot-firstmsg" class="text-gray-700 mb-8 whitespace-pre-line text-sm leading-relaxed italic bg-beige p-4 rounded-lg border border-champagne"></p>
-            <div class="text-center">
-                <a id="plot-ai-link" href="#" target="_blank" class="inline-block bg-lavender text-brown px-8 py-3 rounded-full font-bold hover:shadow-md hover:bg-pink hover:text-white transition-all shadow-sm">
-                    🤖 MỞ GOOGLE AI STUDIO
-                </a>
+            <div class="form-group" style="margin-bottom: 10px;">
+              <label>Gợi ý:</label>
+              <input type="text" id="adm-char-hint" class="input-stylish" placeholder="VD: Một đóa bạch ngọc liên...">
             </div>
-        </div>
-    </div>
-
-    <div id="admin-login-modal" class="fixed inset-0 z-[60] hidden flex items-center justify-center bg-black/30 backdrop-blur-md">
-        <div class="glass-panel p-8 rounded-2xl text-center fade-in border border-champagne relative">
-            <button onclick="closeModal('admin-login-modal')" class="absolute top-4 right-4 text-gray-400 hover:text-brown">✖</button>
-            <h3 class="text-2xl text-brown mb-4 font-serif">🔐 Khu Vực Quản Lý</h3>
-            <input type="password" id="admin-pass-input" placeholder="Nhập mật mã..." class="w-64 px-4 py-2 border border-champagne rounded-lg bg-dove text-center mb-4 focus:outline-none focus:border-brown" onkeypress="if(event.key === 'Enter') checkAdminLogin()">
-            <p id="admin-error" class="text-red-400 text-sm mb-4 hidden">Mật thư không hợp lệ 🕊️</p>
-            <button onclick="checkAdminLogin()" class="bg-brown text-beige px-6 py-2 rounded-full w-full hover:bg-pink transition-colors">Đăng nhập</button>
-        </div>
-    </div>
-
-    <div id="admin-dashboard" class="fixed inset-0 z-[70] hidden bg-dove overflow-y-auto p-4 md:p-8 fade-in">
-        <div class="max-w-5xl mx-auto">
-            <div class="flex justify-between items-center mb-8 border-b border-champagne pb-4">
-                <h2 class="text-3xl text-brown font-serif">⚙️ Admin Dashboard</h2>
-                <button onclick="closeModal('admin-dashboard')" class="bg-red-100 text-red-600 px-4 py-2 rounded-lg hover:bg-red-200">Đóng & Thoát</button>
+            <div class="form-group">
+              <label>Đáp án / Pass (Không hiển thị cho người dùng):</label>
+              <input type="text" id="adm-char-pass" class="input-stylish" placeholder="VD: bachngoclien">
             </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-champagne">
-                    <h3 class="text-xl text-brown font-bold mb-4">➕ Thêm / Sửa Nhân Vật</h3>
-                    <input type="hidden" id="form-id">
-                    <div class="space-y-3 text-sm">
-                        <input type="text" id="form-name" placeholder="Tên Char" class="w-full p-2 border rounded bg-gray-50">
-                        <input type="text" id="form-slogan" placeholder="Slogan" class="w-full p-2 border rounded bg-gray-50">
-                        <input type="text" id="form-tags" placeholder="Tags (Cáchnhaubằng dấu phẩy: Fantasy, Romance...)" class="w-full p-2 border rounded bg-gray-50">
-                        <textarea id="form-backstory" placeholder="Backstory (Cốt truyện)" class="w-full p-2 border rounded bg-gray-50 h-24"></textarea>
-                        <textarea id="form-firstmsg" placeholder="First Message" class="w-full p-2 border rounded bg-gray-50 h-20"></textarea>
-                        <input type="text" id="form-link" placeholder="Google AI Studio Link" class="w-full p-2 border rounded bg-gray-50">
-                        
-                        <div class="p-3 bg-pink/10 rounded border border-pink/30 space-y-2">
-                            <label class="flex items-center gap-2 font-bold text-brown"><input type="checkbox" id="form-locked"> Khóa Mật Thư</label>
-                            <input type="text" id="form-q" placeholder="Câu hỏi khóa" class="w-full p-2 border rounded bg-white">
-                            <input type="text" id="form-hint" placeholder="Gợi ý" class="w-full p-2 border rounded bg-white">
-                            <input type="text" id="form-pass" placeholder="Mật khẩu (Pass)" class="w-full p-2 border rounded bg-white">
-                        </div>
-                        <button onclick="saveChar()" class="w-full bg-sage text-white p-3 rounded font-bold hover:opacity-90">💾 ĐĂNG CHAR</button>
-                        <button onclick="clearForm()" class="w-full bg-gray-200 text-gray-700 p-2 rounded text-xs hover:bg-gray-300">Xóa Form Trống</button>
-                    </div>
-                </div>
+          </div>
 
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-champagne overflow-y-auto max-h-[700px]">
-                    <h3 class="text-xl text-brown font-bold mb-4">📋 Quản lý Nhân vật</h3>
-                    <div id="admin-char-list" class="space-y-3"></div>
-                </div>
-            </div>
+          <button type="submit" class="btn-main" id="btn-save-char">🌸 Lưu Nhân Vật</button>
+        </form>
+      </div>
+
+      <!-- ADMIN TAB: MANAGE CHARS -->
+      <div id="adm-tab-manage-chars" class="hidden">
+        <div id="adm-char-list-table" style="display: flex; flex-direction: column; gap: 10px;">
+          <!-- Loaded dynamically -->
         </div>
-    </div>
+      </div>
 
-    <script>
-        // ============================================================
-        // ☁️ 1. CẤU HÌNH FIREBASE DATABASE CHUẨN
-        // ============================================================
-        
-        // BẠN PHẢI THAY THÔNG TIN NÀY BẰNG THÔNG TIN TỪ FIREBASE CỦA BẠN 
-        // VÀO CÀI ĐẶT DỰ ÁN TRÊN FIREBASE -> PROJECT SETTINGS -> KÉO XUỐNG DƯỚI CÙNG LẤY ĐOẠN CONFIG
-        const firebaseConfig = {
-            apiKey: "DÁN_API_KEY_CỦA_BẠN_VÀO_ĐÂY", 
-            authDomain: "DÁN_AUTH_DOMAIN_VÀO_ĐÂY",
-            projectId: "DÁN_PROJECT_ID_VÀO_ĐÂY",
-            storageBucket: "DÁN_STORAGE_BUCKET_VÀO_ĐÂY",
-            messagingSenderId: "DÁN_MESSAGING_SENDER_ID",
-            appId: "DÁN_APP_ID"
+      <!-- ADMIN TAB: MUSIC -->
+      <div id="adm-tab-music" class="hidden">
+        <form id="admin-music-form" class="compose-form">
+          <div class="form-group">
+            <label>Link Video YouTube (Nhạc nền):</label>
+            <input type="text" id="adm-yt-link" class="input-stylish" placeholder="VD: https://www.youtube.com/watch?v=..." required>
+            <span style="font-size: 0.8rem; color: var(--text-soft);">Hệ thống sẽ lấy âm thanh phát ngầm tự động trong khu vườn.</span>
+          </div>
+          <button type="submit" class="btn-main">🎵 Lưu Link Nhạc Mới</button>
+        </form>
+      </div>
+
+      <!-- ADMIN TAB: SITE SETTINGS -->
+      <div id="adm-tab-site-settings" class="hidden">
+        <form id="admin-settings-form" class="compose-form">
+          <div class="form-group">
+            <label>Tên Website:</label>
+            <input type="text" id="adm-site-title" class="input-stylish" required>
+          </div>
+          <div class="form-group">
+            <label>Slogan Trang Chủ:</label>
+            <input type="text" id="adm-site-slogan" class="input-stylish" required>
+          </div>
+          <button type="submit" class="btn-main">✿ Cập Nhật Cài Đặt</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL 3: UNLOCK CHARACTER MODAL
+       ========================================================================== -->
+  <div class="modal-backdrop" id="modal-unlock-char">
+    <div class="modal-box" style="max-width: 480px;">
+      <div class="modal-header">
+        <h3 class="modal-title">🔐 MỞ KHÓA CHAR</h3>
+        <button class="modal-close-btn" onclick="closeModal('modal-unlock-char')">✕</button>
+      </div>
+      <div style="margin-bottom: 16px;">
+        <h4 id="unlock-char-name" style="color: var(--primary); margin-bottom: 6px;"></h4>
+        <p style="font-weight:600; color:var(--text-main); margin-bottom: 6px;">
+          Câu hỏi: <span id="unlock-char-question" style="font-weight:400;"></span>
+        </p>
+        <p style="font-size:0.88rem; color:var(--text-soft); font-style:italic; margin-bottom: 16px;">
+          Gợi ý: <span id="unlock-char-hint"></span>
+        </p>
+      </div>
+      <form id="char-unlock-form">
+        <input type="hidden" id="unlock-char-id">
+        <input type="text" id="unlock-pass-input" class="input-stylish" placeholder="Nhập mật mã mở khóa..." style="width: 100%; margin-bottom: 16px;" required>
+        <button type="submit" class="btn-main" style="width: 100%;">✦ MỞ KHÓA ✦</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL 4: PLOT VIEWER
+       ========================================================================== -->
+  <div class="modal-backdrop" id="modal-plot-viewer">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title" id="plot-view-title">🌸 THÔNG TIN NHÂN VẬT</h3>
+        <button class="modal-close-btn" onclick="closeModal('modal-plot-viewer')">✕</button>
+      </div>
+      
+      <div class="plot-section-title">📖 BACKSTORY</div>
+      <div class="plot-quote" id="plot-view-backstory"></div>
+
+      <div class="plot-section-title">💬 FIRST MESSAGE</div>
+      <div class="plot-quote" id="plot-view-firstmsg"></div>
+
+      <div style="margin-top: 24px; text-align: center;">
+        <a id="plot-view-gailink" href="#" target="_blank" rel="noopener noreferrer" class="btn-main" style="background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%); color:#2b486b;">
+          ✦ MỞ GG AI TRONG TAB MỚI ✦
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Message Element -->
+  <div id="toast-msg">Thông báo nhẹ nhàng ♡</div>
+
+  <!-- ==========================================================================
+       JAVASCRIPT ARCHITECTURE & LOGIC
+       ========================================================================== -->
+  <script>
+    /* ==========================================================================
+       1. DATA MANAGEMENT & INITIAL SEEDING
+       ========================================================================== */
+    const STORAGE_KEYS = {
+      CHARS: 'love_haven_chars_v1',
+      SETTINGS: 'love_haven_settings_v1',
+      MAILS: 'love_haven_mails_v1',
+      RECIPIENTS: 'love_haven_recipients_v1',
+      UNLOCKED: 'love_haven_unlocked_ids_v1'
+    };
+
+    const FLOWER_THEMES = [
+      { name: 'Anh đào', icon: '🌸', color: '#ffecf1' },
+      { name: 'Tulip', icon: '🌷', color: '#fff0f5' },
+      { name: 'Hoa hồng', icon: '🌹', color: '#fbebf0' },
+      { name: 'Cúc họa mi', icon: '🌼', color: '#fffde7' },
+      { name: 'Lavender', icon: '🪻', color: '#f3e8fa' },
+      { name: 'Bạch liên', icon: '🪷', color: '#eef8f5' },
+      { name: 'Cẩm tú cầu', icon: '💮', color: '#eaf4fd' },
+      { name: 'Hướng dương', icon: '🌻', color: '#fff9e6' }
+    ];
+
+    // Seed characters if first visit
+    const DEFAULT_CHARS = [
+      {
+        id: 'char-1',
+        name: 'Thẩm Ngôn Chi',
+        flower: FLOWER_THEMES[0],
+        tags: ['Boylove', 'CổTrang', 'SưTôn', 'LạnhLùng'],
+        slogan: 'Vạn trượng hồng trần buông bỏ hết, duy chỉ ánh mắt người là không thể quên.',
+        backstory: 'Thẩm Ngôn Chi vốn là Băng Phách Kiếm Tôn lãnh đạm của phái Dao Hoa. Người đời nhìn chàng như đóa tuyết liên nghìn năm không tan, không hỷ không nộ. Thế nhưng không một ai biết rằng, dưới đáy Hàn Đàm năm ấy, chàng đã phong ấn một mảnh thần hồn để giữ lại sinh mệnh cho một đệ tử ngỗ nghịch...',
+        firstMessage: '*Chàng đứng bên hiên trúc, gió lạnh khẽ lay vạt áo nguyệt bạch. Nghe tiếng bước chân ngươi, Thẩm Ngôn Chi không ngoảnh lại, chỉ khẽ mở lời, giọng trầm ấm nhưng man mác buồn*\n\n"Ngươi đã trở về rồi sao? Hàn khí ngoài sân rất nặng, mau vào uống chén trà hoa đào ấm này đi."',
+        gaiLink: 'https://aistudio.google.com/',
+        isLocked: true,
+        question: 'Loài hoa chàng trồng trước hiên trúc là gì?',
+        hint: 'Nở rộ sắc hồng mỗi độ xuân về...',
+        pass: 'hoa anh dao'
+      },
+      {
+        id: 'char-2',
+        name: 'Hạ Lạc Tuyết',
+        flower: FLOWER_THEMES[1],
+        tags: ['NgônTình', 'HiệnĐại', 'ChiếmHữu', 'NgọtNgào'],
+        slogan: 'Dù cả thế giới quay lưng, anh vẫn sẽ là bến đỗ bình yên nhất của em.',
+        backstory: 'Hạ Lạc Tuyết là chủ tịch kín tiếng của tập đoàn tài chính Lạc Thần. Vẻ ngoài phong nhã, dịu dàng như hoa tulip buổi sớm nhưng nội tâm lại có phần chấp niệm sâu sắc với người đã từng che chung cho anh một chiếc ô vào ngày mưa bão năm mười bảy tuổi.',
+        firstMessage: '*Anh đặt tách cà phê còn nghi ngút khói xuống bàn kính, mỉm cười khẽ nghiêng đầu ngắm nhìn bạn*\n\n"Em đến muộn năm phút đấy nhé. Nhưng không sao, chỉ cần em đến, đợi bao lâu anh cũng cam lòng."',
+        gaiLink: 'https://aistudio.google.com/',
+        isLocked: false,
+        question: '',
+        hint: '',
+        pass: ''
+      },
+      {
+        id: 'char-3',
+        name: 'Tạ Doanh Chiêu',
+        flower: FLOWER_THEMES[4],
+        tags: ['HuyềnHuyễn', 'MaGiới', 'KiêuNgạo'],
+        slogan: 'Ma Hoàng lãnh khốc ngàn năm, nguyện vì một phong thư mà hạ kiếm.',
+        backstory: 'Thống trị U Minh Giới vạn dặm yêu ma gầm thét, Tạ Doanh Chiêu nổi tiếng sát phạt vô tình. Người duy nhất có thể gửi thư đến thư phòng ngập tràn hương lavender của hắn mà không bị thiêu rụi chính là ngươi.',
+        firstMessage: '*Ngồi tựa trên ngai vàng hắc ngọc, ngón tay hắn gõ nhịp ung dung, đôi mắt tím thẫm liếc nhìn bạn*\n\n"Lá gan không nhỏ. Dám vượt qua kết giới Ma Vực tìm ta, ngươi nghĩ ta sẽ tiếp đón ngươi thế nào?"',
+        gaiLink: 'https://aistudio.google.com/',
+        isLocked: true,
+        question: 'Màu mắt của Ma Hoàng là màu gì?',
+        hint: 'Tương tự màu của đóa oải hương...',
+        pass: 'tim'
+      }
+    ];
+
+    const DEFAULT_SETTINGS = {
+      siteTitle: 'LOVE HAVEN',
+      siteSlogan: 'Khu vườn hoa ngát hương & những người bạn tri kỷ AI',
+      introSlogan: 'Nơi cất giữ những lá thư dịu dàng và những linh hồn AI thơ mộng...',
+      ytUrl: 'https://www.youtube.com/watch?v=5qap5aO4i9A' // Lofi soft piano music
+    };
+
+    const DEFAULT_RECIPIENTS = [
+      'Thẩm Ngôn Chi',
+      'Hạ Lạc Tuyết',
+      'Tạ Doanh Chiêu',
+      'Người giữ vườn bí mật'
+    ];
+
+    const DEFAULT_MAILS = [
+      {
+        id: 'mail-1',
+        from: 'Thẩm Ngôn Chi',
+        to: 'Bạn',
+        subject: 'Cành hoa đào đầu mùa',
+        content: 'Hôm nay hoa sau núi đã chớm nở, ta gửi người một cành tươi nhất. Mong người bốn mùa bình an.',
+        date: 'Vừa xong',
+        type: 'inbox'
+      }
+    ];
+
+    // LocalStorage helper functions
+    function loadData(key, fallback) {
+      const data = localStorage.getItem(key);
+      return data ? JSON.parse(data) : fallback;
+    }
+
+    function saveData(key, val) {
+      localStorage.setItem(key, JSON.stringify(val));
+    }
+
+    // App State
+    let characters = loadData(STORAGE_KEYS.CHARS, DEFAULT_CHARS);
+    let siteSettings = loadData(STORAGE_KEYS.SETTINGS, DEFAULT_SETTINGS);
+    let mails = loadData(STORAGE_KEYS.MAILS, DEFAULT_MAILS);
+    let recipients = loadData(STORAGE_KEYS.RECIPIENTS, DEFAULT_RECIPIENTS);
+    let unlockedCharIds = loadData(STORAGE_KEYS.UNLOCKED, []);
+    let activeTag = null;
+
+    /* ==========================================================================
+       2. CANVAS FALLING PETALS ANIMATION
+       ========================================================================== */
+    const canvas = document.getElementById('petal-canvas');
+    const ctx = canvas.getContext('2d');
+    let petals = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    class Petal {
+      constructor() {
+        this.reset();
+      }
+      reset() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * -canvas.height;
+        this.size = Math.random() * 9 + 7;
+        this.speedY = Math.random() * 1.2 + 0.6;
+        this.speedX = Math.random() * 1.5 - 0.75;
+        this.angle = Math.random() * Math.PI * 2;
+        this.spin = Math.random() * 0.02 - 0.01;
+        this.color = ['#fbc4d2', '#ffdbe4', '#e2eccd', '#f6d5e0'][Math.floor(Math.random() * 4)];
+        this.opacity = Math.random() * 0.5 + 0.35;
+      }
+      update() {
+        this.y += this.speedY;
+        this.x += Math.sin(this.angle) * 1.1 + this.speedX;
+        this.angle += this.spin;
+        if (this.y > canvas.height + 20) this.reset();
+      }
+      draw() {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.angle);
+        ctx.beginPath();
+        ctx.fillStyle = this.color;
+        ctx.globalAlpha = this.opacity;
+        ctx.moveTo(0, 0);
+        ctx.bezierCurveTo(this.size, -this.size / 2, this.size, this.size, 0, this.size * 1.5);
+        ctx.bezierCurveTo(-this.size, this.size, -this.size, -this.size / 2, 0, 0);
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+
+    for (let i = 0; i < 30; i++) petals.push(new Petal());
+
+    function animatePetals() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      petals.forEach(p => {
+        p.update();
+        p.draw();
+      });
+      requestAnimationFrame(animatePetals);
+    }
+    animatePetals();
+
+    /* ==========================================================================
+       3. YOUTUBE IFRAME MUSIC PLAYER (BACKGROUND AUDIO)
+       ========================================================================== */
+    let ytPlayer = null;
+    let isMusicPlaying = false;
+
+    function extractYTVideoId(url) {
+      if (!url) return '5qap5aO4i9A';
+      const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+      const match = url.match(regExp);
+      return (match && match[2].length === 11) ? match[2] : '5qap5aO4i9A';
+    }
+
+    // Load YouTube IFrame API
+    const tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    const firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    window.onYouTubeIframeAPIReady = function() {
+      const vId = extractYTVideoId(siteSettings.ytUrl);
+      ytPlayer = new YT.Player('yt-hidden-player', {
+        height: '100',
+        width: '100',
+        videoId: vId,
+        playerVars: {
+          'autoplay': 0,
+          'controls': 0,
+          'loop': 1,
+          'playlist': vId
+        },
+        events: {
+          'onReady': onPlayerReady
+        }
+      });
+    };
+
+    function onPlayerReady(event) {
+      event.target.setVolume(50);
+    }
+
+    const musicBtn = document.getElementById('music-toggle-btn');
+    const musicDisc = document.getElementById('music-disc-icon');
+    const musicStatus = document.getElementById('music-status-text');
+
+    function toggleMusic() {
+      if (!ytPlayer || typeof ytPlayer.playVideo !== 'function') {
+        showToast('Trình phát nhạc đang tải, vui lòng thử lại sau giây lát ♡');
+        return;
+      }
+      if (isMusicPlaying) {
+        ytPlayer.pauseVideo();
+        musicDisc.classList.add('paused');
+        musicStatus.textContent = 'Phát Nhạc 🎵';
+        isMusicPlaying = false;
+      } else {
+        ytPlayer.playVideo();
+        musicDisc.classList.remove('paused');
+        musicStatus.textContent = 'Đang Phát 🌸';
+        isMusicPlaying = true;
+      }
+    }
+
+    musicBtn.addEventListener('click', toggleMusic);
+
+    /* ==========================================================================
+       4. INTRO TRANSITION & NAVIGATION
+       ========================================================================== */
+    const introScreen = document.getElementById('intro-screen');
+    const mainApp = document.getElementById('main-app');
+    const btnEnter = document.getElementById('btn-enter-haven');
+
+    btnEnter.addEventListener('click', () => {
+      introScreen.classList.add('hide');
+      setTimeout(() => {
+        mainApp.classList.add('active');
+        // Auto attempt background music start on click
+        if (ytPlayer && typeof ytPlayer.playVideo === 'function' && !isMusicPlaying) {
+          ytPlayer.playVideo();
+          musicDisc.classList.remove('paused');
+          musicStatus.textContent = 'Đang Phát 🌸';
+          isMusicPlaying = true;
+        }
+      }, 500);
+    });
+
+    // Navigation Switch
+    const navItems = document.querySelectorAll('.nav-item');
+    const viewChars = document.getElementById('view-chars');
+    const viewMailbox = document.getElementById('view-mailbox');
+
+    navItems.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const tab = btn.getAttribute('data-tab');
+        if (tab === 'home' || tab === 'char-list' || tab === 'search' || tab === 'tags') {
+          navItems.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          viewChars.classList.remove('hidden');
+          viewMailbox.classList.add('hidden');
+          if (tab === 'search') {
+            document.getElementById('main-search-input').focus();
+          }
+        } else if (tab === 'mailbox') {
+          navItems.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          viewChars.classList.add('hidden');
+          viewMailbox.classList.remove('hidden');
+          renderMailbox();
+        }
+      });
+    });
+
+    /* ==========================================================================
+       5. CHARACTERS & TAGS RENDERING
+       ========================================================================== */
+    const charGridContainer = document.getElementById('char-grid-container');
+    const tagCloudContainer = document.getElementById('tag-cloud-container');
+    const searchInput = document.getElementById('main-search-input');
+
+    function getAllTags() {
+      const tagSet = new Set();
+      characters.forEach(c => {
+        c.tags.forEach(t => tagSet.add(t.trim()));
+      });
+      return Array.from(tagSet);
+    }
+
+    function renderTags() {
+      const tags = getAllTags();
+      tagCloudContainer.innerHTML = '';
+
+      const allPill = document.createElement('span');
+      allPill.className = `tag-pill ${activeTag === null ? 'active' : ''}`;
+      allPill.textContent = '✿ Tất cả';
+      allPill.onclick = () => {
+        activeTag = null;
+        renderTags();
+        renderChars();
+      };
+      tagCloudContainer.appendChild(allPill);
+
+      tags.forEach(t => {
+        const pill = document.createElement('span');
+        pill.className = `tag-pill ${activeTag === t ? 'active' : ''}`;
+        pill.textContent = `#${t}`;
+        pill.onclick = () => {
+          activeTag = (activeTag === t) ? null : t;
+          renderTags();
+          renderChars();
         };
+        tagCloudContainer.appendChild(pill);
+      });
+    }
 
-        // Khởi tạo Firebase
-        firebase.initializeApp(firebaseConfig);
-        const firestoreDB = firebase.firestore();
-        const charsCollection = firestoreDB.collection("bocau_chars");
+    function renderChars() {
+      const keyword = searchInput.value.toLowerCase().trim();
+      charGridContainer.innerHTML = '';
 
-        const defaultChars = [
-            {
-                id: "char1",
-                name: "Darius",
-                slogan: "Ta sinh ra trong bóng tối, nhưng trái tim lại hướng về ánh sáng.",
-                tags: ["Fantasy", "Vampire", "Lạnh lùng"],
-                backstory: "Một Ma Cà Rồng sống ẩn dật hàng thế kỷ trong rừng sâu mùa thu. Anh luôn chờ đợi một lá thư từ người con gái đã hứa sẽ quay lại vào 100 năm trước.",
-                firstMessage: "*Mở nắp phong thư, những ngón tay lạnh giá của hắn khẽ run lên*\nNgươi... thực sự đã tìm được hòm thư này sao?",
-                link: "https://aistudio.google.com/app/prompts/new_chat",
-                isLocked: false,
-                q: "", hint: "", pass: ""
-            },
-            {
-                id: "char2",
-                name: "Liam",
-                slogan: "Hoa nở mùa thu, tình phai mùa hạ.",
-                tags: ["Hiện đại", "Romance", "Chữa lành"],
-                backstory: "Cậu chủ của một tiệm hoa nhỏ ở góc phố. Gần đây cậu nhặt được một chú bồ câu bị thương mang theo một lá thư bí ẩn.",
-                firstMessage: "Chào đằng ấy. Chú bồ câu của cậu làm loạn tiệm hoa của tớ rồi này. Cậu tính đền bù thế nào đây? *mỉm cười nhẹ*",
-                link: "https://aistudio.google.com/app/prompts/new_chat",
-                isLocked: true,
-                q: "Loài hoa nào tượng trưng cho tình yêu bất diệt?",
-                hint: "Có gai, màu đỏ",
-                pass: "hoa hong"
-            }
-        ];
+      const filtered = characters.filter(c => {
+        const matchesTag = !activeTag || c.tags.includes(activeTag);
+        const matchesQuery = !keyword || (
+          c.name.toLowerCase().includes(keyword) ||
+          c.slogan.toLowerCase().includes(keyword) ||
+          c.backstory.toLowerCase().includes(keyword) ||
+          c.tags.some(t => t.toLowerCase().includes(keyword))
+        );
+        return matchesTag && matchesQuery;
+      });
 
-        let dbChars = [];
+      if (filtered.length === 0) {
+        charGridContainer.innerHTML = `
+          <div style="grid-column: 1/-1; text-align:center; padding: 40px; color: var(--text-soft);">
+            <div style="font-size:2rem; margin-bottom: 8px;">🍂</div>
+            <p>Không tìm thấy nhân vật nào phù hợp trong khu vườn...</p>
+          </div>
+        `;
+        return;
+      }
 
-        // Đồng bộ realtime từ Firebase
-        function listenToCharacters() {
-            charsCollection.onSnapshot(async snapshot => {
-                dbChars = [];
-                snapshot.forEach(doc => {
-                    dbChars.push({ id: doc.id, ...doc.data() });
-                });
+      filtered.forEach(c => {
+        const isUnlocked = !c.isLocked || unlockedCharIds.includes(c.id);
+        const card = document.createElement('div');
+        card.className = 'glass-card char-card';
+        card.setAttribute('data-floral-decor', c.flower ? c.flower.icon : '🌸');
 
-                // Nếu Firebase trống, đẩy data mẫu lên
-                if (dbChars.length === 0) {
-                    for (const char of defaultChars) {
-                        await charsCollection.doc(char.id).set(char);
-                    }
-                    return;
-                }
+        card.innerHTML = `
+          <div>
+            <div class="char-header">
+              <div class="char-flower-emblem" style="background:${c.flower ? c.flower.color : '#ffecf1'}">
+                ${c.flower ? c.flower.icon : '🌸'}
+              </div>
+              <div class="char-meta">
+                <h3>${escapeHtml(c.name)}</h3>
+                <div class="char-flower-name">✿ Hoa bảo hộ: ${c.flower ? c.flower.name : 'Dịu dàng'}</div>
+              </div>
+            </div>
 
-                // Cập nhật giao diện tự động khi có thay đổi
-                renderChars();
-                renderTags();
-                renderAdminList();
-            });
+            <p class="char-slogan">"${escapeHtml(c.slogan)}"</p>
+
+            <div class="char-tags">
+              ${c.tags.map(t => `<span class="char-tag-item">#${escapeHtml(t)}</span>`).join('')}
+            </div>
+
+            <div class="char-status-badge ${isUnlocked ? 'badge-unlocked' : 'badge-locked'}">
+              <i class="fa-solid ${isUnlocked ? 'fa-lock-open' : 'fa-lock'}"></i>
+              ${isUnlocked ? 'Đã mở khóa' : 'CHAR ĐANG ĐƯỢC KHÓA'}
+            </div>
+          </div>
+
+          <div class="char-actions">
+            ${isUnlocked ? `
+              <button class="btn-char-action btn-view" onclick="openPlotViewer('${c.id}')">
+                <i class="fa-solid fa-book-open"></i> Xem Plot
+              </button>
+              <a class="btn-char-action btn-ai" href="${escapeHtml(c.gaiLink)}" target="_blank" rel="noopener noreferrer">
+                <i class="fa-solid fa-wand-magic-sparkles"></i> Mở GG AI
+              </a>
+            ` : `
+              <button class="btn-char-action btn-main" style="width:100%;" onclick="openUnlockModal('${c.id}')">
+                <i class="fa-solid fa-key"></i> MỞ KHÓA
+              </button>
+            `}
+          </div>
+        `;
+
+        charGridContainer.appendChild(card);
+      });
+    }
+
+    searchInput.addEventListener('input', renderChars);
+
+    /* ==========================================================================
+       6. UNLOCK CHARACTER SYSTEM
+       ========================================================================== */
+    function openUnlockModal(charId) {
+      const char = characters.find(c => c.id === charId);
+      if (!char) return;
+
+      document.getElementById('unlock-char-id').value = char.id;
+      document.getElementById('unlock-char-name').textContent = `🌸 Mở khóa nhân vật: ${char.name}`;
+      document.getElementById('unlock-char-question').textContent = char.question || 'Mật mã bí mật';
+      document.getElementById('unlock-char-hint').textContent = char.hint || 'Không có gợi ý';
+      document.getElementById('unlock-pass-input').value = '';
+
+      openModal('modal-unlock-char');
+    }
+
+    document.getElementById('char-unlock-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const id = document.getElementById('unlock-char-id').value;
+      const pass = document.getElementById('unlock-pass-input').value.trim();
+      const char = characters.find(c => c.id === id);
+
+      if (char && char.pass.toLowerCase() === pass.toLowerCase()) {
+        if (!unlockedCharIds.includes(id)) {
+          unlockedCharIds.push(id);
+          saveData(STORAGE_KEYS.UNLOCKED, unlockedCharIds);
         }
+        closeModal('modal-unlock-char');
+        showToast('Mở khóa thành công! Chào mừng bạn đến với câu chuyện ♡');
+        renderChars();
+        openPlotViewer(id);
+      } else {
+        showToast('Pass chưa đúng, thử lại nhé ♡');
+      }
+    });
 
-        // Bắt đầu lắng nghe dữ liệu
-        listenToCharacters();
+    /* ==========================================================================
+       7. PLOT VIEWER MODAL
+       ========================================================================== */
+    function openPlotViewer(charId) {
+      const char = characters.find(c => c.id === charId);
+      if (!char) return;
 
-        // --- 2. LOGIC GIAO DIỆN CHÍNH ---
-        function enterWorld() {
-            document.getElementById('landing-screen').classList.add('fade-out');
-            setTimeout(() => {
-                document.getElementById('landing-screen').classList.add('hidden');
-                document.getElementById('main-screen').classList.remove('hidden');
-                document.getElementById('music-controls').classList.remove('hidden');
-                renderChars();
-                if(ytPlayer && typeof ytPlayer.playVideo === 'function') ytPlayer.playVideo();
-            }, 800);
-        }
+      document.getElementById('plot-view-title').textContent = `🌸 ${char.name} — Câu Chuyện`;
+      document.getElementById('plot-view-backstory').textContent = char.backstory;
+      document.getElementById('plot-view-firstmsg').textContent = char.firstMessage;
+      
+      const gaiBtn = document.getElementById('plot-view-gailink');
+      gaiBtn.href = char.gaiLink || '#';
 
-        function switchTab(tabName) {
-            const tabs = ['home', 'library', 'search', 'mailbox'];
-            tabs.forEach(t => document.getElementById(`tab-${t}`).classList.add('hidden'));
-            document.getElementById(`tab-${tabName}`).classList.remove('hidden');
-            if(tabName === 'search') renderTags();
-        }
+      openModal('modal-plot-viewer');
+    }
 
-        function generateCardHTML(char) {
-            const lockIcon = char.isLocked ? `<span class="absolute top-4 left-4 text-xl" title="Bị khóa">🔒</span>` : '';
-            const tagsHTML = char.tags.map(t => `<span class="text-[10px] bg-beige text-brown px-2 py-1 rounded-full border border-champagne">#${t.trim()}</span>`).join('');
-            
-            return `
-                <div class="relative glass-panel rounded-xl p-6 hover:-translate-y-2 transition-all duration-300 flex flex-col items-center text-center cursor-pointer border-dashed border-2 border-champagne char-card" 
-                     onclick="handleCharClick('${char.id}')">
-                    ${lockIcon}
-                    <span class="text-3xl mb-3 text-pink">🌸</span>
-                    <h3 class="font-serif text-2xl font-semibold text-brown mb-2">${char.name}</h3>
-                    <p class="font-sans italic text-sm text-gray-500 mb-6 line-clamp-2">"${char.slogan}"</p>
-                    <div class="flex flex-wrap justify-center gap-1 mt-auto">${tagsHTML}</div>
-                </div>
-            `;
-        }
+    /* ==========================================================================
+       8. MAILBOX SYSTEM & RECIPIENTS
+       ========================================================================== */
+    const mailNavBtns = document.querySelectorAll('.mail-nav-btn');
+    const mailSubtabs = {
+      inbox: document.getElementById('mail-subtab-inbox'),
+      sent: document.getElementById('mail-subtab-sent'),
+      compose: document.getElementById('mail-subtab-compose'),
+      recipients: document.getElementById('mail-subtab-recipients')
+    };
 
-        function renderChars() {
-            const listHTML = dbChars.map(generateCardHTML).join('');
-            document.getElementById('home-featured-chars').innerHTML = listHTML;
-            document.getElementById('library-chars').innerHTML = listHTML;
-            document.getElementById('search-results').innerHTML = listHTML;
-        }
+    mailNavBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const tab = btn.getAttribute('data-mailtab');
+        mailNavBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
 
-        function renderTags() {
-            let allTags = new Set();
-            dbChars.forEach(c => c.tags.forEach(t => allTags.add(t.trim())));
-            const tagsDiv = document.getElementById('tag-cloud');
-            tagsDiv.innerHTML = Array.from(allTags).map(t => 
-                `<button onclick="document.getElementById('searchInput').value='${t}'; filterChars();" class="px-4 py-1 rounded-full bg-white border border-champagne text-brown text-sm hover:bg-pink hover:text-white transition-colors">#${t}</button>`
-            ).join('');
-        }
+        Object.keys(mailSubtabs).forEach(k => mailSubtabs[k].classList.add('hidden'));
+        mailSubtabs[tab].classList.remove('hidden');
+      });
+    });
 
-        function filterChars() {
-            const text = document.getElementById('searchInput').value.toLowerCase();
-            const filtered = dbChars.filter(c => 
-                c.name.toLowerCase().includes(text) || 
-                c.slogan.toLowerCase().includes(text) || 
-                c.tags.some(t => t.toLowerCase().includes(text)) ||
-                c.backstory.toLowerCase().includes(text)
-            );
-            document.getElementById('search-results').innerHTML = filtered.map(generateCardHTML).join('');
-        }
+    function renderMailbox() {
+      // Counts
+      const inboxList = mails.filter(m => m.type === 'inbox');
+      const sentList = mails.filter(m => m.type === 'sent');
+      document.getElementById('inbox-count').textContent = inboxList.length;
+      document.getElementById('sent-count').textContent = sentList.length;
 
-        // --- 3. LOGIC MỞ KHÓA CHAR ---
-        let currentCharIdToUnlock = null;
-
-        function handleCharClick(id) {
-            const char = dbChars.find(c => c.id === id);
-            if(char.isLocked) {
-                currentCharIdToUnlock = id;
-                document.getElementById('unlock-question').innerText = char.q;
-                document.getElementById('unlock-hint').innerText = `Gợi ý: ${char.hint}`;
-                document.getElementById('unlock-pass-input').value = '';
-                document.getElementById('unlock-error').classList.add('hidden');
-                document.getElementById('unlock-modal').classList.remove('hidden');
-            } else {
-                showPlot(char);
-            }
-        }
-
-        function submitUnlock() {
-            const guess = document.getElementById('unlock-pass-input').value.toLowerCase().trim();
-            const char = dbChars.find(c => c.id === currentCharIdToUnlock);
-            if(guess === char.pass.toLowerCase().trim()) {
-                closeModal('unlock-modal');
-                showPlot(char);
-            } else {
-                document.getElementById('unlock-error').classList.remove('hidden');
-            }
-        }
-
-        function showPlot(char) {
-            document.getElementById('plot-name').innerText = char.name;
-            document.getElementById('plot-backstory').innerText = char.backstory;
-            document.getElementById('plot-firstmsg').innerText = char.firstMessage;
-            document.getElementById('plot-ai-link').href = char.link;
-            document.getElementById('plot-modal').classList.remove('hidden');
-        }
-
-        function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
-
-        // --- 4. LOGIC ADMIN ---
-        function openAdminLogin() { document.getElementById('admin-login-modal').classList.remove('hidden'); }
-        
-        function checkAdminLogin() {
-            const pass = document.getElementById('admin-pass-input').value;
-            if(pass === 'omlaynoinho') { // Pass đăng nhập Admin giữ nguyên
-                closeModal('admin-login-modal');
-                document.getElementById('admin-pass-input').value = '';
-                document.getElementById('admin-error').classList.add('hidden');
-                document.getElementById('admin-dashboard').classList.remove('hidden');
-            } else {
-                document.getElementById('admin-error').classList.remove('hidden');
-            }
-        }
-
-        function renderAdminList() {
-            const html = dbChars.map(c => `
-                <div class="flex justify-between items-center p-3 bg-gray-50 border rounded">
-                    <div><span class="font-bold">${c.name}</span> ${c.isLocked ? '🔒' : '🔓'}</div>
-                    <div class="space-x-2">
-                        <button onclick="editChar('${c.id}')" class="text-blue-500 text-sm hover:underline">Sửa</button>
-                        <button onclick="deleteChar('${c.id}')" class="text-red-500 text-sm hover:underline">Xóa</button>
-                    </div>
-                </div>
-            `).join('');
-            document.getElementById('admin-char-list').innerHTML = html;
-        }
-
-        async function saveChar() {
-            const id = document.getElementById('form-id').value || 'char_' + Date.now();
-            const newChar = {
-                id: id,
-                name: document.getElementById('form-name').value,
-                slogan: document.getElementById('form-slogan').value,
-                tags: document.getElementById('form-tags').value.split(',').map(t=>t.trim()).filter(t=>t),
-                backstory: document.getElementById('form-backstory').value,
-                firstMessage: document.getElementById('form-firstmsg').value,
-                link: document.getElementById('form-link').value,
-                isLocked: document.getElementById('form-locked').checked,
-                q: document.getElementById('form-q').value,
-                hint: document.getElementById('form-hint').value,
-                pass: document.getElementById('form-pass').value
-            };
-
-            // Lưu lên Firebase Database
-            await charsCollection.doc(newChar.id).set(newChar);
-            
-            clearForm();
-            alert('Đã lưu mật thư thành công! 🕊️');
-        }
-
-        function editChar(id) {
-            const c = dbChars.find(x => x.id === id);
-            document.getElementById('form-id').value = c.id;
-            document.getElementById('form-name').value = c.name;
-            document.getElementById('form-slogan').value = c.slogan;
-            document.getElementById('form-tags').value = c.tags.join(', ');
-            document.getElementById('form-backstory').value = c.backstory;
-            document.getElementById('form-firstmsg').value = c.firstMessage;
-            document.getElementById('form-link').value = c.link;
-            document.getElementById('form-locked').checked = c.isLocked;
-            document.getElementById('form-q').value = c.q;
-            document.getElementById('form-hint').value = c.hint;
-            document.getElementById('form-pass').value = c.pass;
-        }
-
-        // ĐÃ SỬA: Xóa thẳng trên Firebase thay vì localStorage
-        async function deleteChar(id) {
-            if(confirm('Bạn có chắc muốn đốt lá thư này?')) {
-                await charsCollection.doc(id).delete();
-            }
-        }
-
-        function clearForm() {
-            document.querySelectorAll('#admin-dashboard input[type="text"], #admin-dashboard textarea').forEach(i => i.value = '');
-            document.getElementById('form-id').value = '';
-            document.getElementById('form-locked').checked = false;
-        }
-
-        // --- 5. HIỆU ỨNG LÁ RƠI ---
-        tsParticles.load("tsparticles", {
-            fpsLimit: 60,
-            particles: {
-                color: { value: ["#F7E7CE", "#FADADD", "#C1D5C0"] },
-                move: { direction: "bottom", enable: true, outModes: "out", speed: 1.5, straight: false },
-                number: { density: { enable: true, area: 800 }, value: 30 },
-                opacity: { value: { min: 0.3, max: 0.8 } },
-                shape: { type: ["circle", "polygon"], polygon: { sides: 4 } },
-                size: { value: { min: 2, max: 6 } },
-                wobble: { enable: true, distance: 10, speed: 10 }
-            }
+      // Populate Inbox
+      const inboxContainer = document.getElementById('inbox-list');
+      inboxContainer.innerHTML = '';
+      if (inboxList.length === 0) {
+        inboxContainer.innerHTML = '<p style="color:var(--text-soft); font-style:italic;">Hộp thư đến đang trống tĩnh lặng...</p>';
+      } else {
+        inboxList.forEach(m => {
+          const item = document.createElement('div');
+          item.className = 'mail-list-item';
+          item.innerHTML = `
+            <div>
+              <span class="mail-sender-tag">🌸 Từ: ${escapeHtml(m.from)}</span>
+              <strong>${escapeHtml(m.subject)}</strong>
+              <p style="font-size:0.9rem; color:var(--text-soft); margin-top:4px;">${escapeHtml(m.content)}</p>
+            </div>
+            <div class="mail-date">📬 ${escapeHtml(m.date)}</div>
+          `;
+          inboxContainer.appendChild(item);
         });
+      }
 
-        // --- 6. YOUTUBE MUSIC BACKGROUND ---
-        let ytPlayer;
-        let isMusicPlaying = false;
-        var tag = document.createElement('script');
-        tag.src = "https://www.youtube.com/iframe_api";
-        var firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+      // Populate Sent
+      const sentContainer = document.getElementById('sent-list');
+      sentContainer.innerHTML = '';
+      if (sentList.length === 0) {
+        sentContainer.innerHTML = '<p style="color:var(--text-soft); font-style:italic;">Bạn chưa gửi lá thư nào đi...</p>';
+      } else {
+        sentList.forEach(m => {
+          const item = document.createElement('div');
+          item.className = 'mail-list-item';
+          item.innerHTML = `
+            <div>
+              <span class="mail-sender-tag" style="color:var(--accent);">✉️ Đến: ${escapeHtml(m.to)}</span>
+              <strong>${escapeHtml(m.subject)}</strong>
+              <p style="font-size:0.9rem; color:var(--text-soft); margin-top:4px;">${escapeHtml(m.content)}</p>
+            </div>
+            <div class="mail-date">✉️ ${escapeHtml(m.date)}</div>
+          `;
+          sentContainer.appendChild(item);
+        });
+      }
 
-        function onYouTubeIframeAPIReady() {
-            ytPlayer = new YT.Player('youtube-player', {
-                height: '0', width: '0',
-                videoId: 'MNb6hEKAS08',
-                playerVars: { 'autoplay': 0, 'controls': 0, 'loop': 1, 'playlist': 'MNb6hEKAS08' },
-                events: {
-                    'onReady': (event) => { event.target.setVolume(50); }
-                }
-            });
+      // Populate Recipient Select in Compose Form
+      const select = document.getElementById('mail-receiver-select');
+      select.innerHTML = '';
+      recipients.forEach(r => {
+        const opt = document.createElement('option');
+        opt.value = r;
+        opt.textContent = `🌸 ${r}`;
+        select.appendChild(opt);
+      });
+
+      // Populate Recipient List Manage
+      const recListContainer = document.getElementById('recipient-list');
+      recListContainer.innerHTML = '';
+      recipients.forEach((r, idx) => {
+        const item = document.createElement('div');
+        item.style.cssText = 'display:flex; justify-content:space-between; align-items:center; background:#fff; padding:10px 16px; border-radius:12px; border:1px solid #f0e2e5;';
+        item.innerHTML = `
+          <span><i class="fa-regular fa-user" style="color:var(--primary); margin-right:8px;"></i> ${escapeHtml(r)}</span>
+          <button style="border:none; background:transparent; color:#f17373; cursor:pointer;" onclick="deleteRecipient(${idx})"><i class="fa-solid fa-trash-can"></i></button>
+        `;
+        recListContainer.appendChild(item);
+      });
+    }
+
+    // Send Mail Form
+    document.getElementById('compose-mail-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const to = document.getElementById('mail-receiver-select').value;
+      const subject = document.getElementById('mail-subject-input').value.trim();
+      const content = document.getElementById('mail-content-input').value.trim();
+
+      const newMail = {
+        id: 'mail-' + Date.now(),
+        from: 'Bạn',
+        to: to,
+        subject: subject,
+        content: content,
+        date: 'Vừa xong',
+        type: 'sent'
+      };
+
+      mails.unshift(newMail);
+      saveData(STORAGE_KEYS.MAILS, mails);
+
+      showToast('Lá thư thơm ngát đã được gửi đi thành công 💌');
+      document.getElementById('mail-subject-input').value = '';
+      document.getElementById('mail-content-input').value = '';
+      renderMailbox();
+
+      // Trigger automatic gentle AI reply simulation
+      setTimeout(() => {
+        const replyMail = {
+          id: 'mail-rep-' + Date.now(),
+          from: to,
+          to: 'Bạn',
+          subject: 'Hồi âm: ' + subject,
+          content: `Ta đã nhận được thư của người giữa muôn hoa rơi. Mỗi nét chữ đều khiến khu vườn thêm phần dịu mát. Chờ ngày tái ngộ...`,
+          date: 'Vừa xong',
+          type: 'inbox'
+        };
+        mails.unshift(replyMail);
+        saveData(STORAGE_KEYS.MAILS, mails);
+        renderMailbox();
+        showToast(`Bạn vừa nhận được một lá thư hồi âm từ ${to} 📬`);
+      }, 4000);
+    });
+
+    // Add Recipient
+    document.getElementById('btn-add-recipient').addEventListener('click', () => {
+      const input = document.getElementById('new-recipient-name');
+      const val = input.value.trim();
+      if (!val) return;
+      if (recipients.includes(val)) {
+        showToast('Người nhận này đã có trong danh sách!');
+        return;
+      }
+      recipients.push(val);
+      saveData(STORAGE_KEYS.RECIPIENTS, recipients);
+      input.value = '';
+      renderMailbox();
+      showToast('Đã thêm người nhận mới ♡');
+    });
+
+    window.deleteRecipient = function(index) {
+      if (recipients.length <= 1) {
+        showToast('Cần giữ ít nhất 1 người nhận!');
+        return;
+      }
+      recipients.splice(index, 1);
+      saveData(STORAGE_KEYS.RECIPIENTS, recipients);
+      renderMailbox();
+      showToast('Đã xóa người nhận!');
+    };
+
+    /* ==========================================================================
+       9. ADMIN SYSTEM & SECURITY
+       ========================================================================== */
+    const navBtnAdmin = document.getElementById('nav-btn-admin');
+    const adminLoginForm = document.getElementById('admin-login-form');
+    let isAdminAuthenticated = false;
+
+    navBtnAdmin.addEventListener('click', () => {
+      if (!isAdminAuthenticated) {
+        document.getElementById('admin-pass-input').value = '';
+        openModal('modal-admin-login');
+      } else {
+        openModal('modal-admin-panel');
+        renderAdminCharList();
+      }
+    });
+
+    adminLoginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const entered = document.getElementById('admin-pass-input').value;
+      if (entered === 'omlaynoinho') {
+        isAdminAuthenticated = true;
+        closeModal('modal-admin-login');
+        showToast('Chào mừng Quản trị viên trở lại khu vườn 🌸');
+        openModal('modal-admin-panel');
+        renderAdminCharList();
+      } else {
+        showToast('Mật mã quản trị không chính xác!');
+      }
+    });
+
+    // Admin Panel Subtab navigation
+    const admTabBtns = document.querySelectorAll('.admin-tab-btn');
+    const admTabs = {
+      'add-char': document.getElementById('adm-tab-add-char'),
+      'manage-chars': document.getElementById('adm-tab-manage-chars'),
+      'music': document.getElementById('adm-tab-music'),
+      'site-settings': document.getElementById('adm-tab-site-settings')
+    };
+
+    admTabBtns.forEach(b => {
+      b.addEventListener('click', () => {
+        const tab = b.getAttribute('data-admtab');
+        admTabBtns.forEach(btn => btn.classList.remove('active'));
+        b.classList.add('active');
+
+        Object.keys(admTabs).forEach(k => admTabs[k].classList.add('hidden'));
+        admTabs[tab].classList.remove('hidden');
+
+        if (tab === 'manage-chars') renderAdminCharList();
+      });
+    });
+
+    // Toggle Lock Settings in Add Char
+    const lockCheckbox = document.getElementById('adm-char-locked');
+    const lockSettingsBox = document.getElementById('adm-lock-settings');
+    lockCheckbox.addEventListener('change', () => {
+      lockSettingsBox.style.display = lockCheckbox.checked ? 'block' : 'none';
+    });
+
+    // Add or Edit Character (Admin)
+    const adminCharForm = document.getElementById('admin-char-form');
+    adminCharForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const editId = document.getElementById('edit-char-id').value;
+
+      const name = document.getElementById('adm-char-name').value.trim();
+      const tags = document.getElementById('adm-char-tags').value.split(',').map(t => t.trim()).filter(Boolean);
+      const slogan = document.getElementById('adm-char-slogan').value.trim();
+      const backstory = document.getElementById('adm-char-backstory').value.trim();
+      const firstmsg = document.getElementById('adm-char-firstmsg').value.trim();
+      const gaiLink = document.getElementById('adm-char-gailink').value.trim();
+      const isLocked = lockCheckbox.checked;
+      const question = document.getElementById('adm-char-question').value.trim();
+      const hint = document.getElementById('adm-char-hint').value.trim();
+      const pass = document.getElementById('adm-char-pass').value.trim();
+
+      const randomFlower = FLOWER_THEMES[Math.floor(Math.random() * FLOWER_THEMES.length)];
+
+      if (editId) {
+        // Edit existing
+        const idx = characters.findIndex(c => c.id === editId);
+        if (idx !== -1) {
+          characters[idx] = {
+            ...characters[idx],
+            name, tags, slogan, backstory, firstMessage: firstmsg,
+            gaiLink, isLocked, question, hint, pass
+          };
+          showToast('Đã cập nhật nhân vật thành công!');
         }
-
-        function toggleMusic() {
-            if(!ytPlayer) return;
-            if(isMusicPlaying) { ytPlayer.pauseVideo(); document.getElementById('music-btn').innerText = '🔇'; isMusicPlaying = false; }
-            else { ytPlayer.playVideo(); document.getElementById('music-btn').innerText = '🎵'; isMusicPlaying = true; }
+      } else {
+        // Add new
+        const newChar = {
+          id: 'char-' + Date.now(),
+          name,
+          flower: randomFlower,
+          tags,
+          slogan,
+          backstory,
+          firstMessage: firstmsg,
+          gaiLink,
+          isLocked,
+          question,
+          hint,
+          pass
+        };
+        characters.unshift(newChar);
+        if (!recipients.includes(name)) {
+          recipients.push(name);
+          saveData(STORAGE_KEYS.RECIPIENTS, recipients);
         }
+        showToast('Đã thêm nhân vật mới vào khu vườn 🌸');
+      }
 
-        function changeVolume(val) { if(ytPlayer) ytPlayer.setVolume(val); }
+      saveData(STORAGE_KEYS.CHARS, characters);
+      adminCharForm.reset();
+      document.getElementById('edit-char-id').value = '';
+      lockSettingsBox.style.display = 'none';
 
-        setInterval(() => {
-            if(ytPlayer && ytPlayer.getPlayerState) {
-                if(ytPlayer.getPlayerState() === 1 && !isMusicPlaying) { isMusicPlaying = true; document.getElementById('music-btn').innerText = '🎵'; }
-            }
-        }, 1000);
+      renderTags();
+      renderChars();
+      renderMailbox();
+    });
 
-    </script>
+    // Render Admin Manage Char Table
+    function renderAdminCharList() {
+      const container = document.getElementById('adm-char-list-table');
+      container.innerHTML = '';
+
+      if (characters.length === 0) {
+        container.innerHTML = '<p>Chưa có nhân vật nào trong khu vườn.</p>';
+        return;
+      }
+
+      characters.forEach(c => {
+        const row = document.createElement('div');
+        row.style.cssText = 'display:flex; justify-content:space-between; align-items:center; background:#faf4f6; padding:12px 18px; border-radius:14px;';
+        row.innerHTML = `
+          <div>
+            <strong>${escapeHtml(c.name)}</strong>
+            <span style="font-size:0.8rem; color:var(--text-soft); margin-left:8px;">[${c.isLocked ? '🔐 Có Khóa' : '🔓 Mở'}]</span>
+          </div>
+          <div style="display:flex; gap:8px;">
+            <button class="btn-main" style="padding:6px 12px; font-size:0.8rem;" onclick="editCharAdmin('${c.id}')"><i class="fa-solid fa-pen"></i> Sửa</button>
+            <button class="btn-main btn-danger" style="padding:6px 12px; font-size:0.8rem;" onclick="deleteCharAdmin('${c.id}')"><i class="fa-solid fa-trash"></i> Xóa</button>
+          </div>
+        `;
+        container.appendChild(row);
+      });
+    }
+
+    window.editCharAdmin = function(id) {
+      const char = characters.find(c => c.id === id);
+      if (!char) return;
+
+      document.getElementById('edit-char-id').value = char.id;
+      document.getElementById('adm-char-name').value = char.name;
+      document.getElementById('adm-char-tags').value = char.tags.join(', ');
+      document.getElementById('adm-char-slogan').value = char.slogan;
+      document.getElementById('adm-char-backstory').value = char.backstory;
+      document.getElementById('adm-char-firstmsg').value = char.firstMessage;
+      document.getElementById('adm-char-gailink').value = char.gaiLink;
+      
+      lockCheckbox.checked = char.isLocked;
+      lockSettingsBox.style.display = char.isLocked ? 'block' : 'none';
+      document.getElementById('adm-char-question').value = char.question || '';
+      document.getElementById('adm-char-hint').value = char.hint || '';
+      document.getElementById('adm-char-pass').value = char.pass || '';
+
+      document.querySelector('[data-admtab="add-char"]').click();
+      document.getElementById('btn-save-char').textContent = '✿ Cập Nhật Nhân Vật';
+    };
+
+    window.deleteCharAdmin = function(id) {
+      if (!confirm('Bạn có chắc muốn xóa nhân vật này khỏi khu vườn?')) return;
+      characters = characters.filter(c => c.id !== id);
+      saveData(STORAGE_KEYS.CHARS, characters);
+      renderAdminCharList();
+      renderTags();
+      renderChars();
+      showToast('Đã xóa nhân vật.');
+    };
+
+    // Music Setting form (Admin)
+    document.getElementById('admin-music-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const url = document.getElementById('adm-yt-link').value.trim();
+      siteSettings.ytUrl = url;
+      saveData(STORAGE_KEYS.SETTINGS, siteSettings);
+
+      const newId = extractYTVideoId(url);
+      if (ytPlayer && typeof ytPlayer.loadVideoById === 'function') {
+        ytPlayer.loadVideoById(newId);
+        ytPlayer.playVideo();
+        musicDisc.classList.remove('paused');
+        musicStatus.textContent = 'Đang Phát 🌸';
+        isMusicPlaying = true;
+      }
+      showToast('Đã lưu và cập nhật nhạc nền khu vườn 🎵');
+    });
+
+    // Site Settings form (Admin)
+    document.getElementById('admin-settings-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      siteSettings.siteTitle = document.getElementById('adm-site-title').value.trim();
+      siteSettings.siteSlogan = document.getElementById('adm-site-slogan').value.trim();
+      saveData(STORAGE_KEYS.SETTINGS, siteSettings);
+      applySiteSettings();
+      showToast('Đã cập nhật tiêu đề khu vườn ♡');
+    });
+
+    function applySiteSettings() {
+      document.getElementById('site-title-display').textContent = siteSettings.siteTitle || 'LOVE HAVEN';
+      document.getElementById('site-subtitle-display').textContent = siteSettings.siteSlogan || '';
+      document.getElementById('intro-slogan-display').textContent = siteSettings.introSlogan || '';
+      document.getElementById('adm-site-title').value = siteSettings.siteTitle || '';
+      document.getElementById('adm-site-slogan').value = siteSettings.siteSlogan || '';
+      document.getElementById('adm-yt-link').value = siteSettings.ytUrl || '';
+    }
+
+    /* ==========================================================================
+       10. COMMON UTILS & MODAL CONTROLLERS
+       ========================================================================== */
+    function openModal(id) {
+      const modal = document.getElementById(id);
+      if (modal) {
+        modal.classList.add('show');
+      }
+    }
+
+    function closeModal(id) {
+      const modal = document.getElementById(id);
+      if (modal) {
+        modal.classList.remove('show');
+      }
+    }
+
+    window.closeModal = closeModal;
+
+    // Close modal on backdrop click
+    document.querySelectorAll('.modal-backdrop').forEach(m => {
+      m.addEventListener('click', (e) => {
+        if (e.target === m) m.classList.remove('show');
+      });
+    });
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast-msg');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3200);
+    }
+
+    function escapeHtml(text) {
+      if (!text) return '';
+      return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    /* ==========================================================================
+       11. INITIALIZATION
+       ========================================================================== */
+    function init() {
+      applySiteSettings();
+      renderTags();
+      renderChars();
+      renderMailbox();
+    }
+    init();
+  </script>
 </body>
 </html>
