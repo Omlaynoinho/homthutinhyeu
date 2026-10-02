@@ -1,0 +1,1484 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Flower Logbook 🌸</title>
+
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap');
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+:root{
+    --pink:#f8cfdc;
+    --pink2:#fbe4eb;
+    --rose:#e9aebe;
+    --cream:#fffaf5;
+    --lavender:#e8def5;
+    --green:#cfe4d3;
+    --text:#6d5963;
+    --dark-text:#57434d;
+    --white:rgba(255,255,255,.88);
+    --shadow:0 12px 35px rgba(190,140,160,.18);
+}
+
+body{
+    min-height:100vh;
+    font-family:'Quicksand',sans-serif;
+    color:var(--text);
+
+    background:
+        radial-gradient(circle at 10% 20%, rgba(255,220,230,.7), transparent 25%),
+        radial-gradient(circle at 90% 10%, rgba(229,220,246,.65), transparent 25%),
+        radial-gradient(circle at 80% 90%, rgba(213,235,217,.6), transparent 28%),
+        linear-gradient(135deg,#fffaf7,#fff2f6,#f8f3fb);
+
+    overflow-x:hidden;
+}
+
+/* =========================
+   FLOATING DECORATION
+========================= */
+
+.decor{
+    position:fixed;
+    pointer-events:none;
+    z-index:0;
+    opacity:.7;
+}
+
+.leaf{
+    position:fixed;
+    font-size:24px;
+    animation:fall linear infinite;
+    opacity:.6;
+}
+
+.leaf:nth-child(1){
+    left:5%;
+    animation-duration:13s;
+    animation-delay:0s;
+}
+
+.leaf:nth-child(2){
+    left:18%;
+    animation-duration:17s;
+    animation-delay:3s;
+}
+
+.leaf:nth-child(3){
+    left:45%;
+    animation-duration:14s;
+    animation-delay:6s;
+}
+
+.leaf:nth-child(4){
+    left:70%;
+    animation-duration:18s;
+    animation-delay:2s;
+}
+
+.leaf:nth-child(5){
+    left:90%;
+    animation-duration:15s;
+    animation-delay:5s;
+}
+
+@keyframes fall{
+    0%{
+        transform:translateY(-100px) rotate(0deg);
+    }
+
+    50%{
+        transform:translateY(50vh) translateX(35px) rotate(160deg);
+    }
+
+    100%{
+        transform:translateY(110vh) translateX(-30px) rotate(320deg);
+    }
+}
+
+.butterfly{
+    position:fixed;
+    font-size:24px;
+    animation:flutter 7s ease-in-out infinite;
+    z-index:1;
+    pointer-events:none;
+}
+
+.butterfly.one{
+    top:18%;
+    left:5%;
+}
+
+.butterfly.two{
+    top:65%;
+    right:5%;
+    animation-delay:2s;
+}
+
+@keyframes flutter{
+    0%,100%{
+        transform:translate(0,0) rotate(-5deg);
+    }
+
+    50%{
+        transform:translate(20px,-18px) rotate(8deg);
+    }
+}
+
+/* =========================
+   MAIN
+========================= */
+
+.container{
+    position:relative;
+    z-index:2;
+    width:min(1100px,94%);
+    margin:35px auto;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.header{
+    background:linear-gradient(
+        135deg,
+        rgba(255,255,255,.92),
+        rgba(255,239,245,.9),
+        rgba(240,234,249,.88)
+    );
+
+    border:1px solid rgba(255,255,255,.9);
+    border-radius:32px;
+    padding:32px 28px;
+    box-shadow:var(--shadow);
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+}
+
+.header::before{
+    content:"";
+    position:absolute;
+    width:170px;
+    height:170px;
+    background:rgba(248,207,220,.25);
+    border-radius:50%;
+    top:-80px;
+    left:-60px;
+}
+
+.header::after{
+    content:"";
+    position:absolute;
+    width:180px;
+    height:180px;
+    background:rgba(232,222,245,.25);
+    border-radius:50%;
+    bottom:-100px;
+    right:-50px;
+}
+
+.ribbon{
+    font-size:27px;
+    margin-bottom:8px;
+}
+
+.header h1{
+    font-family:'Playfair Display',serif;
+    font-size:35px;
+    color:#9b7180;
+    letter-spacing:.5px;
+}
+
+.header p{
+    margin-top:8px;
+    font-size:14px;
+    color:#927f88;
+}
+
+.header .flower{
+    margin-top:15px;
+    font-size:22px;
+    letter-spacing:8px;
+}
+
+/* =========================
+   STATISTICS
+========================= */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+    margin-top:20px;
+}
+
+.stat{
+    background:var(--white);
+    border:1px solid rgba(255,255,255,.9);
+    border-radius:22px;
+    padding:20px;
+    text-align:center;
+    box-shadow:var(--shadow);
+}
+
+.stat-icon{
+    font-size:25px;
+}
+
+.stat-number{
+    margin-top:6px;
+    font-size:24px;
+    font-weight:700;
+    color:#9b7180;
+}
+
+.stat-label{
+    font-size:12px;
+    margin-top:3px;
+    color:#9b8991;
+}
+
+/* =========================
+   TOOLBAR
+========================= */
+
+.toolbar{
+    margin-top:20px;
+    background:var(--white);
+    border-radius:24px;
+    padding:18px;
+    box-shadow:var(--shadow);
+
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+    align-items:center;
+}
+
+.search{
+    flex:1;
+    min-width:210px;
+
+    border:1px solid #efdce3;
+    background:#fffafa;
+    border-radius:15px;
+    padding:11px 15px;
+    outline:none;
+    color:var(--text);
+    font-family:inherit;
+}
+
+.search:focus{
+    border-color:#dfb3c2;
+    box-shadow:0 0 0 3px rgba(231,179,194,.15);
+}
+
+select,
+button{
+    border:none;
+    font-family:inherit;
+    cursor:pointer;
+}
+
+select{
+    background:#fff5f8;
+    border:1px solid #efdce3;
+    border-radius:15px;
+    padding:11px 13px;
+    color:var(--text);
+    outline:none;
+}
+
+.btn{
+    padding:11px 16px;
+    border-radius:15px;
+    transition:.2s;
+}
+
+.btn:hover{
+    transform:translateY(-2px);
+}
+
+.btn-pink{
+    background:#f6d5df;
+    color:#765764;
+}
+
+.btn-lavender{
+    background:#e8def5;
+    color:#685b78;
+}
+
+.btn-green{
+    background:#dcebdd;
+    color:#617762;
+}
+
+.btn-danger{
+    background:#f5dddd;
+    color:#8b6262;
+}
+
+/* =========================
+   LOG PANEL
+========================= */
+
+.log-panel{
+    margin-top:20px;
+    background:rgba(255,255,255,.9);
+    border-radius:28px;
+    padding:22px;
+    box-shadow:var(--shadow);
+}
+
+.panel-title{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:18px;
+}
+
+.panel-title h2{
+    font-family:'Playfair Display',serif;
+    color:#8e6b78;
+    font-size:23px;
+}
+
+.panel-title span{
+    font-size:12px;
+    color:#a28e97;
+}
+
+.log-list{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+}
+
+/* =========================
+   LOG CARD
+========================= */
+
+.log-card{
+    background:linear-gradient(
+        135deg,
+        rgba(255,249,250,.95),
+        rgba(250,247,253,.9)
+    );
+
+    border:1px solid #f0e2e7;
+    border-radius:19px;
+    padding:15px 17px;
+
+    display:grid;
+    grid-template-columns:auto 1fr auto;
+    gap:13px;
+    align-items:start;
+
+    transition:.25s;
+}
+
+.log-card:hover{
+    transform:translateY(-2px);
+    box-shadow:0 8px 20px rgba(190,150,165,.12);
+}
+
+.log-icon{
+    width:38px;
+    height:38px;
+    border-radius:13px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#f8e4ea;
+    font-size:19px;
+}
+
+.log-content{
+    min-width:0;
+}
+
+.log-type{
+    display:inline-block;
+    font-size:10px;
+    padding:4px 8px;
+    border-radius:10px;
+    margin-bottom:5px;
+    background:#f1e5f6;
+    color:#806b8a;
+    font-weight:700;
+}
+
+.log-message{
+    font-size:14px;
+    color:#695760;
+    line-height:1.55;
+    word-break:break-word;
+}
+
+.log-meta{
+    font-size:10px;
+    color:#a7989e;
+    margin-top:5px;
+}
+
+.log-time{
+    font-size:10px;
+    color:#a7989e;
+    white-space:nowrap;
+}
+
+.empty{
+    text-align:center;
+    padding:50px 20px;
+    color:#a18f97;
+}
+
+.empty-icon{
+    font-size:40px;
+    margin-bottom:10px;
+}
+
+/* =========================
+   TYPE COLORS
+========================= */
+
+.type-chat{
+    background:#f7dce5;
+    color:#986b79;
+}
+
+.type-user{
+    background:#e4edf8;
+    color:#657f9d;
+}
+
+.type-character{
+    background:#e9def4;
+    color:#806a93;
+}
+
+.type-system{
+    background:#dcebdc;
+    color:#637a66;
+}
+
+.type-error{
+    background:#f6dada;
+    color:#936060;
+}
+
+.type-rp{
+    background:#f5e4cd;
+    color:#95704c;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer{
+    text-align:center;
+    padding:25px 10px;
+    color:#a18d96;
+    font-size:12px;
+}
+
+.footer .bows{
+    font-size:19px;
+    margin-bottom:5px;
+}
+
+/* =========================
+   MODAL
+========================= */
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(102,76,87,.18);
+    backdrop-filter:blur(5px);
+
+    display:none;
+    align-items:center;
+    justify-content:center;
+
+    z-index:20;
+    padding:20px;
+}
+
+.modal.show{
+    display:flex;
+}
+
+.modal-box{
+    width:min(500px,100%);
+    background:#fffafa;
+    border-radius:28px;
+    padding:25px;
+    box-shadow:0 20px 60px rgba(100,70,85,.2);
+}
+
+.modal-box h3{
+    font-family:'Playfair Display',serif;
+    color:#8d6876;
+    margin-bottom:15px;
+}
+
+.modal textarea{
+    width:100%;
+    min-height:120px;
+    resize:vertical;
+    border:1px solid #eddde3;
+    border-radius:16px;
+    padding:13px;
+    font-family:inherit;
+    outline:none;
+}
+
+.modal-actions{
+    display:flex;
+    gap:10px;
+    margin-top:14px;
+    justify-content:flex-end;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:700px){
+
+    .container{
+        width:94%;
+        margin:20px auto;
+    }
+
+    .header{
+        padding:26px 18px;
+        border-radius:25px;
+    }
+
+    .header h1{
+        font-size:29px;
+    }
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .toolbar{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .search{
+        width:100%;
+    }
+
+    select,
+    .btn{
+        width:100%;
+    }
+
+    .log-card{
+        grid-template-columns:auto 1fr;
+    }
+
+    .log-time{
+        grid-column:2;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- Floating decoration -->
+
+<div class="leaf">🍃</div>
+<div class="leaf">🍂</div>
+<div class="leaf">🌿</div>
+<div class="leaf">🍁</div>
+<div class="leaf">🌱</div>
+
+<div class="butterfly one">🦋</div>
+<div class="butterfly two">🦋</div>
+
+
+<div class="container">
+
+    <!-- HEADER -->
+
+    <header class="header">
+
+        <div class="ribbon">🎀</div>
+
+        <h1>Flower Logbook</h1>
+
+        <p>
+            Nhật ký hoạt động của hệ thống chatbot
+        </p>
+
+        <div class="flower">
+            🌸 ❀ 🦋 ❀ 🌷 ❀ 🌿
+        </div>
+
+    </header>
+
+
+    <!-- STATISTICS -->
+
+    <section class="stats">
+
+        <div class="stat">
+            <div class="stat-icon">📜</div>
+            <div class="stat-number" id="totalLogs">0</div>
+            <div class="stat-label">Tổng Log</div>
+        </div>
+
+        <div class="stat">
+            <div class="stat-icon">💬</div>
+            <div class="stat-number" id="chatLogs">0</div>
+            <div class="stat-label">Chat</div>
+        </div>
+
+        <div class="stat">
+            <div class="stat-icon">🌸</div>
+            <div class="stat-number" id="rpLogs">0</div>
+            <div class="stat-label">RP Events</div>
+        </div>
+
+        <div class="stat">
+            <div class="stat-icon">⚠️</div>
+            <div class="stat-number" id="errorLogs">0</div>
+            <div class="stat-label">Lỗi</div>
+        </div>
+
+    </section>
+
+
+    <!-- TOOLBAR -->
+
+    <section class="toolbar">
+
+        <input
+            id="searchInput"
+            class="search"
+            type="text"
+            placeholder="🔎 Tìm kiếm trong log..."
+        >
+
+        <select id="filterType">
+
+            <option value="all">
+                🌸 Tất cả
+            </option>
+
+            <option value="chat">
+                💬 Chat
+            </option>
+
+            <option value="user">
+                👤 User
+            </option>
+
+            <option value="character">
+                🦋 Character
+            </option>
+
+            <option value="system">
+                ⚙️ System
+            </option>
+
+            <option value="error">
+                ⚠️ Error
+            </option>
+
+            <option value="rp">
+                🌷 RP
+            </option>
+
+        </select>
+
+
+        <button
+            class="btn btn-pink"
+            onclick="openAddLog()">
+            ＋ Thêm Log
+        </button>
+
+        <button
+            class="btn btn-lavender"
+            onclick="copyVisibleLogs()">
+            📋 Copy
+        </button>
+
+        <button
+            class="btn btn-green"
+            onclick="exportLogs()">
+            💾 Export
+        </button>
+
+        <button
+            class="btn btn-danger"
+            onclick="clearLogs()">
+            🗑️ Xóa
+        </button>
+
+    </section>
+
+
+    <!-- LOG PANEL -->
+
+    <section class="log-panel">
+
+        <div class="panel-title">
+
+            <h2>
+                📖 Nhật ký hệ thống
+            </h2>
+
+            <span id="logCount">
+                0 entries
+            </span>
+
+        </div>
+
+
+        <div
+            id="logList"
+            class="log-list">
+        </div>
+
+    </section>
+
+
+    <footer class="footer">
+
+        <div class="bows">
+            🎀 🌸 🦋 🌿 🎀
+        </div>
+
+        Flower Logbook · Chatbot System
+
+    </footer>
+
+</div>
+
+
+<!-- ADD LOG MODAL -->
+
+<div
+    id="modal"
+    class="modal">
+
+    <div class="modal-box">
+
+        <h3>
+            🌸 Thêm nhật ký
+        </h3>
+
+        <select
+            id="newLogType"
+            style="width:100%;margin-bottom:10px;">
+
+            <option value="chat">
+                💬 Chat
+            </option>
+
+            <option value="user">
+                👤 User
+            </option>
+
+            <option value="character">
+                🦋 Character
+            </option>
+
+            <option value="system">
+                ⚙️ System
+            </option>
+
+            <option value="error">
+                ⚠️ Error
+            </option>
+
+            <option value="rp">
+                🌷 RP
+            </option>
+
+        </select>
+
+
+        <textarea
+            id="newLogMessage"
+            placeholder="Nhập nội dung nhật ký...">
+        </textarea>
+
+
+        <div class="modal-actions">
+
+            <button
+                class="btn btn-pink"
+                onclick="closeModal()">
+                Đóng
+            </button>
+
+            <button
+                class="btn btn-green"
+                onclick="addManualLog()">
+                🌸 Lưu Log
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =====================================
+   LOG DATABASE
+===================================== */
+
+const STORAGE_KEY = "flower_chatbot_logs";
+
+
+let logs = JSON.parse(
+    localStorage.getItem(STORAGE_KEY)
+) || [];
+
+
+/* =====================================
+   ICON
+===================================== */
+
+const icons = {
+
+    chat:"💬",
+    user:"👤",
+    character:"🦋",
+    system:"⚙️",
+    error:"⚠️",
+    rp:"🌷"
+
+};
+
+
+/* =====================================
+   FORMAT TIME
+===================================== */
+
+function formatTime(date){
+
+    const d = new Date(date);
+
+    return d.toLocaleString(
+        "vi-VN",
+        {
+            day:"2-digit",
+            month:"2-digit",
+            year:"numeric",
+            hour:"2-digit",
+            minute:"2-digit",
+            second:"2-digit"
+        }
+    );
+
+}
+
+
+/* =====================================
+   SAVE
+===================================== */
+
+function saveLogs(){
+
+    localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(logs)
+    );
+
+}
+
+
+/* =====================================
+   ADD LOG
+===================================== */
+
+function addLog(
+    type,
+    message,
+    metadata = ""
+){
+
+    const log = {
+
+        id:Date.now(),
+
+        type:type,
+
+        message:message,
+
+        metadata:metadata,
+
+        timestamp:new Date().toISOString()
+
+    };
+
+    logs.unshift(log);
+
+    saveLogs();
+
+    renderLogs();
+
+}
+
+
+/*
+    Có thể gọi từ chatbot khác:
+
+    addLog(
+        "chat",
+        "User đã gửi một tin nhắn."
+    );
+
+    addLog(
+        "character",
+        "Qing Yue đã xuất hiện."
+    );
+
+    addLog(
+        "rp",
+        "Đã chuyển sang địa điểm mới."
+    );
+
+*/
+
+
+/* =====================================
+   RENDER
+===================================== */
+
+function renderLogs(){
+
+    const list =
+        document.getElementById("logList");
+
+    const search =
+        document
+        .getElementById("searchInput")
+        .value
+        .toLowerCase();
+
+    const filter =
+        document
+        .getElementById("filterType")
+        .value;
+
+
+    const visibleLogs =
+        logs.filter(log => {
+
+            const matchType =
+                filter === "all" ||
+                log.type === filter;
+
+            const matchSearch =
+                log.message
+                .toLowerCase()
+                .includes(search) ||
+
+                (log.metadata || "")
+                .toLowerCase()
+                .includes(search);
+
+            return matchType && matchSearch;
+
+        });
+
+
+    list.innerHTML = "";
+
+
+    if(visibleLogs.length === 0){
+
+        list.innerHTML = `
+
+            <div class="empty">
+
+                <div class="empty-icon">
+                    🌸
+                </div>
+
+                <div>
+                    Chưa có nhật ký phù hợp.
+                </div>
+
+                <small>
+                    Những hoạt động mới sẽ xuất hiện tại đây.
+                </small>
+
+            </div>
+
+        `;
+
+    }
+
+
+    visibleLogs.forEach(log => {
+
+        const card =
+            document.createElement("div");
+
+        card.className = "log-card";
+
+
+        card.innerHTML = `
+
+            <div class="log-icon">
+                ${icons[log.type] || "🌸"}
+            </div>
+
+
+            <div class="log-content">
+
+                <span class="log-type type-${log.type}">
+                    ${getTypeName(log.type)}
+                </span>
+
+                <div class="log-message">
+                    ${escapeHTML(log.message)}
+                </div>
+
+                ${
+                    log.metadata
+                    ?
+                    `
+                    <div class="log-meta">
+                        ${escapeHTML(log.metadata)}
+                    </div>
+                    `
+                    :
+                    ""
+                }
+
+            </div>
+
+
+            <div class="log-time">
+
+                ${formatTime(log.timestamp)}
+
+            </div>
+
+        `;
+
+
+        list.appendChild(card);
+
+    });
+
+
+    updateStats(
+        visibleLogs
+    );
+
+}
+
+
+/* =====================================
+   TYPE NAME
+===================================== */
+
+function getTypeName(type){
+
+    const names = {
+
+        chat:"CHAT",
+
+        user:"USER",
+
+        character:"CHARACTER",
+
+        system:"SYSTEM",
+
+        error:"ERROR",
+
+        rp:"RP EVENT"
+
+    };
+
+    return names[type] || "LOG";
+
+}
+
+
+/* =====================================
+   ESCAPE HTML
+===================================== */
+
+function escapeHTML(text){
+
+    return String(text)
+
+        .replaceAll("&","&amp;")
+
+        .replaceAll("<","&lt;")
+
+        .replaceAll(">","&gt;")
+
+        .replaceAll('"',"&quot;")
+
+        .replaceAll("'","&#039;");
+
+}
+
+
+/* =====================================
+   STATISTICS
+===================================== */
+
+function updateStats(){
+
+    document.getElementById(
+        "totalLogs"
+    ).textContent = logs.length;
+
+
+    document.getElementById(
+        "chatLogs"
+    ).textContent =
+        logs.filter(
+            x => x.type === "chat"
+        ).length;
+
+
+    document.getElementById(
+        "rpLogs"
+    ).textContent =
+        logs.filter(
+            x => x.type === "rp"
+        ).length;
+
+
+    document.getElementById(
+        "errorLogs"
+    ).textContent =
+        logs.filter(
+            x => x.type === "error"
+        ).length;
+
+
+    document.getElementById(
+        "logCount"
+    ).textContent =
+        `${logs.length} entries`;
+
+}
+
+
+/* =====================================
+   SEARCH
+===================================== */
+
+document
+.getElementById("searchInput")
+.addEventListener(
+    "input",
+    renderLogs
+);
+
+
+document
+.getElementById("filterType")
+.addEventListener(
+    "change",
+    renderLogs
+);
+
+
+/* =====================================
+   MODAL
+===================================== */
+
+function openAddLog(){
+
+    document
+    .getElementById("modal")
+    .classList.add("show");
+
+}
+
+
+function closeModal(){
+
+    document
+    .getElementById("modal")
+    .classList.remove("show");
+
+}
+
+
+/* =====================================
+   MANUAL LOG
+===================================== */
+
+function addManualLog(){
+
+    const type =
+        document
+        .getElementById("newLogType")
+        .value;
+
+    const message =
+        document
+        .getElementById("newLogMessage")
+        .value
+        .trim();
+
+
+    if(!message){
+
+        alert(
+            "🌸 Vui lòng nhập nội dung log."
+        );
+
+        return;
+
+    }
+
+
+    addLog(
+        type,
+        message
+    );
+
+
+    document
+    .getElementById("newLogMessage")
+    .value = "";
+
+
+    closeModal();
+
+}
+
+
+/* =====================================
+   COPY
+===================================== */
+
+function copyVisibleLogs(){
+
+    const text =
+        logs
+        .map(log =>
+            `[${formatTime(log.timestamp)}] ` +
+            `[${getTypeName(log.type)}] ` +
+            log.message
+        )
+        .join("\n");
+
+
+    navigator.clipboard
+    .writeText(text)
+    .then(() => {
+
+        alert(
+            "🌸 Đã copy toàn bộ log!"
+        );
+
+    });
+
+}
+
+
+/* =====================================
+   EXPORT TXT
+===================================== */
+
+function exportLogs(){
+
+    if(logs.length === 0){
+
+        alert(
+            "🌸 Chưa có log để export."
+        );
+
+        return;
+
+    }
+
+
+    const text =
+        logs
+        .map(log => {
+
+            return [
+
+                `[${formatTime(log.timestamp)}]`,
+
+                `[${getTypeName(log.type)}]`,
+
+                log.message,
+
+                log.metadata
+                ?
+                `Metadata: ${log.metadata}`
+                :
+                ""
+
+            ]
+            .filter(Boolean)
+            .join(" | ");
+
+        })
+        .join("\n");
+
+
+    const blob =
+        new Blob(
+            [text],
+            {
+                type:"text/plain;charset=utf-8"
+            }
+        );
+
+
+    const url =
+        URL.createObjectURL(blob);
+
+
+    const a =
+        document.createElement("a");
+
+
+    a.href = url;
+
+    a.download =
+        `flower-log-${Date.now()}.txt`;
+
+    a.click();
+
+
+    URL.revokeObjectURL(url);
+
+}
+
+
+/* =====================================
+   CLEAR
+===================================== */
+
+function clearLogs(){
+
+    if(logs.length === 0){
+
+        return;
+
+    }
+
+
+    const confirmDelete =
+        confirm(
+            "🎀 Bạn có chắc muốn xóa toàn bộ nhật ký?"
+        );
+
+
+    if(!confirmDelete){
+
+        return;
+
+    }
+
+
+    logs = [];
+
+    saveLogs();
+
+    renderLogs();
+
+}
+
+
+/* =====================================
+   DEMO DATA
+   Chỉ tạo nếu chưa từng có log.
+===================================== */
+
+if(logs.length === 0){
+
+    logs = [
+
+        {
+            id:1,
+            type:"system",
+            message:"Flower Logbook đã được khởi động.",
+            metadata:"System initialized",
+            timestamp:new Date().toISOString()
+        },
+
+        {
+            id:2,
+            type:"chat",
+            message:"User đã mở cuộc trò chuyện với Character.",
+            metadata:"Chat Session",
+            timestamp:new Date(Date.now()-60000).toISOString()
+        },
+
+        {
+            id:3,
+            type:"character",
+            message:"Character đã phản hồi tin nhắn.",
+            metadata:"AI Character",
+            timestamp:new Date(Date.now()-120000).toISOString()
+        },
+
+        {
+            id:4,
+            type:"rp",
+            message:"RP chuyển sang địa điểm mới.",
+            metadata:"Open World",
+            timestamp:new Date(Date.now()-180000).toISOString()
+        },
+
+        {
+            id:5,
+            type:"user",
+            message:"User đã gửi một tin nhắn mới.",
+            metadata:"User Action",
+            timestamp:new Date(Date.now()-240000).toISOString()
+        }
+
+    ];
+
+    saveLogs();
+
+}
+
+
+/* =====================================
+   INIT
+===================================== */
+
+renderLogs();
+
+</script>
+
+</body>
+</html>
